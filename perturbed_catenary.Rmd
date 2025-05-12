@@ -1,0 +1,300 @@
+---
+title: "Perturbing the catenary: a first-order analysis"
+author: "Robin Hankin"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## The catenary.
+
+\newcommand{\di}[2]{\frac{\partial{#1}}{\partial{#2}}}
+\newcommand{\cx}{\cosh{\left(\frac{x-x_0}{a}\right)}}
+\newcommand{\sx}{\sinh{\left(\frac{x-x_0}{a}\right)}}
+\newcommand{\tx}{\tanh{\left(\frac{x-x_0}{a}\right)}}
+\newcommand{\sech}{\operatorname{sech}}
+
+We start with the Euler-Lagrange equation
+
+\begin{equation}
+\frac{d}{dx}\di{F}{y'} -\di{F}{y}=0
+\end{equation}
+
+and if $\di{F}{x}=0$ we have the Beltrami equation
+
+\begin{equation}
+F-y'\di{F}{y'}=C
+\end{equation}
+
+For a catenary we have
+
+\begin{equation}
+F=\sqrt{1+(y')^2}(y + \lambda)
+\end{equation}
+
+so Beltrami applies giving
+
+\begin{equation}
+\sqrt{1+y'^2}(y + \lambda)-\frac{y'^2(y'+\lambda)}{\sqrt{1+y'^2}}=C
+\end{equation}
+
+Simplifying
+
+\begin{equation}
+(y+\lambda)=C\sqrt{1+y'^2}
+\end{equation}
+
+or
+
+\begin{equation}
+dx=\frac{dy}{\sqrt{\left(\frac{y+\lambda}{C}\right)^2-1}}
+\end{equation}
+
+Substituting $u=(y+\lambda)/C$ so $du=dy/C$ we have
+
+\begin{equation}
+x=\int\frac{C\,du}{\sqrt{u^2-1}} =
+C\operatorname{acosh}\left(\frac{y+\lambda}{C}\right)+K
+\end{equation}
+
+giving, in more conventional notation,
+
+\begin{equation}
+y = y_0 + a\operatorname{cosh}\left(\frac{x-x_0}{a}\right)
+\end{equation}
+
+Here for simplicity we use $x_0=y_0=0$, $a=1$.
+
+
+# Perturbed catenary
+
+
+Now we consider a flexible chain minimising its potential energy in a
+slightly perturbed potential field $y + \epsilon\phi(x,y)$ where
+$\epsilon$ is sufficiently small to neglect $\epsilon^2$ and higher
+powers.  We assume that the chain adopts a slightly perturbed form and
+perturb with $\epsilon$, sufficiently small to neglect powers above
+the second:
+
+\begin{eqnarray}
+y  &\longrightarrow&  y(x) + \epsilon z(x)\\
+y' &\longrightarrow&  y'(x) + \epsilon z'(x)\\
+F  &\longrightarrow&  F + \epsilon G(x,y,y')
+\end{eqnarray}
+
+
+\begin{equation}
+\frac{d}{dx}\di{F}{y'}=\di{F}{y}\longrightarrow
+\frac{d}{dx}\left[\di{}{y'}\left(F(x,y+\epsilon z,y'+\epsilon z')+\epsilon G(x,y+\epsilon z,y'+\epsilon z')\right)\right] =
+\di{}{y}\left[F+\epsilon G(x,y+\epsilon z,y'+\epsilon z')\right]
+\end{equation}
+
+Above we write $y$ for $y(x)$ etc.  We have to remember that
+$y,y',z,z'$ are functions of $x$.  Now neglect terms of order
+$\epsilon^2$ and above, and continue to neglect them:
+
+\begin{equation}
+\frac{d}{dx}\left[\di{}{y'}\left(F(x,y+\epsilon z,y'+\epsilon z')+\epsilon G(x,y,y')\right)\right] =
+\di{}{y}\left[F+\epsilon G(x,y,y')\right]
+\end{equation}
+
+\begin{equation}
+\frac{d}{dx}\left[\di{}{y'}\left(
+F(x,y,y') + \epsilon z\di{F}{y}+ \epsilon z'\di{F}{y'}
++\epsilon G(x,y,y')\right)\right] =
+\di{}{y}\left[F+\epsilon G(x,y,y')\right]
+\end{equation}
+
+The $\epsilon^0$ term is just the Euler-Lagrange equation, which is
+known to be true.  The first order term is:
+
+\begin{equation}\label{EL1}
+\frac{d}{dx}\left[\di{}{y'}\left(
+z\di{F}{y} + z'\di{F}{y'} + G\right)\right] =
+\di{G}{y}
+\end{equation}
+
+(above we have to remember that $G=G(x,y,y')$).  Before we apply it to
+the catenary we need to consider the form of $G$, which will include a
+constraint.  We have $F=\sqrt{1+y'^2}(y+\lambda)$ giving
+$y(x)=a\cosh\left(\frac{x-x_0}{a}\right)$.  At first glance, the
+perturbation $\epsilon G$ is just $\epsilon\phi(x,y)\sqrt{1+y'^2}$.
+But there is a constraint here.  The overall length should not be
+altered.  As above, we have
+
+\begin{eqnarray}
+\int_{x=-a}^{x=+a}\sqrt{1+y'^2}dx &\longrightarrow& \int_{x=-a}^{x=+a}\sqrt{1+(y+\epsilon z)'^2}dx\\
+&=& \int_{x=-a}^{x=+a}\sqrt{1+y'^2 +2\epsilon y'z'}dx \\
+&=& \int_{x=-a}^{x=+a}\left(\sqrt{1+y'^2} + \epsilon\frac{y'z'}{\sqrt{1+y'^2}}\right)dx
+\end{eqnarray}
+
+
+So the constraint should be that 
+
+\begin{equation}
+\int_{x=-a}^{x=+a}\frac{y'z'\,dx}{\sqrt{1+y'^2}}=0
+\end{equation}
+
+So the appropriate constraint on G would be 
+
+\begin{equation}
+G = \phi(x,y)\sqrt{1+y'^2} + \mu z'(x)\frac{y'}{\sqrt{1+y'^2}}
+\end{equation}
+
+where $\mu$ is an undetermined multiplier.  For convenience here is
+equation \ref{EL1}:
+
+\begin{equation}\nonumber
+\frac{d}{dx}\left[\di{}{y'}\left(
+z\di{F}{y} + z'\di{F}{y'} + G\right)\right] =
+\di{G}{y}
+\end{equation}
+
+\begin{eqnarray}
+\frac{d}{dx}\left[\di{}{y'}\left(
+z\di{F}{y} + z'\di{F}{y'}
++ \underbrace{\phi(x,y)\sqrt{1+y'^2} + \mu z'(x)\frac{y'}{\sqrt{1+y'^2}}}_{G(x,y,y')}
+\right)\right] &=& \di{\phi}{y}\sqrt{1+y'^2}
+\end{eqnarray}
+
+(above we have substituted for $G$).  But now we know that
+$F=\sqrt{1+y'^2}(y+\lambda)$ so we now have
+
+\begin{eqnarray}
+\di{F}{y} &=&\sqrt{1+y'^2}=\cosh x\\
+\di{F}{y'} &=&
+\frac{y'(y+\lambda)}{\sqrt{1+y'^2}}=\tanh x\left(\cosh x+\lambda\right)\\
+\frac{\partial^2F}{\partial y\partial y'} &=& \frac{y'}{\sqrt{1+y'^2}}=\tanh x\\
+\frac{\partial^2F}{\partial y'\partial y'} &=&
+\frac{y+\lambda}{(1+y'^2)^{3/2}} = \frac{\cosh x + \lambda}{\cosh^3 x}
+\end{eqnarray}
+
+Thus
+
+\begin{eqnarray}
+\frac{d}{dx}\left[
+z\tanh x + z'\frac{\cosh x+\lambda}{\cosh^3x}
++ \phi(x,y)\frac{y'}{\sqrt{1+y'^2}}
++ \mu z'(x)\frac{1}{(1+y'^2)^{3/2}}
+\right] &=& \di{\phi}{y}\sqrt{1+y'^2}\\
+\frac{d}{dx}\left[
+z\tanh x + z'\frac{\cosh x+\lambda}{\cosh^3 x}
++ \phi(x,y)\tanh x
++ \frac{\mu z'(x)}{\cosh^3 x}
+\right] &=& \di{\phi}{y}\cosh x\nonumber\\
+\frac{d}{dx}\left[
+z\tanh x + z'(\lambda+\mu)\sech^3x
++z'\sech^2x
++ \phi(x,y)\tanh x
+\right] &=& \di{\phi}{y}\cosh x\nonumber
+\end{eqnarray}
+
+\begin{equation}
+\frac{d}{dx}\left[
+z\tanh x + z'(\lambda+\mu)\sech^3(x)
++z'\sech^2x
++ \phi(x,\cosh(x))\tanh(x)
+\right] = \di{\phi}{y}\cosh(x)
+\end{equation}
+
+Now just write $\lambda$ for $\lambda+\mu$:
+
+\begin{eqnarray}
+z'\tanh x + z\sech^2x\nonumber
++
+z''\lambda\sech^3x
+-z'\cdot 3\lambda\sech^3x\tanh x\\
++
+z''\sech^2x
+-2z'\cdot\sech^2x\tanh x
++
+\phi_x(x,\cosh x) + \sinh x\,\phi_y(x,\cosh x) &=&
+\cosh x\,\phi_y(x,\cosh x)
+\end{eqnarray}
+
+Collecting terms:
+
+\begin{equation*}
+z''\cdot(\lambda\sech^3x+\sech^2x) +
+z'\cdot(\tanh x - 3\lambda\sech^3x\tanh x - 2\sech^2 x\tanh x) +
+z\cdot(\sech^2x)
+=
+\phi_x 
++\phi_y(\cosh x-\sinh x)
+\nonumber
+\end{equation*}
+
+Where we understand that $\phi=\phi(x,y)=\phi(x,\cosh x)$,
+$\phi_x=\partial\phi(x,y)/\partial x$ and
+$\phi_y=\partial\phi(x,y)/\partial y$, all evaluated at $(x,\cosh x)$.
+
+
+\begin{equation*}
+z''\cdot(\lambda\sech^3x+\sech^2x) +
+z'\cdot\tanh x(1 - 3\lambda\sech^3x- 2\sech^2 x) +
+z\cdot(\sech^2x)
+=
+\phi_x 
++\phi_y(\cosh x-\sinh x)
+\nonumber
+\end{equation*}
+
+
+Now set $\lambda=0$:
+
+\begin{equation*}
+z''\cdot(\sech^2x) +
+z'\cdot\tanh x(1 - 2\sech^2 x) +
+z\cdot(\sech^2x)
+=
+\phi_x 
++\phi_y(\cosh x-\sinh x)
+\nonumber
+\end{equation*}
+
+# Numerical work
+
+
+```{r odesolver}
+library("deSolve") 
+sech <- function(x){1/cosh(x)}
+Lorenz <- function(t, state, parameters) {
+    with(as.list(c(state, parameters)), {
+        RHS <- 0.1  # could be dphi/dx + dphi/dy*(cosh(x)-sinh(x))
+        dZ <- Zdash
+        ss <- sech(t)^2
+        dZdash <- (-Z*ss - Zdash*(tanh(t)*(1 - 3*lambda/cosh(t)^3 - 2*ss)) + RHS ) / ( ss + lambda/cosh(t)^3)
+        list(c(dZ, dZdash))
+    })
+}
+
+parameters <- c(lambda = 0.1)
+state      <- c(Z = 0, Zdash = -1)  # initial conditions
+times      <- seq(-2, 2, by = 0.01)
+
+out <- ode(y = state, times = times, func = Lorenz, parms = parameters)
+```
+
+```{r showode}
+head(out)
+x <- out[,1]
+y <- out[,2]
+plot(x,y)
+grid()
+```
+
+
+```{r defodefunc}
+f <- function(lambdamu){
+    times <- seq(from = -2, to = 2, by = 1)
+    parameters <- c(lambda = lambdamu)
+    state      <- c(Z = 0, Zdash = -1)  # initial conditions
+    out <- ode(y = state, times = times, func = Lorenz, parms = parameters)
+    return(out)
+}
+
+f(1)
+```
+    
