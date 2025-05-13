@@ -1,0 +1,265 @@
+---
+title: "Perturbing the Snell law with small changes to refractive index: a first-order analysis"
+author: "Robin Hankin"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## The shortest distance between two points is a straight line
+
+\newcommand{\di}[2]{\frac{\partial{#1}}{\partial{#2}}}
+\newcommand{\cx}{\cosh{\left(\frac{x-x_0}{a}\right)}}
+\newcommand{\sx}{\sinh{\left(\frac{x-x_0}{a}\right)}}
+\newcommand{\tx}{\tanh{\left(\frac{x-x_0}{a}\right)}}
+\newcommand{\sech}{\operatorname{sech}}
+
+We start with the Euler-Lagrange equation
+
+\begin{equation}
+\frac{d}{dx}\di{F}{y'} -\di{F}{y}=0
+\end{equation}
+
+
+For a uniform refractive index we would have $F=\sqrt{1+y'^2}$ but here we have 
+
+\begin{equation}
+F=\sqrt{1+y'^2}(1+\epsilon f(x))
+\end{equation}
+
+
+Where $f(x)$ is some function of $x$.  We will start the path at point
+$(-1,-1)$ and end it at $(1,1)$.
+
+First we have $f(x)=0$.  Then E-L gives us
+
+\begin{equation}
+\frac{d}{dx}\di{F}{y'}=0
+\end{equation}
+
+
+Thus $\di{F}{y'}=K$ for some constant $K$, or
+$\frac{y'}{\sqrt{1+y'^2}}=K$.  For later convenience we will *not*
+infer immediately that $y'$ is constant but solve
+
+\begin{equation}
+\frac{y'}{\sqrt{1+y'^2}}=K\longrightarrow y'=\frac{K}{\sqrt{1-K^2}}
+\end{equation}
+
+This is quite easy to solve.  We have $y'$ is constant and with the
+boundary conditions we have $y'=1$ so $K=\sqrt{2}/2$.
+
+Now we perturb the situation with a slight refractive index change:
+
+\begin{equation}
+F=\sqrt{1+y'^2}(1+\epsilon H(x))
+\end{equation}
+
+Where $\epsilon$ is small and $H(x)$ is the Heaviside step function.
+
+Then we have 
+
+\begin{equation}
+\frac{d}{dx}\di{\sqrt{1+y'^2}(1+\epsilon H(x))}{y'}=0
+\longrightarrow
+\frac{d}{dx}\frac{(1+\epsilon H(x))y'}{\sqrt{1+y'^2}}=0
+\longrightarrow
+\frac{(1+\epsilon H(x))y'}{\sqrt{1+y'^2}}=K
+\end{equation}
+
+
+So now
+
+\begin{equation}
+y'=\frac{K}{\sqrt{(1+\epsilon H(x))^2-K^2}}
+\end{equation}
+
+So 
+
+\begin{equation}
+y'=\left\{\begin{array}{lr}
+\frac{K}{\sqrt{1-K^2}}, & x<0\\
+\frac{K}{\sqrt{(1+\epsilon H(x))^2-K^2}}, & x\geqslant 0
+\end{array}
+\right.
+\end{equation}
+
+So, given $y(-1)=-1$ the constraint that the beam passes through $(-1,-1)$ and $(1,1)$ would be 
+
+\begin{equation}
+\frac{K}{\sqrt{1-K^2}} + 
+\frac{K}{\sqrt{(1+\epsilon)^2 - K^2}} =2
+\end{equation}
+
+This is not easy to solve, even if we discard terms of order $\epsilon^2$.
+I get
+
+\begin{equation}
+\frac{K}{\sqrt{(1+\epsilon)^2 - K^2}} = 
+\frac{K}{\sqrt{1-K^2}}\left(   1-\frac{\epsilon}{1-K^2}  \right) + \mathcal{O}(\epsilon^2)
+\end{equation}
+
+
+To first order:
+
+\begin{equation}
+\frac{K}{\sqrt{1-K^2}}\left(1 - \frac{\epsilon/2}{1-K^2}  \right)=1
+\end{equation}
+
+
+after algebra
+
+\begin{equation}
+2K^4-(3-\epsilon)K^2 +1=0
+\end{equation}
+
+
+from which we recover $K=\sqrt{2}/2$ at $\epsilon=0$, and, to first
+order we have $K=\frac{\sqrt{2}}{2}(1+\epsilon/2)$ [the other root is
+$1-\epsilon/2$, not sure what that means].  So for $x<0$ we have
+
+\begin{equation}
+y'=\frac{K}{\sqrt{1-K^2}}= 1+\epsilon
+\end{equation}
+
+
+and for $x>0$ we have (again to first order)
+
+\begin{equation}
+y'=\frac{K}{\sqrt{(1+\epsilon)^2-K^2}}=1-\epsilon
+\end{equation}
+
+
+OK but look how much easier it is using the perturbed EL:
+
+
+\begin{equation}
+\frac{d}{dx}\left[\di{}{y'}\left(
+z\di{F}{y} + z'\di{F}{y'} + G\right)\right] =
+\di{G}{y}
+\end{equation}
+
+Here we have $F=\sqrt{1+y'^2}$ and $G=H(x)\sqrt{1+y'^2}$.
+
+
+\begin{equation}
+\frac{d}{dx}\left[\di{}{y'}\left(
+\frac{z'y'}{\sqrt{1+y'^2}}
++ H(x)\sqrt{1+y'^2}
+\right)\right] =
+0
+\end{equation}
+
+
+\begin{equation}
+\di{}{y'}\left(
+\frac{z'y'}{\sqrt{1+y'^2}}
++ H(x)\sqrt{1+y'^2}
+\right)
+= K
+\end{equation}
+
+\begin{equation}
+\frac{z'}{(1+y'^2)^{3/2}}
++ \frac{y'H(x)}{\sqrt{1+y'^2}}
+= K
+\end{equation}
+
+
+
+\begin{equation}\label{tobegeneralized}
+\frac{z'}{(1+y'^2)^{3/2}}
++ \frac{y'H(x)}{\sqrt{1+y'^2}}
+= K
+\end{equation}
+
+Now the clever bit, we know $y'=1$:
+
+\begin{equation}
+z'\frac{\sqrt{2}}{4}
++ \frac{\sqrt{2}}{2}H(x)
+= K\longrightarrow z'=2\sqrt{2}K-2H(x)
+\end{equation}
+
+So the constraint for $K$ becomes $2\sqrt{2}K + 2\sqrt{2}K -2=0$, or
+$K=\sqrt{2}/4$ (NB there is no sense in which we wish to "recover"
+$K=\sqrt{2}/2$.  This $K$ is the constant of integration for the
+perturbation, not the zeroth order straight line problem).
+
+\begin{equation}
+z'=1-2H(x)=\left\{\begin{array}{lr}1&x<0\\ -1&x\geqslant 0\end{array}\right.
+\end{equation}
+
+
+# Now something a little harder
+
+A slight generalization:  We 
+constrain the path to travel from $(x_1,y_1)$ to $(x_2,y_2)$, and have 
+a more general variation of refractive index, say $1+\epsilon f(x)$.  
+
+
+So now $F=\sqrt{1+y'^2}$, $G=\sqrt{1+y'^2}f(x)$
+
+\begin{equation}
+\frac{d}{dx}\left[\di{}{y'}\left(
+z\di{F}{y} + z'\di{F}{y'} + G\right)\right] =
+\di{G}{y}
+\end{equation}
+
+Right hand side is zero.  We have 
+
+\begin{equation}
+\frac{d}{dx}\left[z'\frac{\partial^2F}{\partial y'^2}
++ \di{G}{y'}\right] = 0
+\end{equation}
+
+\begin{equation}
+z'\frac{\partial^2F}{\partial y'^2}
++ \di{G}{y'}=K
+\end{equation}
+
+
+\begin{equation}
+\frac{z'}{(1+y'^2)^{3/2}}  + \frac{y'f(x)}{\sqrt{1+y'^2}} = K
+\end{equation}
+
+
+Now we know that $y'=(y_2-y_1)/(x_2-x_1)$.  We will write this as $s$
+for slope.
+
+\begin{equation}
+\frac{z'}{(1+s^2)^{3/2}}  + \frac{s\,f(x)}{\sqrt{1+s^2}} = K
+\end{equation}
+
+
+\begin{equation}
+z' = K(1+s^2)^{3/2} - s(1+s^2)f(x)
+\end{equation}
+
+We know that $z(x_1)=0$ [which gives us the constant of integration]
+and $z(x_2)=0$ [which gives us $K$].  Observing that $s=(y_2-y_1)/(x_2-x_1)$ we have
+
+\begin{equation}
+z(x_2) = 0 = 0 + (x_2-x_1)K(1+s^2)^{3/2} -
+s(1+s^2)\int_{x_1}^{x_2}f(x)dx
+\end{equation}
+
+\begin{equation}
+K = \frac{s\overline{\mathcal{I}}}{\sqrt{1+s^2}}
+\end{equation}
+
+(where
+$\overline{\mathcal{I}}=\frac{\int_{x_1}^{x_2}f(x)\,dx}{x_2-x_1}$ is
+the mean integral of $f(x)$ from $x_1$ to $x_2$).
+
+Substituting:
+
+
+\begin{equation}
+z' = \overline{\mathcal{I}}s(1+s^2) - s(1+s^2)f(x) =
+s(1+s^2)(\overline{\mathcal{I}}-f(x))
+\end{equation}
+
+
