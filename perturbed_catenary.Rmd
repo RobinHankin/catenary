@@ -68,47 +68,9 @@ y = y_0 + a\operatorname{cosh}\left(\frac{x-x_0}{a}\right)
 Here for simplicity we use $x_0=y_0=0$, $a=1$.
 
 
-# Perturbed catenary
+# Perturbing the catenary.
 
-
-Now we consider a flexible chain minimising its potential energy in a
-slightly perturbed potential field $y + \epsilon\phi(x,y)$ where
-$\epsilon$ is sufficiently small to neglect $\epsilon^2$ and higher
-powers.  We assume that the chain adopts a slightly perturbed form and
-perturb with $\epsilon$, sufficiently small to neglect powers above
-the second:
-
-\begin{eqnarray}
-y  &\longrightarrow&  y(x) + \epsilon z(x)\\
-y' &\longrightarrow&  y'(x) + \epsilon z'(x)\\
-F  &\longrightarrow&  F + \epsilon G(x,y,y')
-\end{eqnarray}
-
-
-\begin{equation}
-\frac{d}{dx}\di{F}{y'}=\di{F}{y}\longrightarrow
-\frac{d}{dx}\left[\di{}{y'}\left(F(x,y+\epsilon z,y'+\epsilon z')+\epsilon G(x,y+\epsilon z,y'+\epsilon z')\right)\right] =
-\di{}{y}\left[F+\epsilon G(x,y+\epsilon z,y'+\epsilon z')\right]
-\end{equation}
-
-Above we write $y$ for $y(x)$ etc.  We have to remember that
-$y,y',z,z'$ are functions of $x$.  Now neglect terms of order
-$\epsilon^2$ and above, and continue to neglect them:
-
-\begin{equation}
-\frac{d}{dx}\left[\di{}{y'}\left(F(x,y+\epsilon z,y'+\epsilon z')+\epsilon G(x,y,y')\right)\right] =
-\di{}{y}\left[F+\epsilon G(x,y,y')\right]
-\end{equation}
-
-\begin{equation}
-\frac{d}{dx}\left[\di{}{y'}\left(
-F(x,y,y') + \epsilon z\di{F}{y}+ \epsilon z'\di{F}{y'}
-+\epsilon G(x,y,y')\right)\right] =
-\di{}{y}\left[F+\epsilon G(x,y,y')\right]
-\end{equation}
-
-The $\epsilon^0$ term is just the Euler-Lagrange equation, which is
-known to be true.  The first order term is:
+The first-order corrective term for EL is:
 
 \begin{equation}\label{EL1}
 \frac{d}{dx}\left[\di{}{y'}\left(
@@ -116,9 +78,16 @@ z\di{F}{y} + z'\di{F}{y'} + G\right)\right] =
 \di{G}{y}
 \end{equation}
 
-(above we have to remember that $G=G(x,y,y')$).  Before we apply it to
-the catenary we need to consider the form of $G$, which will include a
-constraint.  We have $F=\sqrt{1+y'^2}(y+\lambda)$ giving
+
+Now we consider a flexible chain minimising its potential energy in a
+slightly perturbed potential field $y + \epsilon\phi(x,y)$ where
+$\epsilon$ is sufficiently small to neglect $\epsilon^2$ and higher.
+Here we have $F=\sqrt{1+y'^2}(y+\lambda)$ and
+$G=\sqrt{1+y'^2}\phi(x,y)$.
+
+Before we apply it to the catenary we need to consider the form of
+$G$, which will include a constraint.  We have
+$F=\sqrt{1+y'^2}(y+\lambda)$ giving
 $y(x)=a\cosh\left(\frac{x-x_0}{a}\right)$.  At first glance, the
 perturbation $\epsilon G$ is just $\epsilon\phi(x,y)\sqrt{1+y'^2}$.
 But there is a constraint here.  The overall length should not be
