@@ -37,7 +37,7 @@ F=\sqrt{1+(y')^2}(y + \lambda)
 so Beltrami applies giving
 
 \begin{equation}
-\sqrt{1+y'^2}(y + \lambda)-\frac{y'^2(y'+\lambda)}{\sqrt{1+y'^2}}=C
+\sqrt{1+y'^2}(y + \lambda)-\frac{y'^2(y+\lambda)}{\sqrt{1+y'^2}}=C
 \end{equation}
 
 Simplifying
@@ -106,6 +106,19 @@ So the constraint should be that
 \int_{x=-a}^{x=+a}\frac{y'z'\,dx}{\sqrt{1+y'^2}}=0
 \end{equation}
 
+Reducing to 
+
+\begin{equation}
+\int_{x=-a}^{x=+a}z'(x)\tanh(x)\,dx=0
+\end{equation}
+
+Using the product rule we get
+
+\begin{equation}
+\int_{x=-a}^{x=+a}z(x)\sech^2 x\,dx=0
+\end{equation}
+
+
 So the appropriate constraint on G would be 
 
 \begin{equation}
@@ -170,6 +183,15 @@ z\tanh x + z'(\lambda+\mu)\sech^3(x)
 
 Now just write $\lambda$ for $\lambda+\mu$:
 
+\begin{equation}
+\frac{d}{dx}\left[
+z\tanh x + z'\lambda\sech^3(x) + z'\sech^2x + \phi(x,\cosh(x))\tanh(x)
+\right] 
+=
+\di{\phi}{y}\cosh(x)
+\end{equation}
+
+
 \begin{eqnarray}
 z'\tanh x + z\sech^2x\nonumber
 +
@@ -183,14 +205,15 @@ z''\sech^2x
 \cosh x\,\phi_y(x,\cosh x)
 \end{eqnarray}
 
-Collecting terms:
+(above we have used $\frac{d}{dx}\phi(x,\cosh(x))=
+\phi_x+\sinh(x)\phi_y$).  Collecting terms:
 
 \begin{equation*}
 z''\cdot(\lambda\sech^3x+\sech^2x) +
 z'\cdot(\tanh x - 3\lambda\sech^3x\tanh x - 2\sech^2 x\tanh x) +
 z\cdot(\sech^2x)
 =
-\phi_x 
+-\phi_x 
 +\phi_y(\cosh x-\sinh x)
 \nonumber
 \end{equation*}
@@ -198,30 +221,32 @@ z\cdot(\sech^2x)
 Where we understand that $\phi=\phi(x,y)=\phi(x,\cosh x)$,
 $\phi_x=\partial\phi(x,y)/\partial x$ and
 $\phi_y=\partial\phi(x,y)/\partial y$, all evaluated at $(x,\cosh x)$.
-
+Simplifying:
 
 \begin{equation*}
 z''\cdot(\lambda\sech^3x+\sech^2x) +
 z'\cdot\tanh x(1 - 3\lambda\sech^3x- 2\sech^2 x) +
 z\cdot(\sech^2x)
 =
-\phi_x 
-+\phi_y(\cosh x-\sinh x)
+e^{-x}\phi_y-\phi_x 
 \nonumber
 \end{equation*}
 
 
-Now set $\lambda=0$:
+or
 
-\begin{equation*}
-z''\cdot(\sech^2x) +
-z'\cdot\tanh x(1 - 2\sech^2 x) +
-z\cdot(\sech^2x)
-=
-\phi_x 
-+\phi_y(\cosh x-\sinh x)
-\nonumber
-\end{equation*}
+\begin{equation}
+z'' = 
+\frac{
+e^{-x}\phi_y-\phi_x - z'\cdot\tanh x(1 - 3\lambda\sech^3x- 2\sech^2 x) - z\cdot(\sech^2x)
+}{
+\lambda\sech^3x+\sech^2x
+}
+\end{equation}
+
+This is a second-order ODE with constraint $z(x_1)=z(x_2)=0$.   Length constraint given by
+$\int z'\tanh x\,dx=0$.
+
 
 # Numerical work
 
@@ -231,16 +256,18 @@ library("deSolve")
 sech <- function(x){1/cosh(x)}
 Lorenz <- function(t, state, parameters) {
     with(as.list(c(state, parameters)), {
-        RHS <- 0.1  # could be dphi/dx + dphi/dy*(cosh(x)-sinh(x))
+        RHS <- 1  # could be dphi/dx + dphi/dy/ * exp(-x)
         dZ <- Zdash
         ss <- sech(t)^2
-        dZdash <- (-Z*ss - Zdash*(tanh(t)*(1 - 3*lambda/cosh(t)^3 - 2*ss)) + RHS ) / ( ss + lambda/cosh(t)^3)
-        list(c(dZ, dZdash))
+        dZdash <- (-Z*ss - Zdash*tanh(t)*(1 - 3*lambda/cosh(t)^3 - 2*ss) + RHS ) / ( ss + lambda/cosh(t)^3)
+        dextra_length <- Zdash*tanh(t)
+        dextra_length2 <- Z*sech(t)^2
+        list(c(dZ, dZdash, dextra_length, dextra_length2))
     })
 }
 
-parameters <- c(lambda = 0.1)
-state      <- c(Z = 0, Zdash = -1)  # initial conditions
+parameters <- c(lambda = 102.74)
+state      <- c(Z = 0, Zdash = 1, extra_length=0, extra_length2=0)  # initial conditions
 times      <- seq(-2, 2, by = 0.01)
 
 out <- ode(y = state, times = times, func = Lorenz, parms = parameters)
@@ -248,22 +275,70 @@ out <- ode(y = state, times = times, func = Lorenz, parms = parameters)
 
 ```{r showode}
 head(out)
+tail(out)
 x <- out[,1]
 y <- out[,2]
-plot(x,y)
+plot(x,y,type='l')
 grid()
 ```
 
 
 ```{r defodefunc}
-f <- function(lambdamu){
+f <- function(unknown, give=FALSE){
+    lambda        <- unknown[1]
+    Zdash_initial <- unknown[2]
     times <- seq(from = -2, to = 2, by = 1)
-    parameters <- c(lambda = lambdamu)
-    state      <- c(Z = 0, Zdash = -1)  # initial conditions
+    parameters <- c(lambda = lambda)
+    state <- c(Z = 0, Zdash = Zdash_initial, extra_length=0, extra_length2=0)  # initial conditions
     out <- ode(y = state, times = times, func = Lorenz, parms = parameters)
-    return(out)
+    final_disp <- out[5,2]
+    extra_length <- out[5,4]
+    badness <- abs(final_disp) + abs(extra_length)
+    if(give){
+        return(c(final_disp=final_disp,
+                 extra_length,
+                 badness))
+    } else {
+        return(badness)
+    } 
 }
-
-f(1)
 ```
-    
+
+```{r}
+f(c(0,0))
+f(c(0.1,0))
+f(c(0,0.1))
+```
+   
+   
+```{r}
+jj <- optim(c(0,0),f)
+jj
+
+```
+
+```{r usef}
+v <- seq(from = 0,to = 1, by = 0.1)
+M <- as.matrix(expand.grid(v,v))
+M
+f(unname(M[13,]))
+f(c(0.1,0.1))
+```
+   
+	
+```{r}
+jj$par
+parameters <- c(lambda = jj$par[1])
+state      <- c(Z = 0, Zdash = jj$par[2], extra_length=0, extra_length2=0)  # initial conditions
+times      <- seq(-2, 2, by = 0.01)
+
+out <- ode(y = state, times = times, func = Lorenz, parms = parameters)
+head(out)
+x  <- out[,1]
+z <- out[,2]
+y0 <- cosh(x)
+
+plot(x, z,type="l")
+plot(x, y0,type="l")
+points(x, y0+z,type="l",col="red")
+```
