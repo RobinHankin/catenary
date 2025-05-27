@@ -17,11 +17,76 @@ knitr::opts_chunk$set(echo = TRUE)
 \newcommand{\sech}{\operatorname{sech}}
 
 
-We wish to maximize the functional $F[y] = \lambda y+\sqrt{1+y'^2}$.
+We wish to minimize the functional $F[y] = \lambda y+\sqrt{1+y'^2}$.
 Here is the Beltrami identity:
 
 \begin{equation}
 F - y'\di{F}{y'} = C
 \end{equation}
+
+
+\begin{equation}
+\lambda y+\sqrt{1+y'^2} - \frac{y'^2}{\sqrt{1+y'^2}} = C
+\end{equation}
+
+
+\begin{equation}
+\sqrt{1+y'^2} - \frac{y'^2}{\sqrt{1+y'^2}} = C+\lambda y
+\end{equation}
+
+
+\begin{equation}
+(C+\lambda y)\sqrt{1 + y'^2} =1
+\end{equation}
+
+
+\begin{equation}
+(C+\lambda y)\sqrt{1 + y'^2} =1
+\end{equation}
+
+\begin{equation}
+y' = \sqrt{\frac{1}{(C+\lambda y)^2}-1}
+\end{equation}
+
+
+\begin{equation}
+\int\frac{dy}{\sqrt{\frac{1}{(C+\lambda y)^2}-1}} = \int dx
+\end{equation}
+
+\begin{equation}
+x + K =  \frac{(C+\lambda y)^2-1}{\lambda(C+\lambda y)\sqrt{\frac{1}{(C+\lambda y)^2}-1}}
+\end{equation}
+
+\begin{equation}
+\sqrt{1-(C+\lambda y)^2} = \lambda(x+K)
+\end{equation}
+
+\begin{equation}
+(C+\lambda y)^2+ \lambda^2(x+K)^2 =1
+\end{equation}
+
+\begin{equation}
+(y + C/\lambda)^2+ (x+K)^2 = 1/\lambda^2
+\end{equation}
+
+
+boundary conditions:  $y(a)=y(b)=0$:
+
+\begin{equation}
+C=\pm\sqrt{1-\lambda^2(a+K)^2}=\pm\sqrt{1-\lambda^2(b+K)^2}
+\end{equation}
+
+Solving for $K$ gives $(a+K)=\pm(b+K)$; the positive root gives $a=b$
+so is disallowed and we are left with $K=-(a+b)/2$.
+
+\begin{equation}
+\left(y\pm\frac{\sqrt{1-\lambda^2(b-a)^2/4}}{\lambda}\right)^2 + (x-(a-b)/2)^2 = \lambda^{-2}
+\end{equation}
+
+
+
+
+
+
 
 
