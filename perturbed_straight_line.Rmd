@@ -258,8 +258,57 @@ Substituting:
 
 
 \begin{equation}
-z' = \overline{\mathcal{I}}s(1+s^2) - s(1+s^2)f(x) =
-s(1+s^2)(\overline{\mathcal{I}}-f(x))
+z' = \overline{\mathcal{I}}s(1+s^2) - s(1+s^2)f(x) 
+\end{equation}
+
+Simplifying:
+
+\begin{equation}\label{final}
+z' = s(1+s^2)(\overline{\mathcal{I}}-f(x))
 \end{equation}
 
 
+
+
+\section{Use of the Beltrami equation}
+
+Beltrami, viz:
+
+\begin{equation}
+F-u'\di{F}{y'}=C
+\end{equation}
+
+is arguably a bit easier to apply.  For the uniform refractive index
+case we would have
+
+
+
+
+\begin{equation}
+G-y'\di{G}{y'}=z'\di{F}{y'}=C
+\end{equation}
+
+
+
+
+
+
+
+\section{Beltrami identity}
+
+
+This is
+
+\begin{equation}\label{beltrami}
+F-u'\di{F}{y'}=C
+\end{equation}
+
+and we apply the same perturbation as before, specifically
+$F\longrightarrow F+\epsilon G$.  Taking the first order terms and
+subtracting out Beltrami we get
+
+\begin{equation}\label{beltrami_epsilon}
+G-y'\di{G}{y'}-z'\di{F}{y'}=C
+\end{equation}
+
+for some (other) constant $C$.

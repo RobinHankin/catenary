@@ -60,7 +60,7 @@ z\di{F}{y} + z'\di{F}{y'} + F\right)\right] =
 \di{F}{y}
 \end{equation}
 
-As an example we will take $F=\sqrt{1+y'^2}$:
+As an example, we will take $F=\sqrt{1+y'^2}$:
 
 
 \begin{equation}
@@ -82,3 +82,63 @@ z''=0\longrightarrow z=c_1 + c_2x
 \end{equation}
 
 and the boundary conditions give $c_1=c_2=0$.
+
+
+
+\section{Beltrami identity}
+
+
+This is
+
+\begin{equation}\label{beltrami}
+F-u'\di{F}{y'}=C
+\end{equation}
+
+and we apply the same perturbation as before, specifically
+$F\longrightarrow F+\epsilon G$.  Taking the first order terms and
+subtracting out Beltrami we get
+
+\begin{equation}\label{beltrami_epsilon}
+G-y'\di{G}{y'}-z'\di{F}{y'}=C
+\end{equation}
+
+for some (other) constant $C$.  Apply $F=\sqrt{1+y'^2}$ to
+equation \ref{beltrami} gives
+
+\begin{equation}
+\sqrt{1+y'^2}-\frac{y'^2}{\sqrt{1+y'^2}}=C
+\end{equation}
+
+Simplifying:
+
+\begin{equation}
+\sqrt{1+y'^2}=1/C
+\end{equation}
+
+or 
+
+\begin{equation}\label{straightline}
+y'= K
+\end{equation}
+
+for $K$ some constant.  Now perturb it with $G=f(y)$ and substitute
+into equation \ref{beltrami_epsilon}:
+
+\begin{equation}
+f(y) - \frac{z'y'}{\sqrt{1+y'^2}}=C
+\end{equation}
+
+\begin{equation}
+f(y) - sz'=C
+\end{equation}
+
+(where $s=K/\sqrt{1+K^2}$, a constant).  Integrating
+
+\begin{equation}
+z' = \frac{f(y)-C}{s}
+\end{equation}
+
+But we know that y=y_0 + \frac{x-x_0}{y_1-y_0}
+
+
+
