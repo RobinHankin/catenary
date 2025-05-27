@@ -1,0 +1,27 @@
+---
+title: "Dido's problem"
+author: "Robin Hankin"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## How to enclose the maximum area for a given length of string
+
+\newcommand{\di}[2]{\frac{\partial{#1}}{\partial{#2}}}
+\newcommand{\cx}{\cosh{\left(\frac{x-x_0}{a}\right)}}
+\newcommand{\sx}{\sinh{\left(\frac{x-x_0}{a}\right)}}
+\newcommand{\tx}{\tanh{\left(\frac{x-x_0}{a}\right)}}
+\newcommand{\sech}{\operatorname{sech}}
+
+
+We wish to maximize the functional $F[y] = \lambda y+\sqrt{1+y'^2}$.
+Here is the Beltrami identity:
+
+\begin{equation}
+F - y'\di{F}{y'} = C
+\end{equation}
+
+
