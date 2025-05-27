@@ -278,37 +278,24 @@ Beltrami, viz:
 F-u'\di{F}{y'}=C
 \end{equation}
 
-is arguably a bit easier to apply.  For the uniform refractive index
-case we would have
-
-
-
-
-\begin{equation}
-G-y'\di{G}{y'}=z'\di{F}{y'}=C
-\end{equation}
-
-
-
-
-
-
-
-\section{Beltrami identity}
-
-
-This is
-
-\begin{equation}\label{beltrami}
-F-u'\di{F}{y'}=C
-\end{equation}
-
-and we apply the same perturbation as before, specifically
-$F\longrightarrow F+\epsilon G$.  Taking the first order terms and
-subtracting out Beltrami we get
+is arguably a bit easier to apply.  We apply the same perturbation as
+before, specifically $F\longrightarrow F+\epsilon G$.  Taking the
+first order terms and subtracting out Beltrami we get
 
 \begin{equation}\label{beltrami_epsilon}
 G-y'\di{G}{y'}-z'\di{F}{y'}=C
 \end{equation}
 
-for some (other) constant $C$.
+for some (other) constant $C$.  Now perturb it with $G=f(y)$ and
+substitute into equation \ref{beltrami_epsilon}:
+
+\begin{equation}
+f(y) - \frac{z'y'}{\sqrt{1+y'^2}}=C
+\end{equation}
+
+\begin{equation}
+f(y) - \frac{z's}{\sqrt{1+s^2}}=C
+\end{equation}
+
+
+

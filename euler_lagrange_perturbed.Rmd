@@ -102,43 +102,4 @@ subtracting out Beltrami we get
 G-y'\di{G}{y'}-z'\di{F}{y'}=C
 \end{equation}
 
-for some (other) constant $C$.  Apply $F=\sqrt{1+y'^2}$ to
-equation \ref{beltrami} gives
-
-\begin{equation}
-\sqrt{1+y'^2}-\frac{y'^2}{\sqrt{1+y'^2}}=C
-\end{equation}
-
-Simplifying:
-
-\begin{equation}
-\sqrt{1+y'^2}=1/C
-\end{equation}
-
-or 
-
-\begin{equation}\label{straightline}
-y'= K
-\end{equation}
-
-for $K$ some constant.  Now perturb it with $G=f(y)$ and substitute
-into equation \ref{beltrami_epsilon}:
-
-\begin{equation}
-f(y) - \frac{z'y'}{\sqrt{1+y'^2}}=C
-\end{equation}
-
-\begin{equation}
-f(y) - sz'=C
-\end{equation}
-
-(where $s=K/\sqrt{1+K^2}$, a constant).  Integrating
-
-\begin{equation}
-z' = \frac{f(y)-C}{s}
-\end{equation}
-
-But we know that y=y_0 + \frac{x-x_0}{y_1-y_0}
-
-
-
+for some (other) constant $C$.  
