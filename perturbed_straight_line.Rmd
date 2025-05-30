@@ -267,6 +267,53 @@ Simplifying:
 z' = s(1+s^2)(\overline{\mathcal{I}}-f(x))
 \end{equation}
 
+\section{Now a function of y}
+
+Will use $F = f(y)\sqrt{1+y'^2}$.
+
+
+\begin{equation}
+\frac{d}{dx}\di{F}{y'}=\di{F}{y}
+\end{equation}
+
+\begin{equation}\label{covstraight}
+\frac{d}{dx}\left(\frac{y'f(y)}{\sqrt{1+y'^2}}\right)
+= f'(y)\sqrt{1+y'^2}
+\end{equation}
+
+Now we need that 
+
+\begin{eqnarray*}
+\frac{d f(y)}{dx} &=& \frac{d f(y(x))}{dx}\\
+&=& \frac{f(y(x+\delta x))-f(y(x))}{\delta x}\\
+&=& \frac{f(y(x)+y'(x)\delta x))-f(y(x))}{\delta x}\\
+&=& \frac{f(y(x)) + y'(x)\delta xf'(y(x))-f(y(x))}{\delta x}\\
+&=& y'(x)f'(y(x))
+\end{eqnarray*}
+
+
+Thus 
+\begin{equation}
+\frac{d}{dx}\left(\frac{y'f(y)}{\sqrt{1+y'^2}}\right)=
+\frac{f'(y)}{(1+y'^2)^{3/2}} + \frac{y'^2f''(y)}{\sqrt{1+y'^2}}
+\end{equation}
+
+
+Equation~\ref{covstraight} becomes
+
+\begin{equation}
+\frac{f(y)}{(1+y'^2)^{3/2}} + \frac{y'^2f'(y)}{\sqrt{1+y'^2}} = 
+f'(y)\sqrt{1+y'^2}
+\end{equation}
+
+\begin{equation}
+\frac{f'(y)}{(1+y'^2)} + y'^2f''(y) = f'(y)(1+y'^2)
+\end{equation}
+
+
+\begin{equation}
+f''(y) = f'(y)\left((1+y'^2)-\frac{1}{1+y'^2}\right)y'^{-2}
+\end{equation}
 
 
 

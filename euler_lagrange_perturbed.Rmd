@@ -95,11 +95,86 @@ F-u'\di{F}{y'}=C
 \end{equation}
 
 and we apply the same perturbation as before, specifically
-$F\longrightarrow F+\epsilon G$.  Taking the first order terms and
-subtracting out Beltrami we get
+$F\longrightarrow F+\epsilon G$.
 
-\begin{equation}\label{beltrami_epsilon}
-G-y'\di{G}{y'}-z'\di{F}{y'}=C
+\begin{equation}
+F+\epsilon G - 
+(y'+\epsilon z')\di{}{y'}(F(x,y+\epsilon z+\epsilon z') + \epsilon G(x,y,y')) = C
 \end{equation}
 
-for some (other) constant $C$.  
+
+\begin{equation}
+F+\epsilon G - 
+(y'+\epsilon z')\di{}{y'}(F(x,y+\epsilon z,y'+\epsilon z') + \epsilon G(x,y,y')) = C
+\end{equation}
+
+\begin{equation}
+F+\epsilon G - 
+(y'+\epsilon z')\di{}{y'}\left(F(x,y,y')
++ \epsilon z \di{F}{y }
++ \epsilon z'\di{F}{y'} 
++ \epsilon G\right) = C
+\end{equation}
+
+\begin{equation}
+F+\epsilon G - 
+(y'+\epsilon z')\left(\di{F}{y'}
++ \epsilon z \frac{\partial^2F}{\partial y\partial y'}
++ \epsilon z'\frac{\partial^2F}{\partial y'\partial y'}
++ \epsilon\di{G}{y'}\right) = C
+\end{equation}
+
+Expanding and dropping terms of order $\epsilon^2$:
+
+
+\begin{equation}
+F+\epsilon G - 
+y'\left(
+  \di{F}{y'}
++ \epsilon z \frac{\partial^2F}{\partial y\partial y'}
++ \epsilon z'\frac{\partial^2F}{\partial y'\partial y'}
++ \epsilon\di{G}{y'}
+\right) +
+\epsilon z'\di{F}{y'}
+= C
+\end{equation}
+
+
+Now subtract the original Beltrami identity and consider terms of
+order $\epsilon^1$:
+
+\begin{equation}
+ G - 
+y'\left(
+  z \frac{\partial^2F}{\partial y\partial y'}
++ z'\frac{\partial^2F}{\partial y'\partial y'}
++ \di{G}{y'}
+\right) +
+z'\di{F}{y'}
+= C
+\end{equation}
+
+[where $C$ might be different].  Rearranging:
+
+
+\begin{equation}
+ G - 
+y'\frac{\partial}{\partial y'}\left(
+  z \di{F}{y }
++ z'\di{F}{y'}
++ G  - z'F
+\right) 
+= C
+\end{equation}
+
+
+\begin{equation}
+ G - y'\di{G}{y'} - 
+y'\frac{\partial}{\partial y'}\left(
+  z \di{F}{y }
++ z'\di{F}{y'}
+- z'F
+\right) 
+= C
+\end{equation}
+
