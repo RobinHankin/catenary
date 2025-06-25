@@ -16,6 +16,81 @@ knitr::opts_chunk$set(echo = TRUE)
 \newcommand{\tx}{\tanh{\left(\frac{x-x_0}{a}\right)}}
 \newcommand{\sech}{\operatorname{sech}}
 
+
+# First, the full equation
+
+\begin{equation}
+\frac{d}{dx}\di{F}{y'} -\di{F}{y}=0\qquad F=f(x,y)\sqrt{1+y'^2}
+\end{equation}
+
+\begin{equation}
+\frac{d}{dx}\left[\frac{y'f(x,y)}{\sqrt{1+y'^2}}\right] = 
+\sqrt{1+y'^2}\,f_y(x,y)
+\end{equation}
+
+
+Noting that $\frac{d}{dx}f(x,y)=f_x(x,y) + y'f_y(x,y)$ we have
+
+\begin{equation}
+\frac{y''\,f(x,y)}{(1+y'^2)^{3/2}}+
+\frac{y'(f_x(x,y)+y'f_y(x,y))}{\sqrt{1+y'^2}} =
+\sqrt{1+y'^2}\,f_y(x,y)
+\end{equation}
+
+where we understand that $f_y=f_y(x,y)$ etc.
+
+\begin{equation}
+y'' + y'(1+y'^2)\frac{f_x(x,y)+y'f_y(x,y)}{f(x,y)} = 
+\sqrt{1+y'^2}\,f_y(x,y)
+\end{equation}
+
+\begin{equation}
+y'' = \frac{f_y-y'f_x}{f}(1+y'^2)
+\end{equation}
+
+This equation seems to be not at all easy to solve.  Starting with
+$f=f(x,y)=a+bx+cy$ ($a,b,c$ constant) we would have
+
+\begin{equation}
+y'' = \frac{c-y'b}{a+bx+cy}(1+y'^2)
+\end{equation}
+
+which seems to be extraordinarily difficult to solve.  I guess there
+is a trivial solution if $y'=c/b$ [viz $y''=0$]
+
+
+
+# Numerical work
+
+
+```{r odesolver}
+library("deSolve") 
+Lorenz <- function(t, state, parameters) {
+    with(as.list(c(state, parameters)), {
+        dZ <- Zdash
+        dZdash <- (C - Zdash*B)/(A + B*t + C*Z) * (1+ Zdash^2)
+
+        return(list(c(dZ, dZdash)))
+    })
+}
+
+parameters <- c(A=1, B=0.1, C=0.1)
+state      <- c(Z = 0, Zdash = -1)  # initial conditions
+times      <- seq(-2, 54, by = 0.1)
+
+out <- ode(y = state, times = times, func = Lorenz, parms = parameters)
+```
+
+```{r showode}
+plot(out[,1:2], type='l', asp=1)
+for(i in -30:10){abline(i,-1,lwd=0.1)}
+
+```
+
+
+# Further work:  full E-L but with a small change in refractive index
+
+
 We start with the Euler-Lagrange equation
 
 \begin{equation}
@@ -81,7 +156,7 @@ So
 \begin{equation}
 y'=\left\{\begin{array}{lr}
 \frac{K}{\sqrt{1-K^2}}, & x<0\\
-\frac{K}{\sqrt{(1+\epsilon H(x))^2-K^2}}, & x\geqslant 0
+\frac{K}{\sqrt{(1+\epsilon)^2-K^2}}, & x\geqslant 0
 \end{array}
 \right.
 \end{equation}
@@ -132,8 +207,56 @@ y'=\frac{K}{\sqrt{(1+\epsilon)^2-K^2}}=1-\epsilon
 \end{equation}
 
 
+# Perturbed Euler-Lagrange
+
 OK but look how much easier it is using the perturbed EL:
 
+\begin{equation}
+\frac{d}{dx}\left[\di{}{y'}\left(
+z\di{F}{y} + z'\di{F}{y'} + G\right)\right] =
+\di{G}{y}
+\end{equation}
+ 
+Now we have $F=\sqrt{1+y'^2}$ and $G=\phi\sqrt{1+y'^2}$ where
+$\phi=\phi(x,y)$ is the perturbation in refractive index.
+
+\begin{equation}
+\frac{d}{dx}\left[\di{}{y'}\left(0+
+\frac{z'y'}{\sqrt{1+y'^2}} + \phi\sqrt{1+y'^2}\right)\right] =
+\phi_y\sqrt{1+y'^2}
+\end{equation}
+
+
+\begin{equation}
+\frac{d}{dx}\left[
+\frac{z'}{(1+y'^2)^{3/2}} + \frac{\phi y'}{\sqrt{1+y'^2}}\right]
+= \phi_y\sqrt{1+y'^2}
+\end{equation}
+
+
+Now formally write $y'=s$, just to emphasise that it is in fact a
+constant:
+
+\begin{equation}
+\frac{d}{dx}\left[
+\frac{z'}{(1+s^2)^{3/2}} + \frac{\phi s}{\sqrt{1+s^2}}\right]
+= \phi_y\sqrt{1+s^2}
+\end{equation}
+
+\begin{equation}
+\frac{d}{dx}\left[z' + s\phi(1+s^2) \right]
+= \phi_y(1+s^2)^2
+\end{equation}
+
+At this point we remind ourselves that $\frac{d\phi}{dx}=\phi_x + s\phi_y$:
+
+\begin{equation}
+z'' + s\phi(1+s^2)(\phi_x + s\phi_y) = \phi_y(1+s^2)^2
+\end{equation}
+
+
+
+# Pertrubed Euler-Lagrange but with $1+\epsilon H(x)$
 
 \begin{equation}
 \frac{d}{dx}\left[\di{}{y'}\left(
@@ -294,25 +417,87 @@ Now we need that
 
 Thus 
 \begin{equation}
-\frac{d}{dx}\left(\frac{y'f(y)}{\sqrt{1+y'^2}}\right)=
-\frac{f'(y)}{(1+y'^2)^{3/2}} + \frac{y'^2f''(y)}{\sqrt{1+y'^2}}
+\frac{d}{dx}\left(\frac{y'f(y)}{\sqrt{1+y'^2}}\right) =
+\frac{y''f(y)}{(1+y'^2)^{3/2}} + \frac{y'^2f'(y)}{\sqrt{1+y'^2}}
 \end{equation}
 
 
 Equation~\ref{covstraight} becomes
 
 \begin{equation}
-\frac{f(y)}{(1+y'^2)^{3/2}} + \frac{y'^2f'(y)}{\sqrt{1+y'^2}} = 
+\frac{y''f(y)}{(1+y'^2)^{3/2}} + \frac{y'^2f'(y)}{\sqrt{1+y'^2}} =
 f'(y)\sqrt{1+y'^2}
 \end{equation}
 
 \begin{equation}
-\frac{f'(y)}{(1+y'^2)} + y'^2f''(y) = f'(y)(1+y'^2)
+y''f(y) + y'^2(1+y'^2)f'(y) = f'(y)(1+y'^2)^2
+\end{equation}
+
+\begin{equation}
+y'' = \frac{f'(y)}{f(y)}(1+y'^2) = d\log(f(y))/dy(1+y'^2)
+\end{equation}
+
+
+We an take, as an example, $d\log(f(y))/dy$ to be a constant $K$:
+
+\begin{equation}
+y'' = K(1+y'^2)
+\end{equation}
+
+
+
+Use the linearization:
+
+\begin{equation}
+\frac{d}{dx}\left[\di{}{y'}\left(
+z\di{F}{y} + z'\di{F}{y'} + G\right)\right] =
+\di{G}{y}
+\end{equation}
+
+
+Here $F=\sqrt{1+y'^2}$ and $G=f(y)\sqrt{1+y'^2}$ so we have 
+
+
+\begin{equation}
+\frac{d}{dx}\left[\di{}{y'}\left(
+z'\di{\sqrt{1+y'^2}}{y'} + f(y)\sqrt{1+y'^2}\right)\right] =
+\di{f(y)\sqrt{1+y'^2}}{y}
 \end{equation}
 
 
 \begin{equation}
-f''(y) = f'(y)\left((1+y'^2)-\frac{1}{1+y'^2}\right)y'^{-2}
+\frac{d}{dx}
+\left[
+\frac{y'z'}{\sqrt{1+y'^2}} + \frac{y'f(y)}{\sqrt{1+y'^2}}
+\right]
+=
+f'(y)\sqrt{1+y'^2}
+\end{equation}
+
+\begin{equation}
+\frac{d}{dx}
+\left[
+\frac{y'(z'+f'(y))}{\sqrt{1+y'^2}}
+\right]
+=
+f'(y)\sqrt{1+y'^2}
+\end{equation}
+
+writing $s=y'$ for the slope of the unperturbed line
+
+\begin{equation}
+\frac{d}{dx}
+\left[
+(z'+f'(y))\frac{s}{\sqrt{1+s^2}}
+\right]
+=
+f'(y)\sqrt{1+s^2}
+\end{equation}
+
+\begin{equation}
+z''+sf''(y)
+=
+f'(y)\frac{1+s^2}{s}
 \end{equation}
 
 
