@@ -244,19 +244,96 @@ constant:
 \end{equation}
 
 \begin{equation}
-\frac{d}{dx}\left[z' + s\phi(1+s^2) \right]
-= \phi_y(1+s^2)^2
+\frac{d}{dx}\left[z' + s\phi(1+s^2) \right] = \phi_y(1+s^2)^2
 \end{equation}
 
 At this point we remind ourselves that $\frac{d\phi}{dx}=\phi_x + s\phi_y$:
 
 \begin{equation}
-z'' + s\phi(1+s^2)(\phi_x + s\phi_y) = \phi_y(1+s^2)^2
+z'' + s(1+s^2)(\phi_x + s\phi_y) = \phi_y(1+s^2)^2
+\end{equation}
+
+Simplifying:
+
+
+\begin{equation}
+z'' = (1+s^2)(\phi_y - s\phi_x)
 \end{equation}
 
 
+## Example
 
-# Pertrubed Euler-Lagrange but with $1+\epsilon H(x)$
+Suppose $\phi=ax+by$.  Then we have
+
+\begin{equation}
+z'' = (1+s^2)(a-sb)
+\end{equation}
+
+With solution $z=A + Bx + (1+s^2)(a-sb)/2x^2$ where $A$ and $B$ are
+constants of integration.
+
+
+Now we take $s=0$ and $\phi=ay^2/2$:
+
+\begin{equation}
+z''(x) = ay = az
+\end{equation}
+
+[above there is a bit of a terminological knot.  We are kind of
+identifying $z$ with $y$ but I'm sort of using $y$ in two distinct and
+incompatible ways in different parts of the analysis]
+
+
+
+### Full E-L equations for 
+
+OK now we use the Full EL equations, starting from Beltrami:
+
+\begin{equation}
+F -y'\di{F}{y'}=C,\qquad F=f(y)\sqrt{1+y'^2}
+\end{equation}
+
+\begin{equation}
+f(y)\sqrt{1+y'^2} - \frac{f(y)y'^2}{\sqrt{1+y'^2}} = C
+\end{equation}
+
+\begin{equation}
+f(y)(1+y'^2) - f(y)y'^2 = C\sqrt{1+y'^2}
+\end{equation}
+
+\begin{equation}
+f(y) = C\sqrt{1+y'^2}
+\end{equation}
+
+\begin{equation}
+k^2f(y)^2 = 1+y'^2
+\end{equation}
+
+\begin{equation}
+y'=\sqrt{k^2f(y)^2-1}
+\end{equation}
+
+\begin{equation}
+\int dx=\int\frac{dy}{\sqrt{k^2f(y)^2-1}}
+\end{equation}
+
+This integral is difficult for any non-trivial $f(\cdot)$.  For
+example, if $f(y)=1+ay^2$, mathematica gives
+
+\begin{equation}
+-\frac{i \sqrt{\frac{a k y^2}{k-1}+1} \sqrt{\frac{a k
+   y^2}{k+1}+1} F\left(i \sinh ^{-1}\left(\sqrt{\frac{a k}{k+1}}
+   y\right)|\frac{k+1}{k-1}\right)}{\sqrt{\frac{a k}{k+1}}
+   \sqrt{\left(a k y^2+k\right)^2-1}}
+\end{equation}
+
+where $F=F(\phi\vert m)$ is the elliptic integral of the first kind;
+this is a bit of a nightmare to work with (note that the expression is
+complex).  Note that we have $x$ in terms of $y$.
+
+Anyway
+
+# Perturbed Euler-Lagrange but with $1+\epsilon H(x)$
 
 \begin{equation}
 \frac{d}{dx}\left[\di{}{y'}\left(
