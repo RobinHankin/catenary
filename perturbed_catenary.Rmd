@@ -305,26 +305,35 @@ f <- function(unknown, give=FALSE){
 ```
 
 ```{r}
-f(c(0,0))
-f(c(0.1,0))
-f(c(0,0.1))
+f(c(5000,-0.035))
+f(c(5000,-0.030))
+f(c(5000,-0.025))
+f(c(5000,-0.020))
+f(c(5000,-0.015))
 ```
    
    
-```{r}
+```{r cache=TRUE}
 jj <- optim(c(0,0),f)
 jj
 
 ```
 
-```{r usef}
-v <- seq(from = 0,to = 1, by = 0.1)
-M <- as.matrix(expand.grid(v,v))
-M
-f(unname(M[13,]))
-f(c(0.1,0.1))
+```{r usef,cache=TRUE}
+v1 <- seq(from = 2000, to = 4000, by = 100)
+v2 <- seq(from =  -2, to =  2, by = 0.5)
+M <- as.matrix(expand.grid(v1,v2))
+head(M)
+bad <- sapply(seq_len(nrow(M)),function(i){f(unname(M[i,]))})
 ```
-   
+
+```{r contbad}
+contour(v1,v2,matrix(pmin(10,bad),length(v1),length(v2)),nlevels=40)
+filled.contour(v1,v2,matrix(pmin(10,bad),length(v1),length(v2)))
+```
+
+next chunk
+
 	
 ```{r}
 jj$par
