@@ -222,9 +222,8 @@ Rearranging:
 \begin{equation*}
 z''\cdot(\lambda\sech^3x+\sech^2x) +
 z'\cdot\tanh x(1 - 3\lambda\sech^3x- 2\sech^2 x) +
-z\cdot(\sech^2x)
+(z+\phi)\cdot(\sech^2x)
 =
--\phi\sech^2x
 -\phi_x 
 +\phi_y(\cosh x-\sinh x\tanh x)
 \nonumber
@@ -235,16 +234,34 @@ or
 \begin{equation}
 z'' = 
 \frac{
-    -\phi\sech^2 x
     -\phi_x  +\phi_y(\cosh x-\sinh x\tanh x)
-    - z'\cdot\tanh x(1 - 3\lambda\sech^3x- 2\sech^2 x) - z\cdot(\sech^2x)
+    - (z+\phi)\cdot(\sech^2x)
+    - z'\cdot\tanh x(1 - 3\lambda\sech^3x- 2\sech^2 x) 
 }{
     \lambda\sech^3x+\sech^2x
 }
 \end{equation}
 
-This is a second-order ODE with constraint $z(x_1)=z(x_2)=0$.   Length constraint given by
-$\int z'\tanh x\,dx=0$.
+This is a second-order ODE with constraint $z(x_1)=z(x_2)=0$.  Note
+that if we take the limit $\lambda\longrightarrow\infty$ we get
+
+\begin{equation}
+z'' = -3z'\tanh x,\qquad z(0)=0
+\end{equation}
+
+which has solution 
+
+\begin{equation}
+C(\arctan(\sinh x)  - \arctan(\sinh a) 
++ \sech(x)\tanh(x) - \sech(a)\tanh(a))
+\end{equation}
+
+
+So of course, if $\lambda=\infty$ we can simultaneously satisfy the
+length constraint and also $z(x_1)=z(x_2)=0$ by taking $C=0$.  The
+question is, can we find another (non-infinite) value of $\lambda$ and
+$z'(x_1)$ that satisfies the length constraint and also
+$z(x_1)=z(x_2)=0$ for $C\neq 0$?
 
 
 # Numerical work
@@ -257,8 +274,18 @@ Lorenz <- function(t, state, parameters) {
     with(as.list(c(state, parameters)), {
         dZ <- Zdash
         ss <- sech(t)^2
-        RHS <- -t*ss -1
-        dZdash <- (-Z*ss - Zdash*tanh(t)*(1 - 3*lambda/cosh(t)^3 - 2*ss) + RHS ) / ( ss + lambda/cosh(t)^3)
+
+        phi <- t
+        phi_y  <- 0
+        phi_x <- 1
+        numerator <- (
+            -phi_x + phi_y*(cosh(t) - sinh(t)*tanh(t))
+            -(Z + phi)*ss
+            -Zdash * tanh(t) * (1-3*lambda/cosh(t)^3 - 2*ss)
+        )
+
+        denominator <-  ss + lambda/cosh(t)^3
+        dZdash <- numerator/denominator
         dextra_length <- Zdash*tanh(t)
         dextra_length2 <- Z*sech(t)^2
         list(c(dZ, dZdash, dextra_length, dextra_length2))
@@ -351,3 +378,79 @@ plot(x, z,type="l")
 plot(x, y0,type="l")
 points(x, y0+z,type="l",col="red")
 ```
+
+
+
+# Exact solutions
+
+Try to solve the exact EL equation in a potential of $y+ax$
+[notionally $|a|\ll 1$]
+
+
+\begin{equation}
+F=(y+ax+\lambda)\sqrt{1+y'^2}
+\end{equation}
+
+\begin{equation}
+\frac{d}{dx}\di{F}{y'}=\di{F}{y}
+\end{equation}
+
+
+\begin{equation}
+\frac{d}{dx}\left[\frac{(y+ax+\lambda)y'}{\sqrt{1+y'^2}}\right]=\sqrt{1+y'^2}
+\end{equation}
+
+\begin{equation}
+\frac{(y'+a)y'}{\sqrt{1+y'^2}} + 
+\frac{y''(y+ax+\lambda)}{(1+y'^2)^{3/2}}=\sqrt{1+y'^2}
+\end{equation}
+
+\begin{equation}
+(y'^2+ay')(1+y^2) + y''(y+ax+\lambda) = (1+y'^2)^2
+\end{equation}
+
+\begin{equation}
+y''(y+ax+\lambda) = (1+y'^2)(1-ay'^2)
+\end{equation}
+
+\begin{equation}
+y'' = \frac{(1+y'^2)(1-ay'^2)}{y+ax+\lambda}
+\end{equation}
+
+*** NUMERICAL WORK***
+
+Here we consider an inextensible string in a potential
+$\phi(x,y)=ax+y$.  So $a=0$ is vertical gravitational field.
+
+```{r}
+cat <- function(t, state, parameters) {
+    with(as.list(c(state, parameters)), {
+        dZ <- Zdash
+        numerator <- (1+Zdash^2) * (1-a*Zdash^2)
+        denominator <-  Z + a*t + lambda
+        dZdash <- numerator/denominator
+        list(c(dZ, dZdash))
+    })
+}
+
+parameters <- c(lambda = 1.5, a = 0.2)
+state      <- c(Z = 0, Zdash = -1)  # initial conditions
+times      <- seq(-2, 1, by = 0.01)
+
+out <- ode(y = state, times = times, func = cat, parms = parameters)
+```
+
+```{r showex}
+head(out)
+tail(out)
+x <- out[,1]
+y <- out[,2]
+plot(x,y,asp=1,type='l')
+grid()
+abline(5.0,1/0.2,lwd=0.2)
+abline(5.2,1/0.2,lwd=0.1)
+abline(0.0,-0.2,lwd=0.2)
+abline(0.2,-0.2,lwd=0.1)
+```
+
+
