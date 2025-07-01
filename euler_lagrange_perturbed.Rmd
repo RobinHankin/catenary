@@ -1,5 +1,5 @@
 ---
-title: "Perturbing the Euler-Lagrange equations for calculus of variations: a first-order analysis"
+-title: "Perturbing the Euler-Lagrange equations for calculus of variations: a first-order analysis"
 author: "Robin Hankin"
 output: pdf_document
 ---
@@ -9,7 +9,13 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+
+
 \newcommand{\di}[2]{\frac{\partial{#1}}{\partial{#2}}}
+\newcommand{\cx}{\cosh{\left(\frac{x-x_0}{a}\right)}}
+\newcommand{\sx}{\sinh{\left(\frac{x-x_0}{a}\right)}}
+\newcommand{\tx}{\tanh{\left(\frac{x-x_0}{a}\right)}}
+\newcommand{\sech}{\operatorname{sech}}
 
 Consider a perturbation:
 
@@ -20,7 +26,7 @@ F  &\longrightarrow&  F + \epsilon G(x,y,y')
 \end{eqnarray}
 
 
-\begin{equation} 
+\begin{equation}
 \frac{d}{dx}\di{F}{y'}=\di{F}{y}\longrightarrow
 \frac{d}{dx}\left[\di{}{y'}\left(F(x,y+\epsilon z,y'+\epsilon z')+\epsilon G(x,y+\epsilon z,y'+\epsilon z')\right)\right] =
 \di{}{y}\left[F+\epsilon G(x,y+\epsilon z,y'+\epsilon z')\right]
@@ -51,130 +57,6 @@ z\di{F}{y} + z'\di{F}{y'} + G\right)\right] =
 \di{G}{y}
 \end{equation}
 
-(above we have to remember that $G=G(x,y,y')$). 
-As a consistency check, we set $G=F$:
+(above we have to remember that $G=G(x,y,y')$).
 
-\begin{equation}\label{ELeq}
-\frac{d}{dx}\left[\di{}{y'}\left(
-z\di{F}{y} + z'\di{F}{y'} + F\right)\right] =
-\di{F}{y}
-\end{equation}
-
-As an example, we will take $F=\sqrt{1+y'^2}$:
-
-
-\begin{equation}
-\frac{d}{dx}\left[\di{}{y'}\left(
-\frac{z'y'}{\sqrt{1+y'^2}} + \sqrt{1+y'^2}\right)\right] =
-0
-\end{equation}
-
-\begin{equation}
-\frac{d}{dx}\left[
-\frac{z'}{\sqrt{1+y'^2}^{3/2}} + \frac{y'}{1+y'^2}\right] =
-0
-\end{equation}
-
-Now note that $y'$ is a constant, say $s$ for slope, giving 
-
-\begin{equation}
-z''=0\longrightarrow z=c_1 + c_2x
-\end{equation}
-
-and the boundary conditions give $c_1=c_2=0$.
-
-
-
-\section{Beltrami identity}
-
-
-This is
-
-\begin{equation}\label{beltrami}
-F-u'\di{F}{y'}=C
-\end{equation}
-
-and we apply the same perturbation as before, specifically
-$F\longrightarrow F+\epsilon G$.
-
-\begin{equation}
-F+\epsilon G - 
-(y'+\epsilon z')\di{}{y'}(F(x,y+\epsilon z+\epsilon z') + \epsilon G(x,y,y')) = C
-\end{equation}
-
-
-\begin{equation}
-F+\epsilon G - 
-(y'+\epsilon z')\di{}{y'}(F(x,y+\epsilon z,y'+\epsilon z') + \epsilon G(x,y,y')) = C
-\end{equation}
-
-\begin{equation}
-F+\epsilon G - 
-(y'+\epsilon z')\di{}{y'}\left(F(x,y,y')
-+ \epsilon z \di{F}{y }
-+ \epsilon z'\di{F}{y'} 
-+ \epsilon G\right) = C
-\end{equation}
-
-\begin{equation}
-F+\epsilon G - 
-(y'+\epsilon z')\left(\di{F}{y'}
-+ \epsilon z \frac{\partial^2F}{\partial y\partial y'}
-+ \epsilon z'\frac{\partial^2F}{\partial y'\partial y'}
-+ \epsilon\di{G}{y'}\right) = C
-\end{equation}
-
-Expanding and dropping terms of order $\epsilon^2$:
-
-
-\begin{equation}
-F+\epsilon G - 
-y'\left(
-  \di{F}{y'}
-+ \epsilon z \frac{\partial^2F}{\partial y\partial y'}
-+ \epsilon z'\frac{\partial^2F}{\partial y'\partial y'}
-+ \epsilon\di{G}{y'}
-\right) +
-\epsilon z'\di{F}{y'}
-= C
-\end{equation}
-
-
-Now subtract the original Beltrami identity and consider terms of
-order $\epsilon^1$:
-
-\begin{equation}
- G - 
-y'\left(
-  z \frac{\partial^2F}{\partial y\partial y'}
-+ z'\frac{\partial^2F}{\partial y'\partial y'}
-+ \di{G}{y'}
-\right) +
-z'\di{F}{y'}
-= C
-\end{equation}
-
-[where $C$ might be different].  Rearranging:
-
-
-\begin{equation}
- G - 
-y'\frac{\partial}{\partial y'}\left(
-  z \di{F}{y }
-+ z'\di{F}{y'}
-+ G  - z'F
-\right) 
-= C
-\end{equation}
-
-
-\begin{equation}
- G - y'\di{G}{y'} - 
-y'\frac{\partial}{\partial y'}\left(
-  z \di{F}{y }
-+ z'\di{F}{y'}
-- z'F
-\right) 
-= C
-\end{equation}
 
