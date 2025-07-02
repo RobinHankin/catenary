@@ -269,9 +269,8 @@ Suppose $\phi=ax+by$.  Then we have
 z'' = (1+s^2)(a-sb)
 \end{equation}
 
-With solution $z=A + Bx + (1+s^2)(a-sb)/2x^2$ where $A$ and $B$ are
-constants of integration.
-
+This has solution $z=A + Bx + \frac{1}{2}(1+s^2)(a-sb)x^2$ where $A$
+and $B$ are constants of integration.
 
 Now we take $s=0$ and $\phi=ay^2/2$:
 
