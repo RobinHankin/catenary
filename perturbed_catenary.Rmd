@@ -246,7 +246,7 @@ This is a second-order ODE with constraint $z(x_1)=z(x_2)=0$.  Note
 that if we take the limit $\lambda\longrightarrow\infty$ we get
 
 \begin{equation}
-z'' = -3z'\tanh x,\qquad z(0)=0
+z'' = -3z'\tanh x,\qquad z(a)=0
 \end{equation}
 
 which has solution 
@@ -257,9 +257,10 @@ C(\arctan(\sinh x)  - \arctan(\sinh a)
 \end{equation}
 
 
-So of course, if $\lambda=\infty$ we can simultaneously satisfy the
-length constraint and also $z(x_1)=z(x_2)=0$ by taking $C=0$.  The
-question is, can we find another (non-infinite) value of $\lambda$ and
+and if $a=0$ we have $C(\arctan(\sinh x) + \sech(x)\tanh(x))$.  We
+note that if $\lambda=\infty$ we can simultaneously satisfy the length
+constraint and also $z(x_1)=z(x_2)=0$ by taking $C=0$.  The question
+is, can we find another (non-infinite) value of $\lambda$ and
 $z'(x_1)$ that satisfies the length constraint and also
 $z(x_1)=z(x_2)=0$ for $C\neq 0$?
 
@@ -347,8 +348,8 @@ jj
 ```
 
 ```{r usef,cache=TRUE}
-v1 <- seq(from = 9, to = 11, by = 0.1)
-v2 <- seq(from = 0.1, to = 0.3, by = 0.05)
+v1 <- seq(from = 5, to = 10, by = 0.1)
+v2 <- seq(from = -0.1, to = 0.3, by = 0.05)
 M <- as.matrix(expand.grid(v1,v2))
 head(M)
 bad <- sapply(seq_len(nrow(M)),function(i){f(unname(M[i,]))})
