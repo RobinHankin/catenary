@@ -1,4 +1,9 @@
 ---
+output:
+  pdf_document: default
+  html_document: default
+---
+<---
 title: "Perturbing the catenary: a first-order analysis"
 author: "Robin Hankin"
 output: pdf_document
@@ -160,7 +165,7 @@ Thus
 z\tanh x + z'\frac{\cosh x+\lambda}{\cosh^3x}
 + \phi(x,y)\frac{y'}{\sqrt{1+y'^2}}
 + \mu z'(x)\frac{1}{(1+y'^2)^{3/2}}
-\right] &=& \di{\phi}{y}\sqrt{1+y'^2}\\
+\right] &=& \di{\phi}{y}\sqrt{1+y'^2}\nonumber\\
 \frac{d}{dx}\left[
 z\tanh x + z'\frac{\cosh x+\lambda}{\cosh^3 x}
 + \phi(x,y)\tanh x
@@ -276,7 +281,7 @@ Lorenz <- function(t, state, parameters) {
         dZ <- Zdash
         ss <- sech(t)^2
 
-        phi <- t
+        phi <- t+33
         phi_y  <- 0
         phi_x <- 1
         numerator <- (
@@ -288,7 +293,7 @@ Lorenz <- function(t, state, parameters) {
         denominator <-  ss + lambda/cosh(t)^3
         dZdash <- numerator/denominator
         dextra_length <- Zdash*tanh(t)
-        dextra_length2 <- Z*sech(t)^2
+        dextra_length2 <- -Z*sech(t)^2
         list(c(dZ, dZdash, dextra_length, dextra_length2))
     })
 }
@@ -323,9 +328,7 @@ f <- function(unknown, give=FALSE){
     extra_length <- out[5,4]
     badness <- final_disp^2 + extra_length^2
     if(give){
-        return(c(final_disp=final_disp,
-                 extra_length,
-                 badness))
+        return(out)
     } else {
         return(badness)
     } 
@@ -348,8 +351,8 @@ jj
 ```
 
 ```{r usef,cache=TRUE}
-v1 <- seq(from = 5, to = 10, by = 0.1)
-v2 <- seq(from = -0.1, to = 0.3, by = 0.05)
+v1 <- seq(from = 1, to = 2, by = 0.1)
+v2 <- seq(from = -0.3, to = 0.3, by = 0.05)
 M <- as.matrix(expand.grid(v1,v2))
 head(M)
 bad <- sapply(seq_len(nrow(M)),function(i){f(unname(M[i,]))})
@@ -371,15 +374,15 @@ times      <- seq(-2, 2, by = 0.01)
 
 out <- ode(y = state, times = times, func = Lorenz, parms = parameters)
 head(out)
+tail(out)
 x  <- out[,1]
 z <- out[,2]
 y0 <- cosh(x)
 
 plot(x, z,type="l")
 plot(x, y0,type="l")
-points(x, y0+z,type="l",col="red")
+points(x, y0+z/100,type="l",col="red")
 ```
-
 
 
 # Exact solutions

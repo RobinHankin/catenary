@@ -214,47 +214,40 @@ OK but look how much easier it is using the perturbed EL:
 \begin{equation}
 \frac{d}{dx}\left[\di{}{y'}\left(
 z\di{F}{y} + z'\di{F}{y'} + G\right)\right] =
-\di{G}{y}
+\di{}{y}\left(z\di{F}{y} + z'\di{F}{y'} + G\right)
 \end{equation}
  
 Now we have $F=\sqrt{1+y'^2}$ and $G=\phi\sqrt{1+y'^2}$ where
 $\phi=\phi(x,y)$ is the perturbation in refractive index.
 
+We observe that
+
 \begin{equation}
-\frac{d}{dx}\left[\di{}{y'}\left(0+
-\frac{z'y'}{\sqrt{1+y'^2}} + \phi\sqrt{1+y'^2}\right)\right] =
+z\di{F}{y} + z'\di{F}{y'} + G = \frac{z'y'}{\sqrt{1+y'^2}} + \phi\sqrt{1+y'^2}
+\end{equation}
+
+So we have 
+
+
+\begin{equation}
+\frac{d}{dx}\left[
+\frac{z'}{(1+y'^2)^{3/2}} + \frac{\phi y'}{\sqrt{1+y'^2}}
+\right] =
 \phi_y\sqrt{1+y'^2}
 \end{equation}
 
+At this point we remind ourselves that $y'$ is a constant (and we
+write $s$ for slope); and also $\frac{d\phi}{dx}=\phi_x + s\phi_y$:
+
+
 
 \begin{equation}
-\frac{d}{dx}\left[
-\frac{z'}{(1+y'^2)^{3/2}} + \frac{\phi y'}{\sqrt{1+y'^2}}\right]
-= \phi_y\sqrt{1+y'^2}
-\end{equation}
-
-
-Now formally write $y'=s$, just to emphasise that it is in fact a
-constant:
-
-\begin{equation}
-\frac{d}{dx}\left[
-\frac{z'}{(1+s^2)^{3/2}} + \frac{\phi s}{\sqrt{1+s^2}}\right]
-= \phi_y\sqrt{1+s^2}
-\end{equation}
-
-\begin{equation}
-\frac{d}{dx}\left[z' + s\phi(1+s^2) \right] = \phi_y(1+s^2)^2
-\end{equation}
-
-At this point we remind ourselves that $\frac{d\phi}{dx}=\phi_x + s\phi_y$:
-
-\begin{equation}
-z'' + s(1+s^2)(\phi_x + s\phi_y) = \phi_y(1+s^2)^2
+\frac{z''}{(1+s^2)^{3/2}}+\frac{y'(\phi_x + s\phi_y)}{\sqrt{1+s^2}}
+=
+\phi_y\sqrt{1+s^2}
 \end{equation}
 
 Simplifying:
-
 
 \begin{equation}
 z'' = (1+s^2)(\phi_y - s\phi_x)
@@ -263,26 +256,14 @@ z'' = (1+s^2)(\phi_y - s\phi_x)
 
 ## Example
 
-Suppose $\phi=ax+by$.  Then we have
+Suppose $\phi=ax+by$.  Then we have $\phi_x=a$ and $\phi_y=b$.
 
 \begin{equation}
-z'' = (1+s^2)(a-sb)
+z'' = (1+s^2)(b-sa)
 \end{equation}
 
-This has solution $z=A + Bx + \frac{1}{2}(1+s^2)(a-sb)x^2$ where $A$
+This has solution $z=A + Bx + \frac{1}{2}(1+s^2)(b-sa)x^2$ where $A$
 and $B$ are constants of integration.
-
-Now we take $s=0$ and $\phi=ay^2/2$:
-
-\begin{equation}
-z''(x) = ay = az
-\end{equation}
-
-[above there is a bit of a terminological knot.  We are kind of
-identifying $z$ with $y$ but I'm sort of using $y$ in two distinct and
-incompatible ways in different parts of the analysis]
-
-
 
 ### Full E-L equations for 
 
