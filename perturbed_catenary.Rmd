@@ -244,8 +244,8 @@ Lorenz <- function(t, state, parameters) {
     })
 }
 
-parameters <- c(lambda = 102.74)
-state      <- c(Z = 0, Zdash = 1, extra_length=0, extra_length2=0)  # initial conditions
+parameters <- c(lambda = 1)
+state      <- c(Z = 0, Zdash = 0, extra_length=0, extra_length2=0)  # initial conditions
 times      <- seq(-2, 2, by = 0.01)
 
 out <- ode(y = state, times = times, func = Lorenz, parms = parameters)
