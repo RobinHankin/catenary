@@ -1,9 +1,4 @@
 ---
-output:
-  pdf_document: default
-  html_document: default
----
-<---
 title: "Perturbing the catenary: a first-order analysis"
 author: "Robin Hankin"
 output: pdf_document
@@ -80,7 +75,7 @@ The first-order corrective term for EL is:
 \begin{equation}\label{EL1}
 \frac{d}{dx}\left[\di{}{y'}\left(
 z\di{F}{y} + z'\di{F}{y'} + G\right)\right] =
-\di{G}{y}
+\di{}{y}\left(z\di{F}{y} + z'\di{F}{y'} + G\right)
 \end{equation}
 
 
@@ -133,141 +128,92 @@ G = \phi(x,y)\sqrt{1+y'^2} + \mu z'(x)\frac{y'}{\sqrt{1+y'^2}}
 where $\mu$ is an undetermined multiplier.  For convenience here is
 equation \ref{EL1}:
 
-\begin{equation}\nonumber
+\begin{equation}
 \frac{d}{dx}\left[\di{}{y'}\left(
 z\di{F}{y} + z'\di{F}{y'} + G\right)\right] =
-\di{G}{y}
-\end{equation}
-
-\begin{eqnarray}
-\frac{d}{dx}\left[\di{}{y'}\left(
-z\di{F}{y} + z'\di{F}{y'}
-+ \underbrace{\phi(x,y)\sqrt{1+y'^2} + \mu z'(x)\frac{y'}{\sqrt{1+y'^2}}}_{G(x,y,y')}
-\right)\right] &=& \di{\phi}{y}\sqrt{1+y'^2}
-\end{eqnarray}
-
-(above we have substituted for $G$).  But now we know that
-$F=\sqrt{1+y'^2}(y+\lambda)$ so we now have
-
-\begin{eqnarray}
-\di{F}{y} &=&\sqrt{1+y'^2}=\cosh x\\
-\di{F}{y'} &=&
-\frac{y'(y+\lambda)}{\sqrt{1+y'^2}}=\tanh x\left(\cosh x+\lambda\right)\\
-\frac{\partial^2F}{\partial y\partial y'} &=& \frac{y'}{\sqrt{1+y'^2}}=\tanh x\\
-\frac{\partial^2F}{\partial y'\partial y'} &=&
-\frac{y+\lambda}{(1+y'^2)^{3/2}} = \frac{\cosh x + \lambda}{\cosh^3 x}
-\end{eqnarray}
-
-Thus
-
-\begin{eqnarray}
-\frac{d}{dx}\left[
-z\tanh x + z'\frac{\cosh x+\lambda}{\cosh^3x}
-+ \phi(x,y)\frac{y'}{\sqrt{1+y'^2}}
-+ \mu z'(x)\frac{1}{(1+y'^2)^{3/2}}
-\right] &=& \di{\phi}{y}\sqrt{1+y'^2}\nonumber\\
-\frac{d}{dx}\left[
-z\tanh x + z'\frac{\cosh x+\lambda}{\cosh^3 x}
-+ \phi(x,y)\tanh x
-+ \frac{\mu z'(x)}{\cosh^3 x}
-\right] &=& \di{\phi}{y}\cosh x\nonumber\\
-\frac{d}{dx}\left[
-z\tanh x + z'(\lambda+\mu)\sech^3x
-+z'\sech^2x
-+ \phi(x,y)\tanh x
-\right] &=& \di{\phi}{y}\cosh x\nonumber
-\end{eqnarray}
-
-\begin{equation}
-\frac{d}{dx}\left[
-z\tanh x + z'(\lambda+\mu)\sech^3(x)
-+z'\sech^2x
-+ \phi(x,\cosh(x))\tanh(x)
-\right] = \di{\phi}{y}\cosh(x)
-\end{equation}
-
-Now just write $\lambda$ for $\lambda+\mu$:
-
-\begin{equation}
-\frac{d}{dx}\left[
-z\tanh x + z'\lambda\sech^3(x) + z'\sech^2x + \phi(x,\cosh(x))\tanh(x)
-\right] 
-=
-\di{\phi}{y}\cosh(x)
+\di{}{y}\left(z\di{F}{y} + z'\di{F}{y'} + G\right)\nonumber
 \end{equation}
 
 
-\begin{eqnarray}
-z'\tanh x + z\sech^2x\nonumber\\
-+z''\lambda\sech^3x - z'\cdot 3\lambda\sech^3x\tanh x\nonumber\\
-+z''\sech^2x - 2z'\cdot\sech^2x\tanh x\nonumber\\
-+(\phi_x + \phi_y\sinh x)\tanh x + \phi\sech^2 x 
-&=&
-\phi_y\cosh x
-\end{eqnarray}
-
-(above we understand that $\phi=\phi(x,y)=\phi(x,\cosh x)$, and have
-used $\frac{d}{dx}\phi(x,\cosh(x))= \phi_x+\phi_y\sinh(x)$).
-Collecting terms:
-
-\begin{eqnarray}
-z'' \cdot  (\lambda\sech^3x+\sech^2x)&  \nonumber\\
-+z' \cdot  (\tanh x - 3\lambda\sech^3x\tanh x - 2\sech^2 x\tanh x)&  \nonumber\\
-+ z \cdot  (\sech^2x)  &= \nonumber\\
-          -\phi\sech^2x
-          -  \phi_x\tanh x
-          +  \phi_y(\cosh x-\sinh x\tanh x)
-\end{eqnarray}
-
-Where we understand that $\phi=\phi(x,y)=\phi(x,\cosh x)$,
-$\phi_x=\partial\phi(x,y)/\partial x$ and
-$\phi_y=\partial\phi(x,y)/\partial y$, all evaluated at $(x,\cosh x)$.
-Rearranging:
-
-\begin{equation*}
-z''\cdot(\lambda\sech^3x+\sech^2x) +
-z'\cdot\tanh x(1 - 3\lambda\sech^3x- 2\sech^2 x) +
-(z+\phi)\cdot(\sech^2x)
-=
--\phi_x 
-+\phi_y(\cosh x-\sinh x\tanh x)
-\nonumber
-\end{equation*}
-
-or
-
 \begin{equation}
-z'' = 
-\frac{
-    -\phi_x  +\phi_y(\cosh x-\sinh x\tanh x)
-    - (z+\phi)\cdot(\sech^2x)
-    - z'\cdot\tanh x(1 - 3\lambda\sech^3x- 2\sech^2 x) 
+\frac{d}{dx}\di{H}{y'}=\di{H}{y},\qquad
+H=z\di{F}{y} + z'\di{F}{y'} + G
+\end{equation}
+
+We find that 
+
+\begin{eqnarray}
+H=z\di{F}{y} + z'\di{F}{y'} + G &=&
+z\underbrace{\sqrt{1+y'^2}}_{\partial F/\partial y} + 
+z'\underbrace{\frac{y'(y+\lambda)}{\sqrt{1+y'^2}}}_{\partial F/\partial y'} + 
+\underbrace{\phi(x,y)\sqrt{1+y'^2} +\frac{\mu z'y'}{\sqrt{1+y'^2}}}_{G}\\
+&=& (z+\phi(x,y))\sqrt{1+y'^2}  + \frac{z'y'(y+\lambda+\mu)}{\sqrt{1+y'^2}}
+\end{eqnarray}
+
+So (writing $\lambda$ for $\lambda+\mu$):
+
+
+\begin{eqnarray}
+\frac{d}{dx}\di{H}{y'} &=& \di{H}{y}\nonumber\\
+\frac{d}{dx}
+\left[
+  \frac{z'(y+\lambda)}{(1+y'^2)^{3/2}} +
+ \frac{y'(z+\phi(x,y))}{\sqrt{1+y'^2}}
+\right]
+&=& 
+\phi_y(x,y)\sqrt{1+y'^2} + \frac{z'y'}{\sqrt{1+y'^2}}
+\end{eqnarray}
+
+Now we remind ourselves that $y=y_0+\cx$ and $y'=\sx$, so
+$\sqrt{1+y'^2}=\cx$ and set $x_0=y_0=0$, $a=1$, so $y=\cosh x$ and
+$y'=\sinh x$:
+
+\begin{eqnarray}
+\frac{d}{dx}
+\left[
+\frac{z'(\lambda+\cosh x)}{\cosh^3 x} +
+(z+\phi(x,y))\tanh x
+\right] &=&
+\phi_y(x,y)\cosh x + z\tanh x
+\end{eqnarray}
+
+
+\begin{eqnarray}
+\frac{d}{dx}
+\left[
+z'(\lambda\sech^3 x +\sech^2 x) + 
+(z+\phi(x,y))\tanh x
+\right] &=&
+\phi_y(x,y)\cosh x + z\tanh x
+\end{eqnarray}
+
+\begin{eqnarray}
+\frac{d}{dx}
+\left[
+z'(\lambda\sech^3 x +\sech^2 x) + 
+\phi(x,y)\tanh x
+\right] &=&
+\phi_y(x,y)\cosh x
+\end{eqnarray}
+
+\begin{eqnarray}
+&\hphantom{+}&z''(\lambda\sech^3 x +\sech^2 x)\\
+&-&  z'(3\lambda\sech^3x\tanh x + 2\sech^2\tanh x)\\
+&+& (\phi_x + \phi_y\sinh x)\tanh x + \textcolor{red}{\phi\sech^2 x} \\
+&{}& =\phi_y\cosh x
+\end{eqnarray}
+
+
+\begin{eqnarray}
+z'' =
+	\frac{
+        \phi_y\cosh x
+    +   z'(3\lambda\sech^3x\tanh x + 2\sech^2\tanh x) 
+	-   ((\phi_x + \phi_y\sinh x)\tanh x + \textcolor{red}{\phi\sech^2 x}) 
 }{
-    \lambda\sech^3x+\sech^2x
+        \lambda\sech^3 x +\sech^2 x
 }
-\end{equation}
-
-This is a second-order ODE with constraint $z(x_1)=z(x_2)=0$.  Note
-that if we take the limit $\lambda\longrightarrow\infty$ we get
-
-\begin{equation}
-z'' = -3z'\tanh x,\qquad z(a)=0
-\end{equation}
-
-which has solution 
-
-\begin{equation}
-C(\arctan(\sinh x)  - \arctan(\sinh a) 
-+ \sech(x)\tanh(x) - \sech(a)\tanh(a))
-\end{equation}
-
-
-and if $a=0$ we have $C(\arctan(\sinh x) + \sech(x)\tanh(x))$.  We
-note that if $\lambda=\infty$ we can simultaneously satisfy the length
-constraint and also $z(x_1)=z(x_2)=0$ by taking $C=0$.  The question
-is, can we find another (non-infinite) value of $\lambda$ and
-$z'(x_1)$ that satisfies the length constraint and also
-$z(x_1)=z(x_2)=0$ for $C\neq 0$?
+\end{eqnarray}
 
 
 # Numerical work
@@ -281,13 +227,13 @@ Lorenz <- function(t, state, parameters) {
         dZ <- Zdash
         ss <- sech(t)^2
 
-        phi <- t+33
+        phi <- t
         phi_y  <- 0
         phi_x <- 1
         numerator <- (
-            -phi_x + phi_y*(cosh(t) - sinh(t)*tanh(t))
-            -(Z + phi)*ss
-            -Zdash * tanh(t) * (1-3*lambda/cosh(t)^3 - 2*ss)
+            phi_y * cosh(t)
+            +Zdash * tanh(t) * ss * (3*lambda/cosh(t) + 2)
+            -(  (phi_x + phi_y*sinh(t))*tanh(t) + phi/cosh(t)^2)
         )
 
         denominator <-  ss + lambda/cosh(t)^3
@@ -336,11 +282,8 @@ f <- function(unknown, give=FALSE){
 ```
 
 ```{r}
-f(c(5,-0.035))
-f(c(5,-0.030))
-f(c(5,-0.025))
-f(c(5,-0.020))
-f(c(5,-0.015))
+f(c(2, 1.0))
+f(c(2, 1.1))
 ```
    
    
@@ -350,16 +293,16 @@ jj
 
 ```
 
-```{r usef,cache=TRUE}
-v1 <- seq(from = 1, to = 2, by = 0.1)
-v2 <- seq(from = -0.3, to = 0.3, by = 0.05)
+```{r usef, cache=TRUE}
+v1 <- seq(from = 2, to = 5, by = 0.01)
+v2 <- seq(from = -5, to = -2, by = 0.01)
 M <- as.matrix(expand.grid(v1,v2))
 head(M)
 bad <- sapply(seq_len(nrow(M)),function(i){f(unname(M[i,]))})
 ```
 
 ```{r contbad}
-contour(v1,v2,matrix(bad,length(v1),length(v2)),nlevels=40)
+contour(v1, v2, matrix(pmin(0.1,bad),length(v1),length(v2)),nlevels=10)
 filled.contour(v1,v2,matrix(bad,length(v1),length(v2)))
 ```
 
@@ -381,8 +324,37 @@ y0 <- cosh(x)
 
 plot(x, z,type="l")
 plot(x, y0,type="l")
-points(x, y0+z/100,type="l",col="red")
+points(x, y0+z/10,type="l",col="red")
 ```
+
+
+OK we have two points that are not the same but both satisfy the
+boundary conditions and indeed the length constraint.
+n
+
+
+```{r}
+p1 <- c(4,-3.409)
+p2 <- c(3,-3.999)
+```
+
+```{r}
+show <- function(p){
+    parameters <- c(lambda = p[1])
+state      <- c(Z = 0, Zdash = p[2], extra_length=0, extra_length2=0)  # initial conditions
+times      <- seq(-2, 2, by = 0.01)
+ode(y = state, times = times, func = Lorenz, parms = parameters)
+}
+
+
+jj1 <- show(p1)
+jj2 <- show(p2)
+
+plot(times,jj2[,2])
+points(times,jj1[,2])
+
+```
+
 
 
 # Exact solutions
