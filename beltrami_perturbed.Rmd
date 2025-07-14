@@ -42,7 +42,7 @@ F  &\longrightarrow&  F + \epsilon G(x,y,y')
 
 \begin{eqnarray}
 F-y'\di{F}{y'}=C\longrightarrow\\
-F(x,y+\epsilon z,y'+\epsilon z')+\epsilon G(x,y+\epsilon z,y'+\epsilon z'-
+F(x,y+\epsilon z,y'+\epsilon z')+\epsilon G(x,y+\epsilon z,y'+\epsilon z')-
 (y'+\epsilon z')\di{}{y'}\left[F(x,y+\epsilon z,y'+\epsilon z')
 +\epsilon G(x,y+\epsilon z,y'+\epsilon z')\right]\\
 F(x,y+\epsilon z,y'+\epsilon z')+\epsilon G(x,y,y') -
@@ -104,8 +104,8 @@ So we have
 \begin{eqnarray}
 H-y'\di{H}{y'}-z'\di{F}{y'}\\
 \underbrace{z\sqrt{1+y'^2} + \frac{z'y'(y + \lambda)}{\sqrt{1+y'^2}}+ \phi\sqrt{1+y'^2}}_{H}
-- \frac{y'^2(z+\phi)}{\sqrt{1+y'^2}} - \frac{y'z'(y+\lambda)}{(1+y'^2)^{3/2}}
-- \frac{z'y'(y+\lambda)}{\sqrt{1+y'^2}}\\
+- \underbrace{\left(\frac{y'^2(z+\phi)}{\sqrt{1+y'^2}} + \frac{y'z'(y+\lambda)}{(1+y'^2)^{3/2}}\right)}_{y'\di{H}{y'}}
+- \underbrace{\frac{z'y'(y+\lambda)}{\sqrt{1+y'^2}}}_{z'\di{F}{y'}}\\
 z\sqrt{1+y'^2} + \phi\sqrt{1+y'^2}
 - \frac{y'^2(z+\phi)}{\sqrt{1+y'^2}} - \frac{y'z'(y+\lambda)}{(1+y'^2)^{3/2}}\\
 (z+\phi)\sqrt{1+y'^2} 
