@@ -1,0 +1,215 @@
+---
+title: "Perturbing the Beltrami equations: a first-order analysis"
+author: "Robin Hankin"
+output: pdf_document
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+\newcommand{\di}[2]{\frac{\partial{#1}}{\partial{#2}}}
+\newcommand{\cx}{\cosh{\left(\frac{x-x_0}{a}\right)}}
+\newcommand{\sx}{\sinh{\left(\frac{x-x_0}{a}\right)}}
+\newcommand{\tx}{\tanh{\left(\frac{x-x_0}{a}\right)}}
+\newcommand{\sech}{\operatorname{sech}}
+
+
+Start with the Euler-Lagrange equations:
+
+\begin{equation}
+\frac{d}{dx}\left[\di{F}{y'}\right]=\di{F}{y}
+\end{equation}
+
+If $F$ is independent of $x$ we have the Beltrami equation:
+
+\begin{equation}
+F-y'\di{F}{y'}=C
+\end{equation}
+
+
+and consider a perturbation:
+
+\begin{eqnarray}
+y  &\longrightarrow&  y(x) + \epsilon z(x)\\
+y' &\longrightarrow&  y'(x) + \epsilon z'(x)\\
+F  &\longrightarrow&  F + \epsilon G(x,y,y')
+\end{eqnarray}
+
+
+\begin{eqnarray}
+F-y'\di{F}{y'}=C\longrightarrow\\
+F(x,y+\epsilon z,y'+\epsilon z')+\epsilon G(x,y+\epsilon z,y'+\epsilon z'-
+(y'+\epsilon z')\di{}{y'}\left[F(x,y+\epsilon z,y'+\epsilon z')
++\epsilon G(x,y+\epsilon z,y'+\epsilon z')\right]\\
+F(x,y+\epsilon z,y'+\epsilon z')+\epsilon G(x,y,y') -
+(y'+\epsilon z')\di{}{y'}\left[F(x,y+\epsilon z,y'+\epsilon z')
++\epsilon G(x,y,y')\right]\\
+F + \epsilon z\di{F}{y} + \epsilon z'\di{F}{y'}
++\epsilon G-
+(y'+\epsilon z')\di{}{y'}\left[
+F + \epsilon z\di{F}{y} + \epsilon z'\di{F}{y'}
++\epsilon G
+\right]\\
+F + \epsilon z\di{F}{y} + \epsilon z'\di{F}{y'}
++\epsilon G-
+y'\di{}{y'}\left[
+F + \epsilon z\di{F}{y} + \epsilon z'\di{F}{y'}
++\epsilon G
+\right] -
+\epsilon z'\di{F}{y'}\\
+\epsilon z\di{F}{y} + \epsilon z'\di{F}{y'}
++\epsilon G -
+y'\di{}{y'}\left[
+\epsilon z\di{F}{y} + \epsilon z'\di{F}{y'}
++\epsilon G
+\right] -
+\epsilon z'\di{F}{y'}\\
+z\di{F}{y} + z'\di{F}{y'}
++ G -
+y'\di{}{y'}\left[
+z\di{F}{y} + z'\di{F}{y'}
++  G
+\right] -
+z'\di{F}{y'}
+\end{eqnarray}
+
+
+(above, each line is equal to a constant).
+
+Writing $H= z\di{F}{y} + z'\di{F}{y'}+ G$ we have
+
+\begin{equation}
+H-y'\di{H}{y'}-z'\di{F}{y'}=C\end{equation}
+
+might make the catenary easier, but only if $\phi(x,y)$ is independent
+of $x$.  Here we have $F=(y+\lambda)\sqrt{1+y'^2}$ and
+$G=\phi(y)\sqrt{1+y'^2}$ so
+
+\begin{eqnarray}
+H &=& z\di{F}{y} + z'\di{F}{y'}+ G\\
+&=& z\sqrt{1+y'^2} + \frac{z'y'(y + \lambda)}{\sqrt{1+y'^2}} + \phi(y)\sqrt{1+y'^2}
+\end{eqnarray}
+
+So we have
+
+\begin{eqnarray}
+\di{H}{y'} &=& \frac{zy'}{\sqrt{1+y'^2}} + \frac{z'(y+\lambda)}{(1+y'^2)^{3/2}} + \frac{y'\phi(y)}{\sqrt{1+y'^2}}\\
+&=& \frac{y'(z+\phi(y))}{\sqrt{1+y'^2}} + \frac{z'(y+\lambda)}{(1+y'^2)^{3/2}}
+\end{eqnarray}
+
+\begin{eqnarray}
+H-y'\di{H}{y'}-z'\di{F}{y'}\\
+\underbrace{z\sqrt{1+y'^2} + \frac{z'y'(y + \lambda)}{\sqrt{1+y'^2}}+ \phi\sqrt{1+y'^2}}_{H}
+- \frac{y'^2(z+\phi)}{\sqrt{1+y'^2}} - \frac{y'z'(y+\lambda)}{(1+y'^2)^{3/2}}
+- \frac{z'y'(y+\lambda)}{\sqrt{1+y'^2}}\\
+z\sqrt{1+y'^2} + \phi\sqrt{1+y'^2}
+- \frac{y'^2(z+\phi)}{\sqrt{1+y'^2}} - \frac{y'z'(y+\lambda)}{(1+y'^2)^{3/2}}\\
+(z+\phi)\sqrt{1+y'^2} 
+- \frac{y'^2(z+\phi)}{\sqrt{1+y'^2}} - \frac{y'z'(y+\lambda)}{(1+y'^2)^{3/2}}\\
+(z+\phi)\left(\sqrt{1+y'^2}  - \frac{y'^2}{\sqrt{1+y'^2}}\right) - \frac{y'z'(y+\lambda)}{(1+y'^2)^{3/2}}\\
+\frac{z+\phi}{\sqrt{1+y'^2}} - \frac{y'z'(y+\lambda)}{(1+y'^2)^{3/2}}
+\end{eqnarray}
+
+The above are all equal to a constant $C$. So
+
+
+\begin{eqnarray}
+z+\phi - \frac{y'z'(y+\lambda)}{1+y'^2} = C\sqrt{1+y'^2}
+\end{eqnarray}
+
+and at this point we can substitute for $y=\cosh x$ and $y'=\sinh x$:
+
+\begin{eqnarray}
+z+\phi - \frac{z'\sinh x(\cosh x+\lambda)}{\cosh^2x} = C\cosh x\\
+z+\phi - C\cosh x =
+\frac{z'\sinh x(\cosh x+\lambda)}{\cosh^2x}\\
+z'= \frac{(z+\phi - C\cosh x)\cosh^2x}{\sinh x(\cosh x+\lambda)}
+\end{eqnarray}
+
+
+The problem is that if $x=0$, $\sinh x=0$ so $z'$ becomes infinite???
+
+## Numerical work
+
+
+```{r useode}
+library("deSolve") 
+Lorenz <- function(t, state, parameters) {
+    with(as.list(c(state, parameters)), {
+
+        phi <- cosh(t)^2  # y^2
+
+        numerator <- (Z + phi - C*cosh(t)) * cosh(t)^2
+        denominator <- sinh(t) * (cosh(t) + lambda)
+
+        dZ  <- numerator/denominator
+        dextra_length <- -Z/cosh(t)^2
+        list(c(dZ, dextra_length))
+    })
+}
+
+parameters <- c(lambda = 3, C=0.5)
+state      <- c(Z = 0, extra_length=0)  # initial conditions
+times      <- seq(-2, 2, by = 0.01)
+
+out <- ode(y = state, times = times, func = Lorenz, parms = parameters)
+```
+
+```{r showode}
+head(out)
+tail(out)
+x <- out[,1]
+y <- out[,2]
+```
+
+
+```{r badnessdef}
+badness <- function(unk, give=FALSE, byval=1){
+   unk <- unname(unk)
+   parameters <- c(lambda = unk[1], C=unk[2])
+   state <- c(Z = 0, extra_length=0)  # initial conditions
+   times      <- seq(-2, 2, by = byval)
+
+   out <- ode(y = state, times = times, func = Lorenz, parms = parameters)
+   Z_bad <- out[5,2]
+   L_bad <- out[5,3]
+   if(give){return(out)}
+   return(Z_bad^2 + L_bad^2)
+}
+
+badness(c(1,2), give=TRUE)
+badness(c(1,2), give=FALSE)
+```
+
+```{r, findbad, cache=TRUE}
+  lambda <- seq(from=0, to=7, by=0.1)
+  C      <- seq(from=-1, to=1, by=0.1)
+
+jj <- as.matrix(expand.grid(lambda,C))
+bad <- apply(jj,1,badness)
+```
+
+```{r}
+bad <- matrix(bad, length(lambda), length(C))
+contour(lambda, C, bad)
+filled.contour(lambda, C, bad)
+matplot(bad)
+```
+
+
+```{r, optimbad, cache=TRUE}
+optim(c(5,0),badness)
+```
+
+
+
+
+```{r}
+out <- badness(c(5.87,-0.73),give=TRUE,byval=0.01)
+head(out)
+plot(out[,1],out[,2],type='b')
+```
