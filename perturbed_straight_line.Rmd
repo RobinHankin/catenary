@@ -373,6 +373,17 @@ z'=1-2H(x)=\left\{\begin{array}{lr}1&x<0\\ -1&x\geqslant 0\end{array}\right.
 \end{equation}
 
 
+*Try the homogeneous version, $G=0$*
+
+\begin{equation}
+\frac{d}{dx}\left[\di{}{y'}\left(
+z\di{F}{y} + z'\di{F}{y'} \right)\right] = 0
+\end{equation}
+
+\begin{equation}
+\frac{d}{dx}\frac{z'y'}{\sqrt{1+y'^2}}=0\longrightarrow z'=K$
+\end{equation}
+
 # Now something a little harder
 
 A slight generalization:  We 
