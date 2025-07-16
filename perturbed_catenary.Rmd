@@ -353,8 +353,32 @@ jj2 <- show(p2)
 plot(times,jj2[,2])
 points(times,jj1[,2])
 
+
+plot(times,jj1[,2]/jj2[,2])
 ```
 
+
+```{r}
+jj3 <- show(c(0, -8.7563))
+plot(times,jj3[,2])
+```
+
+```{r}
+parameters <- c(lambda = 0)
+state      <- c(Z = 0, Zdash = -8.7563, extra_length=0, extra_length2=0)  # initial conditions
+times      <- seq(-2, 2, by = 0.01)
+
+out <- ode(y = state, times = times, func = Lorenz, parms = parameters)
+head(out)
+tail(out)
+x  <- out[,1]
+z <- out[,2]
+y0 <- cosh(x)
+
+plot(x, z,type="l")
+plot(x, y0,type="l")
+points(x, y0+z/5,type="l",col="red")
+```
 
 
 # Exact solutions
@@ -393,7 +417,7 @@ y''(y+ax+\lambda) = (1+y'^2)(1-ay'^2)
 y'' = \frac{(1+y'^2)(1-ay'^2)}{y+ax+\lambda}
 \end{equation}
 
-*** NUMERICAL WORK***
+# Exact solutions (numerical work)
 
 Here we consider an inextensible string in a potential
 $\phi(x,y)=ax+y$.  So $a=0$ is vertical gravitational field.
