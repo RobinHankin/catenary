@@ -17,19 +17,20 @@ knitr::opts_chunk$set(echo = TRUE)
 \newcommand{\tx}{\tanh{\left(\frac{x-x_0}{a}\right)}}
 \newcommand{\sech}{\operatorname{sech}}
 
-Consider a perturbation:
+Consider a functional $F=F(x,y,y';\lambda)$ and a perturbation:
 
 \begin{eqnarray}
 y  &\longrightarrow&  y(x) + \epsilon z(x)\\
 y' &\longrightarrow&  y'(x) + \epsilon z'(x)\\
+\lambda &\longrightarrow&  \lambda + \epsilon\\
 F  &\longrightarrow&  F + \epsilon G(x,y,y')
 \end{eqnarray}
 
 
 \begin{eqnarray}
-\frac{d}{dx}\di{F}{y'}=\di{F}{y}\longrightarrow\\
-\frac{d}{dx}\left[\di{}{y'}\left(F(x,y+\epsilon z,y'+\epsilon z')+\epsilon G(x,y+\epsilon z,y'+\epsilon z')\right)\right] =
-\di{}{y}\left[F(x,y+\epsilon z,y'+\epsilon z')
+\frac{d}{dx}\di{F}{y'}=\di{F}{y}\nonumber\longrightarrow\\
+\frac{d}{dx}\left[\di{}{y'}\left(F(x,y+\epsilon z,y'+\epsilon z';\lambda+\epsilon)+\epsilon G(x,y+\epsilon z,y'+\epsilon z')\right)\right] =\\
+\di{}{y}\left[F(x,y+\epsilon z,y'+\epsilon z';\lambda+\epsilon)
 +\epsilon G(x,y+\epsilon z,y'+\epsilon z')\right]
 \end{eqnarray}
 
@@ -38,35 +39,33 @@ $y,y',z,z'$ are functions of $x$.  Now neglect terms of order
 $\epsilon^2$ and above, and continue to neglect them:
 
 \begin{equation}
-\frac{d}{dx}\left[\di{}{y'}\left(F(x,y+\epsilon z,y'+\epsilon z')+\epsilon G(x,y,y')\right)\right] =
-\di{}{y}\left[F(x,y+\epsilon z,y'+\epsilon z')+\epsilon G(x,y,y')\right]
+\frac{d}{dx}\left[\di{}{y'}\left(F(x,y+\epsilon z,y'+\epsilon z';\lambda+\epsilon)+\epsilon G(x,y,y')\right)\right] =
+\di{}{y}\left[F(x,y+\epsilon z,y'+\epsilon z';\lambda+\epsilon)+\epsilon G(x,y,y')\right]
 \end{equation}
 
 \begin{equation}
 \frac{d}{dx}\left[\di{}{y'}\left(
-F(x,y,y') + \epsilon z\di{F}{y}+ \epsilon z'\di{F}{y'}
+F(x,y,y') + \epsilon z\di{F}{y} + \epsilon z'\di{F}{y'} + \epsilon\di{F}{\lambda}
 +\epsilon G(x,y,y')\right)\right] =
 \di{}{y}\left[
-F(x,y+\epsilon z,y'+\epsilon z') + \epsilon G(x,y,y')\right]
+F(x,y+\epsilon z,y'+\epsilon z',\lambda+\epsilon) + \epsilon G(x,y,y')\right]
 \end{equation}
 
 \begin{equation}
 \frac{d}{dx}\left[\di{}{y'}\left(
-F(x,y,y') + \epsilon z\di{F}{y} + \epsilon z'\di{F}{y'}
+F(x,y,y') + \epsilon z\di{F}{y} + \epsilon z'\di{F}{y'} + \epsilon\di{F}{\lambda}
 +\epsilon G(x,y,y')\right)\right] =
 \di{}{y}\left[
-F(x,y,y') + \epsilon z\di{F}{y} + \epsilon z'\di{F}{y'} + \epsilon G(x,y,y')\right]
+F(x,y,y') + \epsilon z\di{F}{y} + \epsilon z'\di{F}{y'} + \epsilon\di{F}{\lambda} + \epsilon G(x,y,y')\right]
 \end{equation}
-
-
 
 The $\epsilon^0$ term is just the Euler-Lagrange equation, which is
 known to be true.  The first order term is:
 
 \begin{equation}\label{EL1}
 \frac{d}{dx}\left[\di{}{y'}\left(
-z\di{F}{y} + z'\di{F}{y'} + G\right)\right] =
-\di{}{y}\left(z\di{F}{y} + z'\di{F}{y'} + G\right)
+z\di{F}{y} + z'\di{F}{y'} +\di{F}{\lambda} + G\right)\right] =
+\di{}{y}\left(z\di{F}{y} + z'\di{F}{y'} + \di{F}{\lambda} + G\right)
 \end{equation}
 
 (above we have to remember that $G=G(x,y,y')$).
