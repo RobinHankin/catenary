@@ -125,8 +125,9 @@ So the appropriate constraint on G would be
 G = \phi(x,y)\sqrt{1+y'^2} + \mu z'(x)\frac{y'}{\sqrt{1+y'^2}}
 \end{equation}
 
-where $\mu$ is an undetermined multiplier.  For convenience here is
-equation \ref{EL1}:
+where $\mu$ is an undetermined multiplier.  BUT THIS IS WRONG.  G is
+not being optimized (actually $F+\epsilon G$ is being optimized).  For
+convenience here is equation \ref{EL1}:
 
 \begin{equation}
 \frac{d}{dx}\left[\di{}{y'}\left(
@@ -143,22 +144,21 @@ H=z\di{F}{y} + z'\di{F}{y'} + G
 We find that 
 
 \begin{eqnarray}
-H=z\di{F}{y} + z'\di{F}{y'} + G &=&
-z\underbrace{\sqrt{1+y'^2}}_{\partial F/\partial y} + 
-z'\underbrace{\frac{y'(y+\lambda)}{\sqrt{1+y'^2}}}_{\partial F/\partial y'} + 
-\underbrace{\phi(x,y)\sqrt{1+y'^2} +\frac{\mu z'y'}{\sqrt{1+y'^2}}}_{G}\\
-&=& (z+\phi(x,y))\sqrt{1+y'^2}  + \frac{z'y'(y+\lambda+\mu)}{\sqrt{1+y'^2}}
+H &=& z\di{F}{y} + z'\di{F}{y'} + G \nonumber\\
+  &=& z\underbrace{\sqrt{1+y'^2}}_{\partial F/\partial y} + 
+      z'\underbrace{\frac{y'(y+\lambda)}{\sqrt{1+y'^2}}}_{\partial F/\partial y'} + 
+      \underbrace{\phi(x,y)\sqrt{1+y'^2} + \frac{\mu y'z'}{\sqrt{1+y'^2}}}_{G}\nonumber\\
+  &=& (z+\phi(x,y))\sqrt{1+y'^2}  + \frac{z'y'(y+\lambda+\mu)}{\sqrt{1+y'^2}}
 \end{eqnarray}
 
-So (writing $\lambda$ for $\lambda+\mu$):
-
+Thus
 
 \begin{eqnarray}
 \frac{d}{dx}\di{H}{y'} &=& \di{H}{y}\nonumber\\
 \frac{d}{dx}
 \left[
-  \frac{z'(y+\lambda)}{(1+y'^2)^{3/2}} +
- \frac{y'(z+\phi(x,y))}{\sqrt{1+y'^2}}
+ \frac{y'(z+\phi(x,y))}{\sqrt{1+y'^2}} +
+  \frac{z'(y+\lambda+\mu)}{(1+y'^2)^{3/2}} 
 \right]
 &=& 
 \phi_y(x,y)\sqrt{1+y'^2} + \frac{z'y'}{\sqrt{1+y'^2}}
@@ -171,10 +171,10 @@ $y'=\sinh x$:
 \begin{eqnarray}
 \frac{d}{dx}
 \left[
-\frac{z'(\lambda+\cosh x)}{\cosh^3 x} +
+\frac{z'(\lambda+\mu+\cosh x)}{\cosh^3 x} +
 (z+\phi(x,y))\tanh x
 \right] &=&
-\phi_y(x,y)\cosh x + z\tanh x
+\phi_y(x,y)\cosh x + z'\tanh x
 \end{eqnarray}
 
 
@@ -184,36 +184,48 @@ $y'=\sinh x$:
 z'(\lambda\sech^3 x +\sech^2 x) + 
 (z+\phi(x,y))\tanh x
 \right] &=&
-\phi_y(x,y)\cosh x + z\tanh x
-\end{eqnarray}
-
-\begin{eqnarray}
-\frac{d}{dx}
-\left[
-z'(\lambda\sech^3 x +\sech^2 x) + 
-\phi(x,y)\tanh x
-\right] &=&
-\phi_y(x,y)\cosh x
-\end{eqnarray}
-
-\begin{eqnarray}
-&\hphantom{+}&z''(\lambda\sech^3 x +\sech^2 x)\\
-&-&  z'(3\lambda\sech^3x\tanh x + 2\sech^2\tanh x)\\
-&+& (\phi_x + \phi_y\sinh x)\tanh x + \textcolor{red}{\phi\sech^2 x} \\
-&{}& =\phi_y\cosh x
+\phi_y(x,y)\cosh x + z'\tanh x
 \end{eqnarray}
 
 
 \begin{eqnarray}
-z'' =
-	\frac{
-        \phi_y\cosh x
-    +   z'(3\lambda\sech^3x\tanh x + 2\sech^2\tanh x) 
-	-   ((\phi_x + \phi_y\sinh x)\tanh x + \textcolor{red}{\phi\sech^2 x}) 
+LHS &=&    z''(\lambda\sech^3 x +\sech^2 x) - z'(3\lambda\sech^3x\tanh x + 2\sech^2\tanh x)\nonumber\\
+    &{}& +(z'+\phi_x + \phi_y\sinh x)\tanh x + (z+\phi)\sech^2 x\\ 
+    &=&   z''(\lambda\sech^3 x +\sech^2 x)-  z'(3\lambda\sech^3x\tanh x + 2\sech^2\tanh x-\tanh x)\nonumber\\
+    &{}& + z\sech^2 x + (\phi_x + \phi_y\sinh x)\tanh x + \textcolor{red}{\phi\sech^2 x}\\
+    &=&   z''(\lambda\sech^3 x +\sech^2 x)-  z'(3\lambda\sech^3x\tanh x + 2\sech^2\tanh x-\tanh x)\nonumber\\
+    &{}&  + (\phi_x + \phi_y\sinh x)\tanh x + (z+\textcolor{red}{\phi})\sech^2 x
+	\end{eqnarray}
+
+\begin{equation}
+RHS = \phi_y\cosh x + z'\tanh x
+\end{equation}
+
+So $LHS=RHS$ becomes
+
+\begin{eqnarray}
+  &{}& z''(\lambda\sech^3 x +\sech^2 x) - z'(3\lambda\sech^3x\tanh x + 2\sech^2\tanh x-\tanh x)\nonumber\\
+    &{}&  + (\phi_x + \phi_y\sinh x)\tanh x + (z+\textcolor{red}{\phi})\sech^2 x = \phi_y\cosh x + z'\tanh x
+\end{eqnarray}
+
+\begin{eqnarray}
+  &{}& z''(\lambda\sech^3 x +\sech^2 x) - z'(3\lambda\sech^3x\tanh x + 2\sech^2\tanh x)\nonumber\\
+    &{}&  + (\phi_x + \phi_y\sinh x)\tanh x + (z+\textcolor{red}{\phi})\sech^2 x
+	= \phi_y\cosh x 
+\end{eqnarray}
+
+\begin{eqnarray}
+   z'' = 
+\frac{
+     z'\cdot (3\lambda\sech^3x\tanh x + 2\sech^2\tanh x)
+  -  z \cdot \sech^2x
+  + \phi_y\cosh x - (\phi_x + \phi_y\sinh x)\tanh x - \textcolor{red}{\phi}\sech^2 x
 }{
-        \lambda\sech^3 x +\sech^2 x
+\lambda\sech^3 x +\sech^2 x
 }
 \end{eqnarray}
+
+
 
 
 # Numerical work
@@ -225,18 +237,20 @@ sech <- function(x){1/cosh(x)}
 Lorenz <- function(t, state, parameters) {
     with(as.list(c(state, parameters)), {
         dZ <- Zdash
-        ss <- sech(t)^2
 
-        phi <- t
+        phi <- t-1
         phi_y  <- 0
         phi_x <- 1
         numerator <- (
-            phi_y * cosh(t)
-            +Zdash * tanh(t) * ss * (3*lambda/cosh(t) + 2)
-            -(  (phi_x + phi_y*sinh(t))*tanh(t) + phi/cosh(t)^2)
+            +Zdash * (3*lambda * sech(t)^3 * tanh(t) + 2*sech(t)^2 * tanh(t))
+            -Z     * sech(t)^2
+            + phi_y * cosh(t)
+            -(phi_x + phi_y*sinh(t))*tanh(t)
+            -phi*sech(t)^2
         )
 
-        denominator <-  ss + lambda/cosh(t)^3
+        denominator <- lambda *sech(t)^3  + sech(t)^2
+
         dZdash <- numerator/denominator
         dextra_length <- Zdash*tanh(t)
         dextra_length2 <- -Z*sech(t)^2
@@ -244,9 +258,9 @@ Lorenz <- function(t, state, parameters) {
     })
 }
 
-parameters <- c(lambda = 1)
-state      <- c(Z = 0, Zdash = 0, extra_length=0, extra_length2=0)  # initial conditions
-times      <- seq(-2, 2, by = 0.01)
+parameters <- c(lambda = 0)
+state      <- c(Z = 0, Zdash = 0, extra_length = 0, extra_length2 = 0)  # initial conditions
+times      <- seq(-2, 2, by = 0.05)
 
 out <- ode(y = state, times = times, func = Lorenz, parms = parameters)
 ```
@@ -294,16 +308,17 @@ jj
 ```
 
 ```{r usef, cache=TRUE}
-v1 <- seq(from = 2, to = 5, by = 0.01)
-v2 <- seq(from = -5, to = -2, by = 0.01)
+v1 <- seq(from = 0, to = 3, by = 0.1)
+v2 <- seq(from = -5, to = -2, by = 0.1)
 M <- as.matrix(expand.grid(v1,v2))
 head(M)
 bad <- sapply(seq_len(nrow(M)),function(i){f(unname(M[i,]))})
 ```
 
 ```{r contbad}
-contour(v1, v2, matrix(pmin(0.1,bad),length(v1),length(v2)),nlevels=10)
-filled.contour(v1,v2,matrix(bad,length(v1),length(v2)))
+M <- matrix(bad,length(v1),length(v2))
+contour(v1, v2, M, levels=0:10)
+filled.contour(M)
 ```
 
 next chunk
