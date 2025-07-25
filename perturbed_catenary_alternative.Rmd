@@ -8,6 +8,12 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+***This file is now considered to contain a subtle yet important
+logical fallacy which I cannot quite express clearly.  But it is
+definitely incorrect and misleading.***
+
+
+
 ## The catenary.
 
 \newcommand{\di}[2]{\frac{\partial{#1}}{\partial{#2}}}

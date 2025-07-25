@@ -8,6 +8,11 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+***This file is now considered to contain a subtle yet important
+logical fallacy which I cannot quite express clearly.  But it is
+definitely incorrect and misleading.***
+
+
 ## The catenary.
 
 \newcommand{\di}[2]{\frac{\partial{#1}}{\partial{#2}}}
@@ -197,6 +202,10 @@ LHS &=&    z''(\lambda\sech^3 x +\sech^2 x) - z'(3\lambda\sech^3x\tanh x + 2\sec
     &{}&  + (\phi_x + \phi_y\sinh x)\tanh x + (z+\textcolor{red}{\phi})\sech^2 x
 	\end{eqnarray}
 
+Above the \textcolor{red}{red $\phi$} is an indicator of trouble: imagine
+it to be a constant.  The constant should not affect the solution but
+it does, AFAICS.
+
 \begin{equation}
 RHS = \phi_y\cosh x + z'\tanh x
 \end{equation}
@@ -238,9 +247,9 @@ Lorenz <- function(t, state, parameters) {
     with(as.list(c(state, parameters)), {
         dZ <- Zdash
 
-        phi <- t-1
+        phi <- 10
         phi_y  <- 0
-        phi_x <- 1
+        phi_x <- 0
         numerator <- (
             +Zdash * (3*lambda * sech(t)^3 * tanh(t) + 2*sech(t)^2 * tanh(t))
             -Z     * sech(t)^2
