@@ -84,6 +84,21 @@ Thus (working to first order)
  + \frac{\epsilon z''}{(1+y'^2)^{3/2}}\right)(y(x) + \epsilon z + \Lambda + \epsilon\phi)\\
   &{}&   \qquad + \left(\frac{y'}{\sqrt{1+y'^2}} + \epsilon\frac{z'}{(1+y'^2)^{3/2}}\right)
   (1 + \Lambda + \epsilon\phi_y)\\
+&=& \left(\frac{y''}{(1+y'^2)^{3/2}} - 3\epsilon\frac{z'y'}{(1+y'^2)^{5/2}}
+ + \frac{\epsilon z''}{(1+y'^2)^{3/2}}\right)(y(x) + \epsilon z + \Lambda + \epsilon\phi)\\
+  &{}&   \qquad + \frac{y'(1+\Lambda)}{\sqrt{1+y'^2}} + \epsilon\left(\frac{z'(1+\Lambda)}{(1+y'^2)^{3/2}} +
+  \frac{\phi_yy'}{\sqrt{1+y'^2}}\right)\\
+&=& \frac{y''(y+\Lambda)}{(1+y'^2)^{3/2}} - 3\epsilon\frac{z'y'(y+\Lambda)}{(1+y'^2)^{5/2}}
+ + \frac{\epsilon z''(y+\Lambda)}{(1+y'^2)^{3/2}} + \epsilon\frac{y''(z+\phi)}{(1+y'^2)^{3/2}}\\
+&{}&   \qquad + \frac{y'(1+\Lambda)}{\sqrt{1+y'^2}} + \epsilon\left(\frac{z'(1+\Lambda)}{(1+y'^2)^{3/2}} +
+  \frac{\phi_yy'}{\sqrt{1+y'^2}}\right)\\
+&=& \frac{y''(y+\Lambda)}{(1+y'^2)^{3/2}} +  \frac{y'(1+\Lambda)}{\sqrt{1+y'^2}} \\
+&{}& \qquad + \epsilon\left(
+   - 3\frac{z'y'(y+\Lambda)}{(1+y'^2)^{5/2}}
+  + \frac{z''(y+\Lambda)}{(1+y'^2)^{3/2}} + \frac{y''(z+\phi)}{(1+y'^2)^{3/2}}
+  + \frac{z'(1+\Lambda)}{(1+y'^2)^{3/2}}
+  +  \frac{\phi_yy'}{\sqrt{1+y'^2}}
+  \right)\\
 \end{eqnarray}
 
 where $\phi=\phi(x,y)$, $z=z(x)$ and $z'=z'(x)$.
@@ -173,8 +188,8 @@ jj
 ```
 
 ```{r usef, cache=TRUE}
-v1 <- seq(from = 0, to = 3, by = 0.1)
-v2 <- seq(from = -5, to = -2, by = 0.1)
+v1 <- seq(from = 0, to = 3, by = 1)
+v2 <- seq(from = -5, to = -2, by = 1)
 M <- as.matrix(expand.grid(v1,v2))
 head(M)
 bad <- sapply(seq_len(nrow(M)),function(i){f(unname(M[i,]))})
@@ -259,78 +274,3 @@ plot(x, z,type="l")
 plot(x, y0,type="l")
 points(x, y0+z/5,type="l",col="red")
 ```
-
-
-# Exact solutions
-
-Try to solve the exact EL equation in a potential of $y+ax$
-[notionally $|a|\ll 1$]
-
-
-\begin{equation}
-F=(y+ax+\lambda)\sqrt{1+y'^2}
-\end{equation}
-
-\begin{equation}
-\frac{d}{dx}\di{F}{y'}=\di{F}{y}
-\end{equation}
-
-
-\begin{equation}
-\frac{d}{dx}\left[\frac{(y+ax+\lambda)y'}{\sqrt{1+y'^2}}\right]=\sqrt{1+y'^2}
-\end{equation}
-
-\begin{equation}
-\frac{(y'+a)y'}{\sqrt{1+y'^2}} + 
-\frac{y''(y+ax+\lambda)}{(1+y'^2)^{3/2}}=\sqrt{1+y'^2}
-\end{equation}
-
-\begin{equation}
-(y'^2+ay')(1+y^2) + y''(y+ax+\lambda) = (1+y'^2)^2
-\end{equation}
-
-\begin{equation}
-y''(y+ax+\lambda) = (1+y'^2)(1-ay'^2)
-\end{equation}
-
-\begin{equation}
-y'' = \frac{(1+y'^2)(1-ay'^2)}{y+ax+\lambda}
-\end{equation}
-
-# Exact solutions (numerical work)
-
-Here we consider an inextensible string in a potential
-$\phi(x,y)=ax+y$.  So $a=0$ is vertical gravitational field.
-
-```{r}
-cat <- function(t, state, parameters) {
-    with(as.list(c(state, parameters)), {
-        dZ <- Zdash
-        numerator <- (1+Zdash^2) * (1-a*Zdash^2)
-        denominator <-  Z + a*t + lambda
-        dZdash <- numerator/denominator
-        list(c(dZ, dZdash))
-    })
-}
-
-parameters <- c(lambda = 1.5, a = 0.2)
-state      <- c(Z = 0, Zdash = -1)  # initial conditions
-times      <- seq(-2, 1, by = 0.01)
-
-out <- ode(y = state, times = times, func = cat, parms = parameters)
-```
-
-```{r showex}
-head(out)
-tail(out)
-x <- out[,1]
-y <- out[,2]
-plot(x,y,asp=1,type='l')
-grid()
-abline(5.0,1/0.2,lwd=0.2)
-abline(5.2,1/0.2,lwd=0.1)
-abline(0.0,-0.2,lwd=0.2)
-abline(0.2,-0.2,lwd=0.1)
-```
-
-
