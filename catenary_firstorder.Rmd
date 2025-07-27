@@ -78,6 +78,32 @@ Thus (working to first order)
 &=& \left(\frac{y''}{(1+(y'+\epsilon z')^2)^{3/2}} + 
 \frac{\epsilon z''}{(1+(y'+\epsilon z')^2)^{3/2}}\right)(y(x) + \epsilon z + \Lambda + \epsilon\phi)\nonumber\\
 &{}& \qquad + \frac{y'}{\sqrt{1+y'^2}} + \epsilon\frac{z'}{(1+y'^2)^{3/2}} + \epsilon\frac{y'(\phi_x + y'\phi_y)}{\sqrt{1+y'^2}}\\
+&=& \left(\frac{y''}{(1+(y'+\epsilon z')^2)^{3/2}} + 
+\frac{\epsilon z''}{(1+y'^2)^{3/2}}\right)(y(x) + \epsilon z + \Lambda + \epsilon\phi)\nonumber\\
+&{}& \qquad + \frac{y'}{\sqrt{1+y'^2}} + \epsilon\frac{z'}{(1+y'^2)^{3/2}} + \epsilon\frac{y'(\phi_x + y'\phi_y)}{\sqrt{1+y'^2}}\\
+&=& \left(\frac{y''}{(1+y'^2)^{3/2}}  -3 \frac{\epsilon z'y'y''}{(1+y'^2)^{5/2}} + 
+\frac{\epsilon z''}{(1+y'^2)^{3/2}}\right)(y(x) + \epsilon z + \Lambda + \epsilon\phi)\nonumber\\
+&{}& \qquad + \frac{y'}{\sqrt{1+y'^2}} + \epsilon\frac{z'}{(1+y'^2)^{3/2}} + \epsilon\frac{y'(\phi_x + y'\phi_y)}{\sqrt{1+y'^2}}\\
+&=& \frac{y''(y+\Lambda)}{(1+y'^2)^{3/2}} + \epsilon\frac{y''(z+\phi)}{(1+y'^2)^{3/2}} 
+-3 \frac{\epsilon z'y'y''(y+\Lambda)}{(1+y'^2)^{5/2}} + 
+\frac{\epsilon z''(y+\Lambda)}{(1+y'^2)^{3/2}}\nonumber\\
+&{}& \qquad + \frac{y'}{\sqrt{1+y'^2}} + \epsilon\frac{z'}{(1+y'^2)^{3/2}} + \epsilon\frac{y'(\phi_x + y'\phi_y)}{\sqrt{1+y'^2}}\\
+&=&  \frac{y''(y+\Lambda)}{(1+y'^2)^{3/2}} + \frac{y'}{\sqrt{1+y'^2}}
++ \epsilon\frac{y''(z+\phi)}{(1+y'^2)^{3/2}}
++  (-3) \frac{\epsilon z'y'y''(y+\Lambda)}{(1+y'^2)^{5/2}}
++  \frac{\epsilon z''(y+\Lambda)}{(1+y'^2)^{3/2}}\nonumber\\
+&{}& \qquad
++ \epsilon\frac{z'}{(1+y'^2)^{3/2}}
++ \epsilon\frac{y'(\phi_x + y'\phi_y)}{\sqrt{1+y'^2}}\\
+&=&  \left(\frac{y''(y+\Lambda)}{(1+y'^2)^{3/2}} + \frac{y'}{\sqrt{1+y'^2}}\right)\nonumber\\
+&{}&
++ \epsilon\left(
+    \frac{y''(z+\phi)}{(1+y'^2)^{3/2}}
+-  3\frac{z'y'y''(y+\Lambda)}{(1+y'^2)^{5/2}}
++   \frac{z''(y+\Lambda)}{(1+y'^2)^{3/2}}
++   \frac{z'}{(1+y'^2)^{3/2}}
++   \frac{y'(\phi_x + y'\phi_y)}{\sqrt{1+y'^2}}
+\right)\\
 \end{eqnarray}
 
 where $\phi=\phi(x,y)$, $z=z(x)$ and $z'=z'(x)$.  Now the right hand side:
