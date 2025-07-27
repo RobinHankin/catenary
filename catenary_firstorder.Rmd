@@ -26,15 +26,13 @@ Euler-Lagrange equation
 We have $\di{F}{y'} = \frac{y'(y+\lambda)}{\sqrt{1+y'^2}}$ and 
 $\di{F}{y} = \sqrt{1+y'^2}$ so
 
-\begin{equation}
-\frac{d}{dx}\left[\frac{y'(y+\lambda)}{\sqrt{1+y'^2}}\right] = \sqrt{1+y'^2}
-\end{equation}
+\begin{eqnarray}
+\frac{d}{dx}\left[\frac{y'(y+\lambda)}{\sqrt{1+y'^2}}\right] &=& \sqrt{1+y'^2}\nonumber\\
+\frac{y''(y + \lambda)}{(1+y'^2)^{3/2}} + \frac{y'}{\sqrt{1+y'^2}}        &=& \sqrt{1+y'^2}
+\end{eqnarray}
 
 This gives $y = \operatorname{cosh} x$.
 
-\begin{equation}
-\frac{d}{dx}\di{F}{y'} -\di{F}{y}=0
-\end{equation}
 
 
 # Perturbing the catenary.
@@ -66,39 +64,39 @@ Thus (working to first order)
 
 \begin{eqnarray}
 \frac{d}{dx}\left[\di{\overline{F}}{Y'}\right]
-&=& \frac{d}{dt}\left[\frac{Y'}{\sqrt{1+Y'^2}}(Y + \Lambda + \epsilon\phi(x,Y))\right]\\
+&=& \frac{d}{dx}\left[\frac{Y'}{\sqrt{1+Y'^2}}(Y + \Lambda + \epsilon\phi(x,Y))\right]\\
 &=& \frac{Y''}{(1+Y'^2)^{3/2}}(Y + \Lambda + \epsilon\phi(x,Y)) + 
         \frac{Y'}{\sqrt{1+Y'^2}}(1 + \Lambda + \epsilon\phi_y(x,Y))\\
 &=& \frac{y'' + \epsilon z''}{(1+(y'+\epsilon z')^2)^{3/2}}(y(x) + \epsilon z + \Lambda + \epsilon\phi) + 
         \frac{y'}{\sqrt{1+(y+\epsilon z')^2}}(1 + \Lambda + \epsilon\phi_y)\\
 &=& \left(\frac{y''}{(1+(y'+\epsilon z')^2)^{3/2}} + 
-\frac{\epsilon z''}{(1+(y'+\epsilon z')^2)^{3/2}}\right)(y(x) + \epsilon z + \Lambda + \epsilon\phi)\\
+\frac{\epsilon z''}{(1+(y'+\epsilon z')^2)^{3/2}}\right)(y(x) + \epsilon z + \Lambda + \epsilon\phi)\nonumber\\
 &{}& \qquad + \frac{y'}{\sqrt{1+(y+\epsilon z')^2}}(1 + \Lambda + \epsilon\phi_y)\\
 &=& \left(\frac{y''}{(1+(y'+\epsilon z')^2)^{3/2}} + 
-\frac{\epsilon z''}{(1+y'^2)^{3/2}}\right)(y(x) + \epsilon z + \Lambda + \epsilon\phi)\\
+\frac{\epsilon z''}{(1+y'^2)^{3/2}}\right)(y(x) + \epsilon z + \Lambda + \epsilon\phi)\nonumber\\
   &{}&   \qquad+ \frac{y'}{\sqrt{1+(y+\epsilon z')^2}}(1 + \Lambda + \epsilon\phi_y)\\
 &=& \left(\frac{y''}{(1+y'^2)^{3/2}} - 3\epsilon\frac{z'y'}{(1+y'^2)^{5/2}}
- + \frac{\epsilon z''}{(1+y'^2)^{3/2}}\right)(y(x) + \epsilon z + \Lambda + \epsilon\phi)\\
+ + \frac{\epsilon z''}{(1+y'^2)^{3/2}}\right)(y(x) + \epsilon z + \Lambda + \epsilon\phi)\nonumber\\
   &{}&   \qquad+ \frac{y'}{\sqrt{1+(y'+\epsilon z')^2}}(1 + \Lambda + \epsilon\phi_y)\\
 &=& \left(\frac{y''}{(1+y'^2)^{3/2}} - 3\epsilon\frac{z'y'}{(1+y'^2)^{5/2}}
- + \frac{\epsilon z''}{(1+y'^2)^{3/2}}\right)(y(x) + \epsilon z + \Lambda + \epsilon\phi)\\
+ + \frac{\epsilon z''}{(1+y'^2)^{3/2}}\right)(y(x) + \epsilon z + \Lambda + \epsilon\phi)\nonumber\\
   &{}&   \qquad + \left(\frac{y'}{\sqrt{1+y'^2}} + \epsilon\frac{z'}{(1+y'^2)^{3/2}}\right)
   (1 + \Lambda + \epsilon\phi_y)\\
 &=& \left(\frac{y''}{(1+y'^2)^{3/2}} - 3\epsilon\frac{z'y'}{(1+y'^2)^{5/2}}
- + \frac{\epsilon z''}{(1+y'^2)^{3/2}}\right)(y(x) + \epsilon z + \Lambda + \epsilon\phi)\\
+ + \frac{\epsilon z''}{(1+y'^2)^{3/2}}\right)(y(x) + \epsilon z + \Lambda + \epsilon\phi)\nonumber\\
   &{}&   \qquad + \frac{y'(1+\Lambda)}{\sqrt{1+y'^2}} + \epsilon\left(\frac{z'(1+\Lambda)}{(1+y'^2)^{3/2}} +
   \frac{\phi_yy'}{\sqrt{1+y'^2}}\right)\\
 &=& \frac{y''(y+\Lambda)}{(1+y'^2)^{3/2}} - 3\epsilon\frac{z'y'(y+\Lambda)}{(1+y'^2)^{5/2}}
- + \frac{\epsilon z''(y+\Lambda)}{(1+y'^2)^{3/2}} + \epsilon\frac{y''(z+\phi)}{(1+y'^2)^{3/2}}\\
+ + \frac{\epsilon z''(y+\Lambda)}{(1+y'^2)^{3/2}} + \epsilon\frac{y''(z+\phi)}{(1+y'^2)^{3/2}}\nonumber\\
 &{}&   \qquad + \frac{y'(1+\Lambda)}{\sqrt{1+y'^2}} + \epsilon\left(\frac{z'(1+\Lambda)}{(1+y'^2)^{3/2}} +
   \frac{\phi_yy'}{\sqrt{1+y'^2}}\right)\\
-&=& \frac{y''(y+\Lambda)}{(1+y'^2)^{3/2}} +  \frac{y'(1+\Lambda)}{\sqrt{1+y'^2}} \\
+&=& \frac{y''(y+\Lambda)}{(1+y'^2)^{3/2}} +  \frac{y'(1+\Lambda)}{\sqrt{1+y'^2}}\nonumber\\
 &{}& \qquad + \epsilon\left(
    - 3\frac{z'y'(y+\Lambda)}{(1+y'^2)^{5/2}}
   + \frac{z''(y+\Lambda)}{(1+y'^2)^{3/2}} + \frac{y''(z+\phi)}{(1+y'^2)^{3/2}}
   + \frac{z'(1+\Lambda)}{(1+y'^2)^{3/2}}
   +  \frac{\phi_yy'}{\sqrt{1+y'^2}}
-  \right)\\
+  \right)
 \end{eqnarray}
 
 where $\phi=\phi(x,y)$, $z=z(x)$ and $z'=z'(x)$.
