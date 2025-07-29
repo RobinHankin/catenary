@@ -240,19 +240,22 @@ z''\cosh x =
 \end{eqnarray}
 
 \begin{eqnarray}
-z'' = 
-  \phi_y\cosh^3 x 
-- \cosh x\sinh x(\phi_x + \phi_y\sinh x) 
-- z'\sinh x  - z(\cosh x - 3)\sech x + \phi
+z''\cosh x = 
+-z'\sinh x 
++z(3 - \cosh x)
++ (
+\phi_y\cosh^4 x - \phi\cosh x - 
+\cosh^2 x\sinh x(\phi_x + \phi_y\sinh x)
+)
 \end{eqnarray}
 
 \begin{eqnarray}
 z'' = 
-- z'\sinh x  - z(\cosh x - 3)\sech x 
-  +\phi_y\cosh^3 x 
-- \cosh x\sinh x(\phi_x + \phi_y\sinh x) 
-+ \phi
+-z'\tanh x 
++ z(3\sech x - 1)
++ \phi_y\cosh^3 x - \phi - \cosh x\sinh x(\phi_x + \phi_y\sinh x)
 \end{eqnarray}
+
 
 
 # Numerical  work
@@ -265,20 +268,15 @@ Lorenz <- function(t, state, parameters) {
     with(as.list(c(state, parameters)), {
         dZ <- Zdash
 
-        phi <- 10
+        phi <- t
         phi_y  <- 0
-        phi_x <- 0
-        numerator <- (
-            +Zdash * (3*lambda * sech(t)^3 * tanh(t) + 2*sech(t)^2 * tanh(t))
-            -Z     * sech(t)^2
-            + phi_y * cosh(t)
-            -(phi_x + phi_y*sinh(t))*tanh(t)
-            -phi*sech(t)^2
-        )
+        phi_x <- 1
 
-        denominator <- lambda *sech(t)^3  + sech(t)^2
+        t1 <- -Zdash * tanh(t)
+        t2 <- Z * (3/cosh(t) - 1)
+        t3 <- phi_y * cosh(t)^3 - phi + lambda - cosh(t)*sinh(t)*(phi_x + phi_y*sinh(t))
 
-        dZdash <- numerator/denominator
+        dZdash <- t1 + t2 + t3
         dextra_length <- Zdash*tanh(t)
         dextra_length2 <- -Z*sech(t)^2
         list(c(dZ, dZdash, dextra_length, dextra_length2))
@@ -335,8 +333,8 @@ jj
 ```
 
 ```{r usef, cache=TRUE}
-v1 <- seq(from = 0, to = 3, by = 1)
-v2 <- seq(from = -5, to = -2, by = 1)
+v1 <- seq(from = -1, to =  1, by = 0.01)
+v2 <- seq(from = -6, to = -4, by = 0.01)
 M <- as.matrix(expand.grid(v1,v2))
 head(M)
 bad <- sapply(seq_len(nrow(M)),function(i){f(unname(M[i,]))})
@@ -344,7 +342,8 @@ bad <- sapply(seq_len(nrow(M)),function(i){f(unname(M[i,]))})
 
 ```{r contbad}
 M <- matrix(bad,length(v1),length(v2))
-contour(v1, v2, M, levels=0:10)
+M <- pmin(M,10)
+contour(v1, v2, M)
 filled.contour(M)
 ```
 
@@ -372,12 +371,10 @@ points(x, y0+z/10,type="l",col="red")
 
 OK we have two points that are not the same but both satisfy the
 boundary conditions and indeed the length constraint.
-n
 
 
 ```{r}
-p1 <- c(4,-3.409)
-p2 <- c(3,-3.999)
+p1 <- c(0.057, -4.9)
 ```
 
 ```{r}
@@ -390,20 +387,10 @@ ode(y = state, times = times, func = Lorenz, parms = parameters)
 
 
 jj1 <- show(p1)
-jj2 <- show(p2)
 
-plot(times,jj2[,2])
-points(times,jj1[,2])
-
-
-plot(times,jj1[,2]/jj2[,2])
+plot(times,jj1[,2])
 ```
 
-
-```{r}
-jj3 <- show(c(0, -8.7563))
-plot(times,jj3[,2])
-```
 
 ```{r}
 parameters <- c(lambda = 0)
