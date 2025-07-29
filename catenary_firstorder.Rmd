@@ -28,7 +28,7 @@ $\di{F}{y} = \sqrt{1+y'^2}$ so
 
 \begin{eqnarray}
 \frac{d}{dx}\left[\frac{y'(y+\lambda)}{\sqrt{1+y'^2}}\right] &=& \sqrt{1+y'^2}\nonumber\\
-\frac{y''(y + \lambda)}{(1+y'^2)^{3/2}} + \frac{y'}{\sqrt{1+y'^2}}        &=& \sqrt{1+y'^2}
+\frac{y''(y + \lambda)}{(1+y'^2)^{3/2}} + \frac{y'^2}{\sqrt{1+y'^2}}        &=& \sqrt{1+y'^2}
 \end{eqnarray}
 
 This gives $y = \operatorname{cosh} x$.
@@ -45,8 +45,7 @@ gives functional
 \overline{F} = \sqrt{1+Y'^2}(Y + \Lambda + \epsilon\phi(x,Y))
 \end{equation}
 
-where $\epsilon$ is small. EL becomes:
-
+where $\epsilon$ is small.  E-L becomes:
 
 \begin{equation}
 \frac{d}{dx}\di{\overline{F}}{Y'} -\di{\overline{F}}{Y}=0
@@ -60,50 +59,78 @@ And we have
 \di{\overline{F}}{Y} = {\sqrt{1+Y'^2}}(1 + \epsilon_y\phi(x,y))
 \end{equation}
 
-Thus (working to first order)
+Thus (working to first order) [also recalling that $\phi=\phi(x,y)$]
 
 \begin{eqnarray}
 \frac{d}{dx}\left[\di{\overline{F}}{Y'}\right]
-&=& \frac{d}{dx}\left[\frac{Y'}{\sqrt{1+Y'^2}}(Y + \Lambda + \epsilon\phi(x,Y))\right]\\
-&=& \frac{Y''}{(1+Y'^2)^{3/2}}(Y + \Lambda + \epsilon\phi(x,Y)) + 
-        \frac{Y'}{\sqrt{1+Y'^2}}(1 + \epsilon(\phi_x + y'\phi_y))\\
-&=& \frac{y'' + \epsilon z''}{(1+(y'+\epsilon z')^2)^{3/2}}(y(x) + \epsilon z + \Lambda + \epsilon\phi) + 
-        \frac{y'}{\sqrt{1+(y'+\epsilon z')^2}}(1 + \epsilon(\phi_x + y'\phi_y))\\
+&=& \frac{d}{dx}\left[\frac{Y'}{\sqrt{1+Y'^2}}(Y + \Lambda + \epsilon\phi)\right]\\
+&=& \frac{Y''}{(1+Y'^2)^{3/2}}(Y + \Lambda + \epsilon\phi) + 
+        \frac{Y'}{\sqrt{1+Y'^2}}(y'+\epsilon z' + \epsilon(\phi_x + y'\phi_y))\\
+&=& \frac{y'' + \epsilon z''}{(1+(y'+\epsilon z')^2)^{3/2}}(y + \epsilon z + \Lambda + \epsilon\phi) + 
+        \frac{y' + \epsilon z'}{\sqrt{1+(y'+\epsilon z')^2}}(y'+\epsilon z' + \epsilon(\phi_x + y'\phi_y))\\
+&=& \left(\frac{y''}{(1+(y'+\epsilon z')^2)^{3/2}} + 
+\frac{\epsilon z''}{(1+(y'+\epsilon z')^2)^{3/2}}\right)(y + \epsilon z + \Lambda + \epsilon\phi)\nonumber\\
+&{}& \qquad + \frac{y' + \epsilon z'}{\sqrt{1+(y'+\epsilon z')^2}}(y'+\epsilon z' + \epsilon(\phi_x + y'\phi_y))\\
 &=& \left(\frac{y''}{(1+(y'+\epsilon z')^2)^{3/2}} + 
 \frac{\epsilon z''}{(1+(y'+\epsilon z')^2)^{3/2}}\right)(y(x) + \epsilon z + \Lambda + \epsilon\phi)\nonumber\\
-&{}& \qquad + \frac{y'}{\sqrt{1+(y'+\epsilon z')^2}}(1 + \epsilon(\phi_x + y'\phi_y))\\
+&{}& \qquad + \left(\frac{y'}{\sqrt{1+y'^2}} +
+\epsilon\frac{z'}{(1+y'^2)^{3/2}} + \epsilon\frac{z'}{\sqrt{1+y'^2}}\right)(y'+\epsilon z' + \epsilon(\phi_x + y'\phi_y))\\
 &=& \left(\frac{y''}{(1+(y'+\epsilon z')^2)^{3/2}} + 
-\frac{\epsilon z''}{(1+(y'+\epsilon z')^2)^{3/2}}\right)(y(x) + \epsilon z + \Lambda + \epsilon\phi)\nonumber\\
-&{}& \qquad + \left(\frac{y'}{\sqrt{1+y'^2}} + \epsilon\frac{z'}{(1+y'^2)^{3/2}}\right)(1 + \epsilon(\phi_x + y'\phi_y))\\
+\frac{\epsilon z''}{(1+(y'+\epsilon z')^2)^{3/2}}\right)(y +\Lambda + \epsilon(z + \phi))\nonumber\\
+&{}& \qquad + \left(\frac{y'}{\sqrt{1+y'^2}} +
+\epsilon\frac{z'}{(1+y'^2)^{3/2}} +
+\epsilon\frac{z'}{\sqrt{1+y'^2}}\right)(y'+\epsilon (z' + \phi_x + y'\phi_y))\\
 &=& \left(\frac{y''}{(1+(y'+\epsilon z')^2)^{3/2}} + 
-\frac{\epsilon z''}{(1+(y'+\epsilon z')^2)^{3/2}}\right)(y(x) + \epsilon z + \Lambda + \epsilon\phi)\nonumber\\
-&{}& \qquad + \frac{y'}{\sqrt{1+y'^2}} + \epsilon\frac{z'}{(1+y'^2)^{3/2}} + \epsilon\frac{y'(\phi_x + y'\phi_y)}{\sqrt{1+y'^2}}\\
+\frac{\epsilon z''}{(1+(y'+\epsilon z')^2)^{3/2}}\right)(y +\Lambda + \epsilon(z + \phi))\nonumber\\
+&{}& \qquad + \left(\frac{y'}{\sqrt{1+y'^2}} +
+\epsilon\left(\frac{z'}{(1+y'^2)^{3/2}} + \frac{z'}{\sqrt{1+y'^2}}\right)\right)(y'+\epsilon (z' + \phi_x + y'\phi_y))\\
 &=& \left(\frac{y''}{(1+(y'+\epsilon z')^2)^{3/2}} + 
-\frac{\epsilon z''}{(1+y'^2)^{3/2}}\right)(y(x) + \epsilon z + \Lambda + \epsilon\phi)\nonumber\\
-&{}& \qquad + \frac{y'}{\sqrt{1+y'^2}} + \epsilon\frac{z'}{(1+y'^2)^{3/2}} + \epsilon\frac{y'(\phi_x + y'\phi_y)}{\sqrt{1+y'^2}}\\
-&=& \left(\frac{y''}{(1+y'^2)^{3/2}}  -3 \frac{\epsilon z'y'y''}{(1+y'^2)^{5/2}} + 
-\frac{\epsilon z''}{(1+y'^2)^{3/2}}\right)(y(x) + \epsilon z + \Lambda + \epsilon\phi)\nonumber\\
-&{}& \qquad + \frac{y'}{\sqrt{1+y'^2}} + \epsilon\frac{z'}{(1+y'^2)^{3/2}} + \epsilon\frac{y'(\phi_x + y'\phi_y)}{\sqrt{1+y'^2}}\\
-&=& \frac{y''(y+\Lambda)}{(1+y'^2)^{3/2}} + \epsilon\frac{y''(z+\phi)}{(1+y'^2)^{3/2}} 
--3 \frac{\epsilon z'y'y''(y+\Lambda)}{(1+y'^2)^{5/2}} + 
-\frac{\epsilon z''(y+\Lambda)}{(1+y'^2)^{3/2}}\nonumber\\
-&{}& \qquad + \frac{y'}{\sqrt{1+y'^2}} + \epsilon\frac{z'}{(1+y'^2)^{3/2}} + \epsilon\frac{y'(\phi_x + y'\phi_y)}{\sqrt{1+y'^2}}\\
-&=&  \frac{y''(y+\Lambda)}{(1+y'^2)^{3/2}} + \frac{y'}{\sqrt{1+y'^2}}
-+ \epsilon\frac{y''(z+\phi)}{(1+y'^2)^{3/2}}
-+  (-3) \frac{\epsilon z'y'y''(y+\Lambda)}{(1+y'^2)^{5/2}}
-+  \frac{\epsilon z''(y+\Lambda)}{(1+y'^2)^{3/2}}\nonumber\\
-&{}& \qquad
-+ \epsilon\frac{z'}{(1+y'^2)^{3/2}}
-+ \epsilon\frac{y'(\phi_x + y'\phi_y)}{\sqrt{1+y'^2}}\\
-&=&  \left(\frac{y''(y+\Lambda)}{(1+y'^2)^{3/2}} + \frac{y'}{\sqrt{1+y'^2}}\right)\nonumber\\
-&{}&
-+ \epsilon\left(
-    \frac{y''(z+\phi)}{(1+y'^2)^{3/2}}
--  3\frac{z'y'y''(y+\Lambda)}{(1+y'^2)^{5/2}}
-+   \frac{z''(y+\Lambda)}{(1+y'^2)^{3/2}}
-+   \frac{z'}{(1+y'^2)^{3/2}}
-+   \frac{y'(\phi_x + y'\phi_y)}{\sqrt{1+y'^2}}
+\frac{\epsilon z''}{(1+(y'+\epsilon z')^2)^{3/2}}\right)(y +\Lambda + \epsilon(z + \phi))\nonumber\\
+&{}& \qquad + \frac{y'^2}{\sqrt{1+y'^2}} +
+\epsilon\left(\frac{y'z'}{(1+y'^2)^{3/2}} + \frac{y'z'}{\sqrt{1+y'^2}}
+ + \frac{y'(z' + \phi_x + y'\phi_y)}{\sqrt{1+y'^2}}
 \right)\\
+&=& \left(\frac{y''}{(1+(y'+\epsilon z')^2)^{3/2}} + 
+\frac{\epsilon z''}{(1+y'^2)^{3/2}}\right)(y +\Lambda + \epsilon(z + \phi))\nonumber\\
+&{}& \qquad + \frac{y'^2}{\sqrt{1+y'^2}} +
+\epsilon\left(\frac{y'z'}{(1+y'^2)^{3/2}} + \frac{y'z'}{\sqrt{1+y'^2}}
+ + \frac{y'(z' + \phi_x + y'\phi_y)}{\sqrt{1+y'^2}}
+\right)\\
+&=& \left(
+\frac{y''}{(1+y')^2)^{3/2}} -3\epsilon\frac{y''z'}{(1+y'^2)^{5/2}} + 
+\frac{\epsilon z''}{(1+y'^2)^{3/2}}\right)(y +\Lambda + \epsilon(z + \phi))\nonumber\\
+&{}& \qquad + \frac{y'^2}{\sqrt{1+y'^2}} +
+\epsilon\left(\frac{y'z'}{(1+y'^2)^{3/2}} + \frac{y'z'}{\sqrt{1+y'^2}}
+ + \frac{y'(z' + \phi_x + y'\phi_y)}{\sqrt{1+y'^2}}
+\right)\\
+&=& \left(
+\frac{y''}{(1+y')^2)^{3/2}} +\epsilon\left(\frac{-3y''z'}{(1+y'^2)^{5/2}} + 
+\frac{z''}{(1+y'^2)^{3/2}}\right)
+\right)(y +\Lambda + \epsilon(z + \phi))\nonumber\\
+&{}& \qquad + \frac{y'^2}{\sqrt{1+y'^2}} +
+\epsilon\left(\frac{y'z'}{(1+y'^2)^{3/2}} + \frac{y'z'}{\sqrt{1+y'^2}}
+ + \frac{y'(z' + \phi_x + y'\phi_y)}{\sqrt{1+y'^2}}
+\right)\\
+&=&  \frac{y''(y+\Lambda)}{(1+y')^2)^{3/2}} +
+    \epsilon\left(
+	    \frac{-3y''(y+\Lambda)z'}{(1+y'^2)^{5/2}} + 
+        \frac{z''(y+\Lambda)}{(1+y'^2)^{3/2}} +
+		\frac{y''(z+\phi)}{(1+y'^2)^{3/2}}
+        \right)\\
+&{}& \qquad + \frac{y'^2}{\sqrt{1+y'^2}} +
+\epsilon\left(\frac{y'z'}{(1+y'^2)^{3/2}} + \frac{y'z'}{\sqrt{1+y'^2}}
+ + \frac{y'(z' + \phi_x + y'\phi_y)}{\sqrt{1+y'^2}}
+\right)\\
+&=&  \frac{y''(y+\Lambda)}{(1+y')^2)^{3/2}} +
+    \epsilon\left(
+	    \frac{-3y''(y+\Lambda)z'}{(1+y'^2)^{5/2}} + 
+        \frac{z''(y+\Lambda)}{(1+y'^2)^{3/2}} +
+		\frac{y''(z+\phi)}{(1+y'^2)^{3/2}}
+        \right)\\
+&{}& \qquad + \frac{y'^2}{\sqrt{1+y'^2}} +
+\epsilon\left(\frac{y'z'}{(1+y'^2)^{3/2}} + \frac{y'z'}{\sqrt{1+y'^2}}
+ + \frac{y'(z' + \phi_x + y'\phi_y)}{\sqrt{1+y'^2}}
+\right)
 \end{eqnarray}
 
 where $\phi=\phi(x,y)$, $z=z(x)$ and $z'=z'(x)$.  Now the right hand side:
@@ -116,25 +143,119 @@ RHS &=& \di{\overline{F}}{Y}\\
 \end{eqnarray}
 
 But we know that $\sqrt{1+Y'^2} = \sqrt{1+(y'+\epsilon z')^2} =
-\sqrt{1+y'^2} + \epsilon\frac{y'}{\sqrt{1+y'^2}}$, to first order.  So
+\sqrt{1+y'^2} + \epsilon\frac{y'z'}{\sqrt{1+y'^2}}$, to first order.  So
 we have, again to first order
 
 \begin{eqnarray}
 RHS
-&=& \sqrt{1+y'^2} + \epsilon\frac{y'}{\sqrt{1+y'^2}}  + \epsilon\phi_y(x,y)\sqrt{1+Y'^2}\\
-&=& \sqrt{1+y'^2} + \epsilon\left(\frac{y'}{\sqrt{1+y'^2}}  + \phi_y(x,y)\sqrt{1+Y'^2}\right)\\
-&=& \sqrt{1+y'^2} + \epsilon\left(\frac{y'}{\sqrt{1+y'^2}}  + \phi_y(x,y)\sqrt{1+y'^2}\right)\\
+&=& \sqrt{1+y'^2} + \epsilon\frac{y'z'}{\sqrt{1+y'^2}}  + \epsilon\phi_y(x,y)\sqrt{1+Y'^2}\\
+&=& \sqrt{1+y'^2} + \epsilon\left(\frac{y'z'}{\sqrt{1+y'^2}}  + \phi_y(x,y)\sqrt{1+Y'^2}\right)\\
+&=& \sqrt{1+y'^2} + \epsilon\left(\frac{y'z'}{\sqrt{1+y'^2}}  + \phi_y(x,y)\sqrt{1+y'^2}\right)
 \end{eqnarray}
  
 
+So
+
+\begin{eqnarray}
+&{}& \frac{y''(y+\Lambda)}{(1+y'^2)^{3/2}} + \frac{y'}{\sqrt{1+y'^2}}\nonumber\\
+&+& \epsilon\left(
+    \frac{y''(z+\phi)}{(1+y'^2)^{3/2}}
+-  3\frac{(y+\Lambda)y''z'}{(1+y'^2)^{5/2}}
++   \frac{z''(y+\Lambda)}{(1+y'^2)^{3/2}}
++   \frac{y'z'}{(1+y'^2)^{3/2}}
++   \frac{y'z'}{\sqrt{1+y'^2}}
++   \frac{y'(\phi_x + y'\phi_y)}{\sqrt{1+y'^2}}
+\right) \nonumber\\
+&=& \sqrt{1+y'^2} + \epsilon\left(\frac{y'z'}{\sqrt{1+y'^2}}  + \phi_y(x,y)\sqrt{1+y'^2}\right)\label{lhsrhs}
+\end{eqnarray}
+
+In equation \ref{lhsrhs} the zeroth order term (that is, $\epsilon^0$)
+is just the Euler-Lagrange equation for the unperturbed functional.
+The first-order term is (after cancelling one of the terms):
+
+\begin{eqnarray}
+    \frac{y''(z+\phi)}{(1+y'^2)^{3/2}}
+-  3\frac{(y+\Lambda)y''z'}{(1+y'^2)^{5/2}}
++   \frac{z''(y+\Lambda)}{(1+y'^2)^{3/2}}
++   \frac{y'z'}{(1+y'^2)^{3/2}}
++   \frac{y'(\phi_x + y'\phi_y)}{\sqrt{1+y'^2}}
+=
+\phi_y\sqrt{1+y'^2}
+\end{eqnarray}
+
+\begin{eqnarray}
+    \frac{y''(z+\phi) + z''(y+\Lambda) + y'z'}{(1+y'^2)^{3/2}}
+-  3\frac{(y+\Lambda)y''z'}{(1+y'^2)^{5/2}}
++   \frac{y'(\phi_x + y'\phi_y)}{\sqrt{1+y'^2}}
+=
+\phi_y\sqrt{1+y'^2}\label{firstorderunsub}
+\end{eqnarray}
+
+Using a standard catenary, that is, $y=\cosh x$, $y'=\sinh x$,
+$y''=\cosh x$ [noting that $\sqrt{1+y'^2}=\cosh x$], we have
+
+\begin{eqnarray}
+  \frac{\cosh x(z + \phi) + z''(\cosh x + \Lambda) + z'\sinh x}{\cosh^3x}
+-3\frac{z(\cosh x + \Lambda)\cosh x}{\cosh^5 x}
++ \frac{\sinh x(\phi_x + \phi_y\sinh x)}{\cosh x}
+= \phi_y\cosh x
+\end{eqnarray}
+
+Now substitute $\Lambda=0$:
+
+\begin{eqnarray}
+  \frac{\cosh x(z + \phi) + z''\cosh x + z'\sinh x}{\cosh^3x}
+-\frac{3z}{\cosh^3 x}
++ \frac{\sinh x(\phi_x + \phi_y\sinh x)}{\cosh x}
+= \phi_y\cosh x
+\end{eqnarray}
+
+\begin{eqnarray}
+  \frac{\cosh x(z + \phi) + z''\cosh x + z'\sinh x - 3z}{\cosh^3x}
++ \frac{\sinh x(\phi_x + \phi_y\sinh x)}{\cosh x}
+= \phi_y\cosh x
+\end{eqnarray}
+
+\begin{eqnarray}
+  \frac{z''\cosh x + z'\sinh x  + z(\cosh x - 3) + \phi\cosh x}{\cosh^3x}
++ \frac{\sinh x(\phi_x + \phi_y\sinh x)}{\cosh x}
+= \phi_y\cosh x
+\end{eqnarray}
+
+\begin{eqnarray}
+  \frac{z''\cosh x + z'\sinh x  + z(\cosh x - 3) + \phi\cosh x}{\cosh^3x}
+= \phi_y\cosh x - \frac{\sinh x(\phi_x + \phi_y\sinh x)}{\cosh x}
+\end{eqnarray}
+
+\begin{eqnarray}
+z''\cosh x + z'\sinh x  + z(\cosh x - 3) + \phi\cosh x
+= \phi_y\cosh^4 x - \cosh^2 x\sinh x(\phi_x + \phi_y\sinh x)
+\end{eqnarray}
+
+\begin{eqnarray}
+z''\cosh x = 
+  \phi_y\cosh^4 x 
+- \cosh^2 x\sinh x(\phi_x + \phi_y\sinh x) 
+- (z'\sinh x  + z(\cosh x - 3) + \phi\cosh x)
+\end{eqnarray}
+
+\begin{eqnarray}
+z'' = 
+  \phi_y\cosh^3 x 
+- \cosh x\sinh x(\phi_x + \phi_y\sinh x) 
+- z'\sinh x  - z(\cosh x - 3)\sech x + \phi
+\end{eqnarray}
+
+\begin{eqnarray}
+z'' = 
+- z'\sinh x  - z(\cosh x - 3)\sech x 
+  +\phi_y\cosh^3 x 
+- \cosh x\sinh x(\phi_x + \phi_y\sinh x) 
++ \phi
+\end{eqnarray}
 
 
-
-
-
-
-
-# Numerical work
+# Numerical  work
 
 
 ```{r odesolver}
