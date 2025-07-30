@@ -274,11 +274,11 @@ Lorenz <- function(t, state, parameters) {
 
         t1 <- -Zdash * tanh(t)
         t2 <- Z * (3/cosh(t) - 1)
-        t3 <- phi_y * cosh(t)^3 - phi + lambda - cosh(t)*sinh(t)*(phi_x + phi_y*sinh(t))
+        t3 <- phi_y * cosh(t)^3 - phi + lambda - cosh(t) * sinh(t) * (phi_x + phi_y*sinh(t))
 
         dZdash <- t1 + t2 + t3
-        dextra_length <- Zdash*tanh(t)
-        dextra_length2 <- -Z*sech(t)^2
+        dextra_length <- Zdash * tanh(t)
+        dextra_length2 <- -Z * sech(t)^2
         list(c(dZ, dZdash, dextra_length, dextra_length2))
     })
 }
@@ -293,9 +293,9 @@ out <- ode(y = state, times = times, func = Lorenz, parms = parameters)
 ```{r showode}
 head(out)
 tail(out)
-x <- out[,1]
-y <- out[,2]
-plot(x,y,type='l')
+x <- out[, 1]
+y <- out[, 2]
+plot(x, y, type = 'l')
 grid()
 ```
 
