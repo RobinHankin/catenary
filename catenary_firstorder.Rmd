@@ -326,10 +326,9 @@ f(c(2, 1.1))
 ```
    
    
-```{r cache=TRUE}
+```{r find2dopt, cache=TRUE}
 jj <- optim(c(0,0),f)
 jj
-
 ```
 
 ```{r usef, cache=TRUE}
@@ -344,6 +343,7 @@ bad <- sapply(seq_len(nrow(M)),function(i){f(unname(M[i,]))})
 M <- matrix(bad,length(v1),length(v2))
 M <- pmin(M,10)
 contour(v1, v2, M)
+grid()
 filled.contour(M)
 ```
 
@@ -363,7 +363,8 @@ x  <- out[,1]
 z <- out[,2]
 y0 <- cosh(x)
 
-plot(x, z,type="l")
+plot(x, z, type="l")
+grid()
 plot(x, y0,type="l")
 points(x, y0+z/10,type="l",col="red")
 ```
@@ -374,27 +375,66 @@ boundary conditions and indeed the length constraint.
 
 
 ```{r}
-p1 <- c(0.057, -4.9)
+p1 <- jj$par
+p2 <- c(1,-5.5)
 ```
 
 ```{r}
 show <- function(p){
     parameters <- c(lambda = p[1])
-state      <- c(Z = 0, Zdash = p[2], extra_length=0, extra_length2=0)  # initial conditions
-times      <- seq(-2, 2, by = 0.01)
-ode(y = state, times = times, func = Lorenz, parms = parameters)
+    state      <- c(Z = 0, Zdash = p[2], extra_length=0, extra_length2=0)  # initial conditions
+    times      <- seq(-2, 2, by = 0.01)
+    ode(y = state, times = times, func = Lorenz, parms = parameters)
 }
 
 
 jj1 <- show(p1)
+jj2 <- show(p2)
+
+head(jj1)
 
 plot(times,jj1[,2])
+plot(times,jj2[,2])
+```
+
+Now one-dimensional optimization, using `optimize()` to find the best
+value for the initial slope.
+
+
+```{r}
+bestslope <- function(lambda){
+    badness <- function(slope){f(unknown = c(lambda, slope))}
+    optimize(badness, interval = c(-8,8))
+    }
+
+bestslope(-1)
+bestslope(0)
+bestslope(1)
+```
+
+```{r showbest}
+thinkbest <- c(0,bestslope(0)$minimum)
+jj <- show(thinkbest)
+plot(jj[,2])
+tail(jj)
 ```
 
 
 ```{r}
+getobj <- function(lambda){bestslope(lambda)$objective}
+L <- seq(from=-0.5,to=0.5,by=0.1)
+OBJ <- sapply(L,getobj)
+```
+
+```{r}
+plot(L,OBJ)
+```
+
+
+
+```{r}
 parameters <- c(lambda = 0)
-state      <- c(Z = 0, Zdash = -8.7563, extra_length=0, extra_length2=0)  # initial conditions
+state      <- c(Z = 0, Zdash = -4.864535, extra_length=0, extra_length2=0)  # initial conditions
 times      <- seq(-2, 2, by = 0.01)
 
 out <- ode(y = state, times = times, func = Lorenz, parms = parameters)
