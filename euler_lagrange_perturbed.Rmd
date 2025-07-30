@@ -94,3 +94,27 @@ simplifying,
 z'' = (1+s^2)(\phi_y -s\phi_x)
 \end{equation}
 
+
+# Catenary
+
+Now 
+
+\begin{equation}
+F = \sqrt{1+y'^2}(y + \Lambda)\qquad G =  \sqrt{1+y'^2}(\phi + \lambda)
+\end{equation}
+
+where $\phi=\phi(x,y)$ is a small perturbation.
+
+\begin{eqnarray}
+\el{F} &=& \frac{d}{dt}\frac{yy'}{\sqrt{1+y'^2}} - \sqrt{1+y'^2}\\
+       &=& \frac{y}{(1+y'^2)^{3/2}} + \frac{y'^2}{\sqrt{1+y'^2}} - \sqrt{1+y'^2}
+\end{eqnarray}
+
+and 
+\begin{eqnarray}
+\el{G} &=& \frac{d}{dt}\di{G}{y'} - \phi_y\sqrt{1+y'^2}\\
+       &=& \frac{d}{dt}\frac{y'\phi}{\sqrt{1+y'^2}} - \phi_y\sqrt{1+y'^2}\\
+       &=& \frac{y''\phi}{(1+y'^2)^{3/2}} + \frac{y'(\phi_x + y'\phi_y)}{\sqrt{1+y'^2}} - \phi_y\sqrt{1+y'^2}\\
+       &=& \frac{y''\phi}{(1+y'^2)^{3/2}} + \frac{1}{\sqrt{1+y'^2}}\left(y'(\phi_x + y'\phi_y) - \phi_y-\phi_yy^2\right)\\
+       &=& \frac{y''\phi}{(1+y'^2)^{3/2}} + \frac{y'\phi_x  -\phi_y}{\sqrt{1+y'^2}}
+\end{eqnarray}
