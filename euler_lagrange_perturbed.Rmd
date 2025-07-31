@@ -52,17 +52,17 @@ F=\sqrt{1+y'^2},\qquad G = \phi(x,y)\sqrt{1+y'^2}
 Here we need
 
 \begin{eqnarray}
-\el{F} &=& \frac{d}{dt}\di{F}{y'}\\
-       &=& \frac{d}{dt}\frac{y'}{\sqrt{1+y'^2}}\\
-       &=& \frac{y''}{(1+y'^2)^{3/2}}\\
+\el{F} &=& \frac{d}{dt}\di{F}{y'}\nonumber\\
+       &=& \frac{d}{dt}\frac{y'}{\sqrt{1+y'^2}}\nonumber\\
+       &=& \frac{y''}{(1+y'^2)^{3/2}}
 \end{eqnarray}
 
 and 
 \begin{eqnarray}
-\el{G} &=& \frac{d}{dt}\di{G}{y'} - \phi_y\sqrt{1+y'^2}\\
-       &=& \frac{d}{dt}\frac{y'\phi}{\sqrt{1+y'^2}} - \phi_y\sqrt{1+y'^2}\\
-       &=& \frac{y''\phi}{(1+y'^2)^{3/2}} + \frac{y'(\phi_x + y'\phi_y)}{\sqrt{1+y'^2}} - \phi_y\sqrt{1+y'^2}\\
-       &=& \frac{y''\phi}{(1+y'^2)^{3/2}} + \frac{1}{\sqrt{1+y'^2}}\left(y'(\phi_x + y'\phi_y) - \phi_y-\phi_yy^2\right)\\
+\el{G} &=& \frac{d}{dt}\di{G}{y'} - \phi_y\sqrt{1+y'^2}\nonumber\\
+       &=& \frac{d}{dt}\frac{y'\phi}{\sqrt{1+y'^2}} - \phi_y\sqrt{1+y'^2}\nonumber\\
+       &=& \frac{y''\phi}{(1+y'^2)^{3/2}} + \frac{y'(\phi_x + y'\phi_y)}{\sqrt{1+y'^2}} - \phi_y\sqrt{1+y'^2}\nonumber\\
+       &=& \frac{y''\phi}{(1+y'^2)^{3/2}} + \frac{1}{\sqrt{1+y'^2}}\left(y'(\phi_x + y'\phi_y) - \phi_y-\phi_yy^2\right)\nonumber\\
        &=& \frac{y''\phi}{(1+y'^2)^{3/2}} + \frac{y'\phi_x  -\phi_y}{\sqrt{1+y'^2}}
 \end{eqnarray}
 
