@@ -94,6 +94,104 @@ simplifying,
 z'' = (1+s^2)(\phi_y -s\phi_x)
 \end{equation}
 
+## Numerical work: refractive index
+
+
+```{r odedefiner}
+library("deSolve") 
+Lorenz <- function(t, state, parameters) {
+    with(as.list(c(state, parameters)), {
+        dZ <- Zdash
+
+        x <- t
+        y <- t*s
+        
+        jj <- exp(-((x-x0)^2 + (y-y0)^2)/r^2)
+        phi <- jj
+        phi_x <- -2*jj*(x-x0)/r^2
+        phi_y <- -2*jj*(y-y0)/r^2
+
+        dZdash <- (1+s^2)*(phi_y - s*phi_x)
+
+        list(c(dZ, dZdash))
+    })
+}
+
+```{r odesolverrr, cache = FALSE}
+parameters <- c(s = 0.1,            # "s" for slope
+                 x0=5, y0=0,  r=1)  # (x0,y0) = center; radius r
+state      <- c(Z = 0, Zdash = 0)   # initial conditions
+times      <- seq(0, 10, by = 0.1)
+out <- ode(y = state, times = times, func = Lorenz, parms = parameters)
+```
+
+```{r showode, cache=FALSE}
+head(out)
+tail(out)
+x <- out[,1]
+y <- out[,2]
+plot(x,y,type='l')
+grid()
+```
+
+```{r definerayfunc}
+ray <- function(s, epsilon = 0.2, give = FALSE){  # s for slope
+    parameters <- c(s=s, x0=5, y0=0, r=1)
+    state      <- c(Z = 0, Zdash = 0)   # initial conditions
+    times      <- seq(0, 10, by = 0.1)
+    out <- ode(y = state, times = times, func = Lorenz, parms = parameters)
+    if(give){return(out)}
+    x <- out[,1]
+    y <- x*s + out[,2]*epsilon
+    return(cbind(x,y))
+}
+```
+
+
+```{r, plotdelta, cache=FALSE}
+plot(NA, xlim=c(0, 10), ylim=c(0, 1), asp=1)
+theta <- seq(from=0, to = 2*pi, len=100)
+points(5 + cos(theta), sin(theta), type="l",col="gray")
+for(i in seq(from=0, to=0.4, len=15)){
+    points(ray(i), type='l')
+}
+
+```
+
+```{r, plotdeltacloseup, cache=FALSE}
+plot(NA, xlim=c(6,8), ylim=c(-0.2, 0.2), asp=1)
+for(i in seq(from=0, to=0.16, len=35)){
+    points(ray(i), type='l', lwd=0.1)
+}
+```
+
+```{r definefinaldeflection}
+final_deflection <- function(s){
+    jj <- ray(s, give=TRUE)
+    jj[nrow(jj),3]
+}
+
+final_deflection(0.3)
+final_deflection(0.31)
+head(ray(0.1,give=TRUE))
+tail(ray(0.1,give=TRUE))
+```
+
+```{r finaldefrange, cache=FALSE}
+s <- seq(from=0, to=0.25, len=10)
+fa <- sapply(s, final_deflection)
+```
+
+```{r}
+plot(s, fa, type="b")
+```
+
+Find the Cartesian ray:
+
+```{r minimizefinaldef, cache=TRUE}
+optimize(final_deflection, interval = c(0.1,0.15))
+```
+
 
 # Catenary
 
