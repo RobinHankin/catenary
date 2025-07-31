@@ -177,7 +177,7 @@ head(ray(0.1,give=TRUE))
 tail(ray(0.1,give=TRUE))
 ```
 
-```{r finaldefrange, cache=FALSE}
+```{r finaldefrange, cache=TRUE}
 s <- seq(from=0, to=0.25, len=10)
 fa <- sapply(s, final_deflection)
 ```
@@ -204,15 +204,90 @@ F = \sqrt{1+y'^2}(y + \Lambda)\qquad G =  \sqrt{1+y'^2}(\phi + \lambda)
 where $\phi=\phi(x,y)$ is a small perturbation.
 
 \begin{eqnarray}
-\el{F} &=& \frac{d}{dt}\frac{yy'}{\sqrt{1+y'^2}} - \sqrt{1+y'^2}\\
-       &=& \frac{y}{(1+y'^2)^{3/2}} + \frac{y'^2}{\sqrt{1+y'^2}} - \sqrt{1+y'^2}
+\el{F} &=& \frac{d}{dx}\left[\frac{(y+\Lambda)y'}{\sqrt{1+y'^2}}\right] - \sqrt{1+y'^2}\nonumber\\
+       &=& \frac{y''(y+\Lambda)}{(1+y'^2)^{3/2}} + \frac{y'^2}{\sqrt{1+y'^2}} - \sqrt{1+y'^2}\nonumber\\
+       &=& \frac{y''(y+\Lambda)}{(1+y'^2)^{3/2}} - \frac{1}{\sqrt{1+y'^2}}\label{elF}
 \end{eqnarray}
 
 and 
+
 \begin{eqnarray}
-\el{G} &=& \frac{d}{dt}\di{G}{y'} - \phi_y\sqrt{1+y'^2}\\
-       &=& \frac{d}{dt}\frac{y'\phi}{\sqrt{1+y'^2}} - \phi_y\sqrt{1+y'^2}\\
-       &=& \frac{y''\phi}{(1+y'^2)^{3/2}} + \frac{y'(\phi_x + y'\phi_y)}{\sqrt{1+y'^2}} - \phi_y\sqrt{1+y'^2}\\
-       &=& \frac{y''\phi}{(1+y'^2)^{3/2}} + \frac{1}{\sqrt{1+y'^2}}\left(y'(\phi_x + y'\phi_y) - \phi_y-\phi_yy^2\right)\\
-       &=& \frac{y''\phi}{(1+y'^2)^{3/2}} + \frac{y'\phi_x  -\phi_y}{\sqrt{1+y'^2}}
+\el{G} &=& \frac{d}{dx}\di{G}{y'} - \phi_y\sqrt{1+y'^2}\nonumber\\
+       &=& \frac{d}{dx}\left[\frac{y'(\phi+\lambda)}{\sqrt{1+y'^2}}\right] - \phi_y\sqrt{1+y'^2}\nonumber\\
+       &=& \frac{y''(\phi+\lambda)}{(1+y'^2)^{3/2}} + \frac{y'(\phi_x + y'\phi_y)}{\sqrt{1+y'^2}} - \phi_y\sqrt{1+y'^2}\nonumber\\
+       &=& \frac{y''(\phi+\lambda)}{(1+y'^2)^{3/2}} + \frac{1}{\sqrt{1+y'^2}}\left(y'(\phi_x + y'\phi_y) - \phi_y-\phi_yy^2\right)\nonumber\\
+       &=& \frac{y''(\phi+\lambda)}{(1+y'^2)^{3/2}} + \frac{y'\phi_x  -\phi_y}{\sqrt{1+y'^2}}\label{elG}
 \end{eqnarray}
+
+
+Summarising for convenience:
+
+\begin{eqnarray}
+\el{G} &+& \left(z\di{}{y} + z'\di{}{y'} + z''\di{}{y''}\right)\label{feqnagain}
+\left(\el{F}\right)=0\nonumber\\
+\el{F} &=& \frac{(y+\Lambda)y''}{(1+y'^2)^{3/2}} - \frac{1}{\sqrt{1+y'^2}}\nonumber\\
+\el{G} &=& \frac{y''(\phi+\lambda)}{(1+y'^2)^{3/2}} + \frac{y'\phi_x  -\phi_y}{\sqrt{1+y'^2}}
+\end{eqnarray}
+
+The first term of equation \ref{feqnagain} is given by equation
+\ref{elG}.  For the second:
+
+\begin{eqnarray}
+ &&  \left(z\di{}{y} + z'\di{}{y'} + z''\di{}{y''}\right)
+     \left(\el{F}\right)\nonumber\\
+&=&  \left(z\di{}{y} + z'\di{}{y'} + z''\di{}{y''}\right)
+     \left(\frac{y''(y+\Lambda)}{(1+y'^2)^{3/2}} - \frac{1}{\sqrt{1+y'^2}}\right)\nonumber\\
+&=& 
+  z  \frac{y''}{(1+y'^2)^{3/2}}
++ z' \left(\frac{-3(y+\Lambda)y'y''}{(1+y'^2)^{5/2}} - \frac{y'}{(1+y'^2)^{3/2}}\right)
++ z''\left(\frac{y+\Lambda}{(1+y'^2)^{3/2}}\right)\label{zyzdddyzdddydd}
+\end{eqnarray}
+
+
+So altogether
+
+\begin{eqnarray}
+\underbrace{ \frac{y''(\phi+\lambda)}{(1+y'^2)^{3/2}} + \frac{y'\phi_x
+-\phi_y}{\sqrt{1+y'^2}}}_{\mbox{equation \ref{elG}}}
++ \underbrace{
+  z  \frac{y''}{(1+y'^2)^{3/2}}
++ z' \left(\frac{-3(y+\Lambda)y'y''}{(1+y'^2)^{5/2}} - \frac{y'}{(1+y'^2)^{3/2}}\right)
++ z''\left(\frac{y+\Lambda}{(1+y'^2)^{3/2}}\right)
+}_{\mbox{equation \ref{zyzdddyzdddydd}}}
+=0\nonumber\\
+\frac{y''(\phi+\lambda)}{(1+y'^2)^{3/2}} + \frac{y'\phi_x-\phi_y}{\sqrt{1+y'^2}} +
+  z  \frac{y''}{(1+y'^2)^{3/2}}
+- z' \left(\frac{3(y+\Lambda)y'y''}{(1+y'^2)^{5/2}} + \frac{y'}{(1+y'^2)^{3/2}}\right)
++ z''\left(\frac{y+\Lambda}{(1+y'^2)^{3/2}}\right) = 0
+\end{eqnarray}
+
+Now for the unperturbed catenary we use $y=\cosh x$ [with $\Lambda=0$]
+giving $y'=\sinh x$ and $y''=\cosh x$.  In particular we note
+$\sqrt{1+y'^2}=\cosh x$.  Thus:
+
+
+\begin{eqnarray}
+\frac{y''(\phi+\lambda)}{(1+y'^2)^{3/2}} + \frac{y'\phi_x-\phi_y}{\sqrt{1+y'^2}}
++ z  \frac{y''}{(1+y'^2)^{3/2}}
+- z' \left(\frac{3yy'y''}{(1+y'^2)^{5/2}} + \frac{y'}{(1+y'^2)^{3/2}}\right)
++ z''\left(\frac{y}{(1+y'^2)^{3/2}}\right) = 0\nonumber\\
+\frac{\cosh x(\phi+\lambda)}{\cosh^3 x} + \frac{\phi_x\sinh x-\phi_y}{\cosh x}
++ z  \frac{\cosh x}{\cosh^3 x}
+- z' \left(\frac{3\cosh^2 x\sinh x}{\cosh^5 x} + \frac{\sinh x}{\cosh^3 x}\right)
++ z''\left(\frac{\cosh x}{\cosh^3x}\right) = 0\nonumber\\
+\frac{\phi+\lambda}{\cosh^2 x} + \frac{\phi_x\sinh x-\phi_y}{\cosh x}
++          \frac{z}{\cosh^2 x}
+- z' \left(\frac{3\sinh x}{\cosh^3 x} + \frac{\sinh x}{\cosh^3 x}\right)
++          \frac{z''}{\cosh^2x} = 0\nonumber\\
+  \frac{\phi+\lambda}{\cosh^2 x} + \frac{\phi_x\sinh x-\phi_y}{\cosh x}
++ \frac{z}{\cosh^2 x}
+- \frac{4z'\sinh x}{\cosh^3 x}
++ \frac{z''}{\cosh^2x} = 0\nonumber\\
+  \phi + \lambda + \phi_x\sinh x\cosh x - \phi_y\cosh x + z - 4z'\tanh x + z'' = 0
+\end{eqnarray}
+
+
+\begin{equation}
+z'' = 4z'\tanh x -z  -(\phi + \lambda + \phi_x\sinh x\cosh x - \phi_y\cosh x)
+\end{equation}
+
