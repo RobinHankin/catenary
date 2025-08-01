@@ -220,17 +220,18 @@ and
 \end{eqnarray}
 
 
-Summarising for convenience:
+Restating for convenience:
 
-\begin{eqnarray}
-\el{G} &+& \left(z\di{}{y} + z'\di{}{y'} + z''\di{}{y''}\right)\label{feqnagain}
-\left(\el{F}\right)=0\nonumber\\
-\el{F} &=& \frac{(y+\Lambda)y''}{(1+y'^2)^{3/2}} - \frac{1}{\sqrt{1+y'^2}}\nonumber\\
-\el{G} &=& \frac{y''(\phi+\lambda)}{(1+y'^2)^{3/2}} + \frac{y'\phi_x  -\phi_y}{\sqrt{1+y'^2}}
-\end{eqnarray}
+\begin{equation}
+\el{G} + \left(z\di{}{y} + z'\di{}{y'} + z''\di{}{y''}\right)\label{feqnagain}
+\left(\el{F}\right)=0
+\end{equation}
 
-The first term of equation \ref{feqnagain} is given by equation
-\ref{elG}.  For the second:
+where $\el{F} = \frac{(y+\Lambda)y''}{(1+y'^2)^{3/2}} -
+\frac{1}{\sqrt{1+y'^2}}$ and $\el{G} =
+\frac{y''(\phi+\lambda)}{(1+y'^2)^{3/2}} + \frac{y'\phi_x
+-\phi_y}{\sqrt{1+y'^2}}$.  The first term of equation \ref{feqnagain}
+is given by equation \ref{elG}.  For the second:
 
 \begin{eqnarray}
  &&  \left(z\di{}{y} + z'\di{}{y'} + z''\di{}{y''}\right)
@@ -238,13 +239,14 @@ The first term of equation \ref{feqnagain} is given by equation
 &=&  \left(z\di{}{y} + z'\di{}{y'} + z''\di{}{y''}\right)
      \left(\frac{y''(y+\Lambda)}{(1+y'^2)^{3/2}} - \frac{1}{\sqrt{1+y'^2}}\right)\nonumber\\
 &=& 
-  z  \frac{y''}{(1+y'^2)^{3/2}}
+  z  \left(\frac{y''}{(1+y'^2)^{3/2}}\right)
 + z' \left(\frac{-3(y+\Lambda)y'y''}{(1+y'^2)^{5/2}} - \frac{y'}{(1+y'^2)^{3/2}}\right)
-+ z''\left(\frac{y+\Lambda}{(1+y'^2)^{3/2}}\right)\label{zyzdddyzdddydd}
++ z''\left(\frac{y+\Lambda}{(1+y'^2)^{3/2}}\right)
+\label{zyzdddyzdddydd}
 \end{eqnarray}
 
 
-So altogether
+So altogether equation \ref{feqnagain} becomes
 
 \begin{eqnarray}
 \underbrace{ \frac{y''(\phi+\lambda)}{(1+y'^2)^{3/2}} + \frac{y'\phi_x
@@ -300,18 +302,22 @@ We solve equation \ref{zdashdash} using the same numerical method as
 for the straight line.
 
 ```{r catenaryODEdefiner}
-Lorenz <- function(t, state, parameters) {
+catenary <- function(t, state, parameters) {
     with(as.list(c(state, parameters)), {
         dZ <- Zdash
 
-        phi <- 0
+        x <- t
+        y <- cosh(x)
+        
+        phi <- x
         phi_y  <- 0
         phi_x <- 1
+        
 
-        dZdash <- 4*Zdash*tanh(t) - Z -(phi + lambda + phi_x*sinh(t)*cosh(t) - phi_y*cosh(t))
+        dZdash <- 4*Zdash*tanh(x) - Z -(phi + lambda + phi_x*sinh(x)*cosh(x) - phi_y*cosh(x)) # equation 24
 
-        dextra_length <- Zdash * tanh(t)
-        dextra_length2 <- -Z/cosh(t)^2
+        dextra_length <- Zdash * tanh(x)
+        dextra_length2 <- -Z/cosh(x)^2
         list(c(dZ, dZdash, dextra_length, dextra_length2))
     })
 }
@@ -324,7 +330,7 @@ parameters <- c(lambda = 0)
 state      <- c(Z = 0, Zdash = 0, extra_length = 0, extra_length2 = 0)  # initial conditions
 times      <- seq(-2, 2, by = 0.1)
 
-out <- ode(y = state, times = times, func = Lorenz, parms = parameters)
+out <- ode(y = state, times = times, func = catenary, parms = parameters)
 ```
 
 ```{r showcatenaryODE}
@@ -344,10 +350,11 @@ badness <- function(unknown, give=FALSE){
     parameters <- c(lambda = lambda)
     state <-  # initial conditions
         c(Z = 0, Zdash = Zdash_initial, extra_length=0, extra_length2=0) 
-    out <- ode(y = state, times = times, func = Lorenz, parms = parameters)
+    out <- ode(y = state, times = times, func = catenary, parms = parameters)
     final_disp <- out[5,2]
     extra_length <- out[5,4]
     badness <- final_disp^2 + extra_length^2
+    badness <- abs(final_disp) + abs(extra_length)
     if(give){
         return(out)
     } else {
@@ -364,20 +371,154 @@ badness(c(6, -9))
 
 
 ```{r usecatenarybadness, cache=TRUE}
-optim(c(0,0),badness)
+(jj<- optim(c(0,0),badness, hessian = TRUE))
+minbad <- jj$par
+
+parameters <- c(lambda = minbad[1])
+state <- c(Z = 0, Zdash = minbad[2], extra_length = 0, extra_length2 = 0)
+times <- seq(-2, 2, by = 0.1)
+# initial conditions
+out <- ode(y = state, times = times, func = catenary, parms = parameters)
+head(out)
+tail(out)
+```
+
+```{r}
+jj$hessian
+eigen(jj$hessian)
 ```
 
 ```{r usef, cache=TRUE}
-v1 <- seq(from = -1, to = 1, by = 0.1)
-v2 <- seq(from = -11, to = -9, by = 0.1)
-M <- as.matrix(expand.grid(v1,v2))
+v1 <- seq(from = -0.1, to = 0.1, len=15)
+v2 <- seq(from = -12.1, to = -11.9, len=65)
+M <- as.matrix(expand.grid(v1, v2))
 head(M)
 bad <- sapply(seq_len(nrow(M)),function(i){badness(unname(M[i,]))})
 ```
 
-```{r contbad}
+```{r contbad, cache=FALSE}
 M <- matrix(bad, length(v1), length(v2))
-M <- pmin(M,50)
+M <- pmin(M, Inf)
 contour(v1, v2, M)
 filled.contour(M)
 ```
+
+It seems that the contours of badness (on the lambda-gradient plane)
+are elliptical but somewhat elongated.  It is further clear that the
+optimal value of lambda is zero; what is the optimal value of the
+initial gradient at this point?
+
+
+```{r conditionalbadness, cache=TRUE}
+bad2 <- function(lambda, give=FALSE){
+    out <- optimize(
+        f = function(initial_gradient){badness(c(lambda, initial_gradient))},
+        interval = c(-20, 20)
+    )
+    if(!give){out <- out$minimum}
+    return(out)
+}
+
+(jj <- bad2(0, give=T))
+optimal_initial_gradient <- jj$minimum
+```
+
+
+```{r lambad, cache=TRUE}
+lam <- seq(from = -0.05, to = 0.05, by=0.01)
+bad <- sapply(lam, function(l){bad2(l, give=TRUE)$objective})
+```
+
+```{r plotlambad}
+plot(lam, bad, type = 'both')
+```
+
+
+```{r}
+parameters <- c(lambda = 0)
+state <- c(Z = 0, Zdash = optimal_initial_gradient, extra_length = 0, extra_length2 = 0)
+times <- seq(-2, 2, by = 0.1)
+# initial conditions
+cat_perturbation <- ode(y = state, times = times, func = catenary, parms = parameters)
+head(cat_perturbation)
+tail(cat_perturbation)
+```
+
+```{r}
+x  <- cat_perturbation[,1]
+dy <- cat_perturbation[,2]
+plot(x,dy)
+
+plot(x, cosh(x), type='l')
+points(x, cosh(x) + dy*0.1,col='red',type='l')
+```
+
+
+# Now a perturbed catenary on a rotating spaceship
+
+Imagine you are in a spaceship that is rotating in order to simulate
+Earth's gravitational field.  You hold a chain in both hands and it
+forms a slightly perturbed catenary; in fact it minimizes $F+\epsilon
+G$ where
+
+\begin{equation}
+F = \sqrt{1+y'^2}(y+\Lambda),\qquad
+G = \sqrt{1+y'^2}(y^2+\lambda)
+\end{equation}
+
+Then
+
+\begin{eqnarray}
+\el{F} 
+&=& \frac{d}{dx}\left(\frac{y'(y+\Lambda)}{\sqrt{1+y'^2}}\right) - \sqrt{1+y'^2}\nonumber\\
+&=& \frac{(y+\Lambda)y''}{(1+y'^2)^{3/2}} + \frac{y'^2}{\sqrt{1+y'^2}} - \sqrt{1+y'^2}\nonumber\\
+&=& \frac{(y+\Lambda)y''}{(1+y'^2)^{3/2}} -\frac{1}{\sqrt{1+y'^2}}\\
+\end{eqnarray}
+
+and 
+
+\begin{eqnarray}
+\el{G} 
+&=& \frac{d}{dx}\left(\frac{y'(y^2+\Lambda)}{\sqrt{1+y'^2}}\right)  - 2y\sqrt{1+y'^2}\nonumber\\
+&=& \frac{(y^2+\Lambda)y''}{(1+y'^2)^{3/2}} + \frac{2yy'^2}{\sqrt{1+y'^2}}- 2y\sqrt{1+y'^2}\nonumber\\
+&=& \frac{(y^2+\Lambda)y''}{(1+y'^2)^{3/2}} - \frac{2y}{\sqrt{1+y'^2}}\nonumber\\
+\end{eqnarray}
+
+\begin{eqnarray}
+\el{G} + \left(z\di{}{y} + z'\di{}{y'} + z''\di{}{y''}\right)\left(\el{F}\right) &=& 0\nonumber\\
+\frac{(y^2+\Lambda)y''}{(1+y'^2)^{3/2}} - \frac{2y}{\sqrt{1+y'^2}}
++ \left(z\di{}{y} + z'\di{}{y'} +
+z''\di{}{y''}\right)\left(\frac{(y^2+\Lambda)y''}{(1+y'^2)^{3/2}} -
+\frac{2y}{\sqrt{1+y'^2}}\right) &=& 0\nonumber\\
+\frac{(y^2+\Lambda)y''}{(1+y'^2)^{3/2}} - \frac{2y}{\sqrt{1+y'^2}}
++ z  \left(\frac{y}{(1+y'^2)^{3/2}} - \frac{2}{\sqrt{1+y'^2}}\right)\nonumber\\
++ z' \left(\frac{-3(y^2+\Lambda)y'y''}{(1+y'^2)^{5/2}} + \frac{2yy'}{(1+y'^2)^{3/2}}\right)
++ z''\frac{y^2+\Lambda}{(1+y'^2)^{3/2}} &=& 0
+\end{eqnarray}
+
+again, we set $\Lambda=0$ and with boundary conditions we get
+$y'=y''=\sqrt{1+y'^2}=\cosh x$, $y'=\sinh x$:
+
+\begin{eqnarray}
+\frac{(y^2+\Lambda)y''}{(1+y'^2)^{3/2}} - \frac{2y}{\sqrt{1+y'^2}}
++ z  \left(\frac{y}{(1+y'^2)^{3/2}} - \frac{2}{\sqrt{1+y'^2}}\right)\nonumber\\
++ z' \left(\frac{-3(y^2+\Lambda)y'y''}{(1+y'^2)^{5/2}} + \frac{2yy'}{(1+y'^2)^{3/2}}\right)
++ z''\frac{y^2+\Lambda}{(1+y'^2)^{3/2}} &=& 0\nonumber\\
+\frac{y^2y''}{(1+y'^2)^{3/2}} - \frac{2y}{\sqrt{1+y'^2}}
++ z  \left(\frac{y}{(1+y'^2)^{3/2}} - \frac{2}{\sqrt{1+y'^2}}\right)\nonumber\\
++ z' \left(\frac{-3y^2y'y''}{(1+y'^2)^{5/2}} + \frac{2yy'}{(1+y'^2)^{3/2}}\right)
++ z''\frac{y^2}{(1+y'^2)^{3/2}} &=& 0\nonumber\\
+\frac{\cosh^3 x}{\cosh^3 x} - \frac{2\cosh x}{\cosh x}
++ z  \left(\frac{\cosh x}{\cosh^3 x} - \frac{2}{\cosh x}\right)\nonumber\\
++ z' \left(\frac{-3\cosh^3 x\sinh x}{\cosh^5x} + \frac{2\sinh x\cosh x}{\cosh^3x}\right)
++ z''\frac{\cosh^2x}{\cosh^3x} &=& 0\nonumber\\
+-1 +z\left(\frac{1}{\cosh^2x}-\frac{2}{\cosh x}\right) - z'\left(\frac{\sinh x}{\cosh x}\right)
++z''\left(\frac{1}{\cosh x}\right) &=& 0\nonumber\\
++z\left(\frac{1}{\cosh^2x}-\frac{2}{\cosh x}\right) - z'\left(\frac{\sinh x}{\cosh x}\right)
++z''\left(\frac{1}{\cosh x}\right) &=& 1\nonumber\\
++z\left(\cosh^{-1}x - 2\right) - z'\tanh x
++z'' &=& 1\nonumber\\
+z\left(2-\cosh^{-1}x\right) + z'\tanh x  +1 &=& z''
+\end{eqnarray}
+
+
