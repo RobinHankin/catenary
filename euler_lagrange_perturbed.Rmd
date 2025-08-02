@@ -484,15 +484,17 @@ and
 &=& \frac{(y^2+\Lambda)y''}{(1+y'^2)^{3/2}} - \frac{2y}{\sqrt{1+y'^2}}\nonumber\\
 \end{eqnarray}
 
+giving:
+
 \begin{eqnarray}
 \el{G} + \left(z\di{}{y} + z'\di{}{y'} + z''\di{}{y''}\right)\left(\el{F}\right) &=& 0\nonumber\\
 \frac{(y^2+\Lambda)y''}{(1+y'^2)^{3/2}} - \frac{2y}{\sqrt{1+y'^2}}
 + \left(z\di{}{y} + z'\di{}{y'} +
 z''\di{}{y''}\right)\left(\frac{(y^2+\Lambda)y''}{(1+y'^2)^{3/2}} -
-\frac{2y}{\sqrt{1+y'^2}}\right) &=& 0\nonumber\\
+\frac{1}{\sqrt{1+y'^2}}\right) &=& 0\nonumber\\
 \frac{(y^2+\Lambda)y''}{(1+y'^2)^{3/2}} - \frac{2y}{\sqrt{1+y'^2}}
-+ z  \left(\frac{2yy''}{(1+y'^2)^{3/2}} - \frac{2}{\sqrt{1+y'^2}}\right)\nonumber\\
-+ z' \left(\frac{-3(y^2+\Lambda)y'y''}{(1+y'^2)^{5/2}} + \frac{2yy'}{(1+y'^2)^{3/2}}\right)
++ z  \left(\frac{2yy''}{(1+y'^2)^{3/2}} \right)\nonumber\\
++ z' \left(\frac{-3(y^2+\Lambda)y'y''}{(1+y'^2)^{5/2}} - \frac{y'}{(1+y'^2)^{3/2}}\right)
 + z''\frac{y^2+\Lambda}{(1+y'^2)^{3/2}} &=& 0
 \end{eqnarray}
 
@@ -501,25 +503,25 @@ $y'=y''=\sqrt{1+y'^2}=\cosh x$, $y'=\sinh x$:
 
 \begin{eqnarray}
 \frac{(y^2+\Lambda)y''}{(1+y'^2)^{3/2}} - \frac{2y}{\sqrt{1+y'^2}}
-+ z  \left(\frac{2yy''}{(1+y'^2)^{3/2}} - \frac{2}{\sqrt{1+y'^2}}\right)\nonumber\\
-+ z' \left(\frac{-3(y^2+\Lambda)y'y''}{(1+y'^2)^{5/2}} + \frac{2yy'}{(1+y'^2)^{3/2}}\right)
++ z  \left(\frac{2yy''}{(1+y'^2)^{3/2}} \right)\nonumber\\
++ z' \left(\frac{-3(y^2+\Lambda)y'y''}{(1+y'^2)^{5/2}} - \frac{y'}{(1+y'^2)^{3/2}}\right)
 + z''\frac{y^2+\Lambda}{(1+y'^2)^{3/2}} &=& 0\nonumber\\
 \frac{y^2y''}{(1+y'^2)^{3/2}} - \frac{2y}{\sqrt{1+y'^2}}
-+ z  \left(\frac{2yy''}{(1+y'^2)^{3/2}} - \frac{2}{\sqrt{1+y'^2}}\right)\nonumber\\
-+ z' \left(\frac{-3y^2y'y''}{(1+y'^2)^{5/2}} + \frac{2yy'}{(1+y'^2)^{3/2}}\right)
++ z  \left(\frac{2yy''}{(1+y'^2)^{3/2}} \right)\nonumber\\
++ z' \left(\frac{-3y^2y'y''}{(1+y'^2)^{5/2}} - \frac{y'}{(1+y'^2)^{3/2}}\right)
 + z''\frac{y^2}{(1+y'^2)^{3/2}} &=& 0\nonumber\\
 \frac{\cosh^3 x}{\cosh^3 x} - \frac{2\cosh x}{\cosh x}
-+ z  \left(\frac{2\cosh^2 x}{\cosh^3 x} - \frac{2}{\cosh x}\right)\nonumber\\
-+ z' \left(\frac{-3\cosh^3 x\sinh x}{\cosh^5x} + \frac{2\sinh x\cosh x}{\cosh^3x}\right)
-+ z''\frac{\cosh^2x}{\cosh^3x} &=& 0\nonumber\\
--1 - z'\left(\frac{\sinh x}{\cosh^2 x}\right)
-+z''\left(\frac{1}{\cosh x}\right) &=& 0\nonumber\\
- - z'\left(\frac{\sinh x}{\cosh^2 x}\right)
-+z''\left(\frac{1}{\cosh x}\right) &=& 1\nonumber\\
--z'\tanh x+z'' &=& \cosh x
++ z  \left(\frac{2\cosh^2 x}{\cosh^3 x}\right)\nonumber\\
++ z' \left(\frac{-3\cosh^3 x\sinh x}{\cosh^5 x}-\frac{\sinh x}{\cosh^3 x}\right)
++ z''\left(\frac{\cosh^2x}{\cosh^3 x}\right) &=& 0\nonumber\\
+-1
++ \frac{2z}{\cosh x}
++ z'\left(\frac{\sinh x}{\cosh^2 x}-\frac{\sinh x}{\cosh^3 x}\right)
++ \frac{z''}{\cosh x} &=& 0\\
+-\cosh x + 2z + z'\tanh x(1-\operatorname{sech} x) + z'' &=& 0\nonumber\\
 \end{eqnarray}
 
 \begin{equation}
-z'' = z'\tanh x + \cosh x\\
+z'' + z'\tanh x(1-\operatorname{sech} x) +2z = \cosh x
 \end{equation}
 
