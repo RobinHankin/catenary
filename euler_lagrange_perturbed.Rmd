@@ -165,6 +165,26 @@ for(i in seq(from=0, to=0.16, len=35)){
 }
 ```
 
+```{r, plotdeltaneg, cache=FALSE}
+plot(NA, xlim=c(0, 10), ylim=c(0, 1), asp=1)
+theta <- seq(from=0, to = 2*pi, len=100)
+points(5 + cos(theta), sin(theta), type="l",col="gray")
+for(i in seq(from=0, to=0.4, len=15)){
+    points(ray(i, epsilon = -0.2), type='l')
+}
+
+```
+
+```{r, plotdeltanegcloseup, cache=FALSE}
+plot(NA, xlim=c(6,8), ylim=c(-0.2, 0.2), asp=1)
+for(i in seq(from=0, to=0.16, len=35)){
+    points(ray(i, epsilon = -2), type='l', lwd=0.1)
+}
+```
+
+
+
+
 ```{r definefinaldeflection}
 final_deflection <- function(s){
     jj <- ray(s, give=TRUE)
@@ -306,16 +326,20 @@ z'' = 4z'\tanh x -z  \label{homogenous}
 
 This has solution
 
-\begin{equation}
-z(x) = \cosh^2x\left(
-  \alpha P_2^\sqrt{3}(\tanh x)
-  \alpha Q_2^\sqrt{3}(\tanh x)
-  \right)
-\end{equation}
-  
+\begin{eqnarray}
+z(x) &=&
+   \alpha\cosh^2x P_2^{\sqrt{3}}(\tanh x)
++  \beta \cosh^2x Q_2^{\sqrt{3}}(\tanh x)\\
+&=& \cosh^2x\left(
+   \alpha P_2^{\sqrt{3}}(\tanh x)
++  \beta  Q_2^{\sqrt{3}}(\tanh x)
+\right)
+\end{eqnarray}
+
 where $P$ and $Q$ are associated Legendre functions of the first and
 second kind respectively.  But imposing boundary conditions
-$z(-1)=z(1)=0$ results in just the trivial solution.
+$z(-1)=z(1)=0$ results in just the trivial solution.  And besides
+$Q(\cdot)$ has infinities.
 
 
 ## Numerical work for the catenary
@@ -527,7 +551,7 @@ grid()
 ```
 
 ```{r definespacebadness}
-badness <- function(unknown, give=FALSE){
+badness_space <- function(unknown, give=FALSE){
     lambda        <- unknown[1]
     Zdash_initial <- unknown[2]
     times <- seq(from = -2, to = 2, by = 1)
@@ -551,7 +575,7 @@ badness <- function(unknown, give=FALSE){
 
 
 ```{r optimspace, cache=TRUE}
-(jj <- optim(c(0,0.1), badness, hessian=TRUE))
+(jj <- optim(c(0,0.1), badness_space, hessian=TRUE))
 eigen(jj$hessian)
 ```
 
@@ -575,68 +599,20 @@ tail(out)
 x <- out[,1]
 y0 <- out[,2]
 plot(x, y0)
-plot(x,cosh(x), type='l')
+plot(x,cosh(x), asp=1, type='l')
 points(x,cosh(x) - y0/4, type="l", col="red")
 ```
 
 
-### Now a suspention bridge.
+### Now a suspension bridge.
 
 We have a suspension bridge of unit weight per unit length supporting
-a road of weight $\epsilon$ per unit length.
+a road of weight $\epsilon$ per unit length.  My first thought was to
+use something like
 
 \begin{equation}
 F=\sqrt{1+y'^2}(y+\Lambda),\qquad G = 1 + \lambda\sqrt{1+y'^2}
 \end{equation}
 
-
-\begin{eqnarray}
-\el{F} &=& \frac{d}{dx}\left[\frac{(y+\Lambda)y'}{\sqrt{1+y'^2}}\right] - \sqrt{1+y'^2}\nonumber\\
-       &=& \frac{y''(y+\Lambda)}{(1+y'^2)^{3/2}} + \frac{y'^2}{\sqrt{1+y'^2}} - \sqrt{1+y'^2}\nonumber\\
-       &=& \frac{y''(y+\Lambda)}{(1+y'^2)^{3/2}} - \frac{1}{\sqrt{1+y'^2}}
-\end{eqnarray}
-
-and because $\di{G}{y'}=\lambda y'/\sqrt{1+y'^2}$ we have
-
-\begin{eqnarray}
-\el{G} &=& \frac{d}{dx}\di{G}{y'}\nonumber\\
-       &=& \frac{d}{dx}\left[\frac{\lambda y'}{\sqrt{1+y'^2}}\right]\nonumber\\
-       &=& \frac{\lambda y''}{(1+y'^2)^{3/2}}\label{elG2}\\
-\end{eqnarray}
-
-
-
-
-So 
-
-\begin{eqnarray}
-\el{G} + \left(z\di{}{y} + z'\di{}{y'} + z''\di{}{y''}\right)
-\left(\el{F}\right) &=& 0\end{eqnarray}
-
-The first term is just $\frac{\lambda y''}{(1+y'^2)^{3/2}}$ (from
-equation \ref{elG2}) and the second is from equation
-\ref{zyzdddyzdddydd}:
-
-\begin{eqnarray}
-\frac{\lambda y''}{(1+y'^2)^{3/2}} 
-+ z  \left(\frac{y''}{(1+y'^2)^{3/2}}\right)
-+ z' \left(\frac{-3(y+\Lambda)y'y''}{(1+y'^2)^{5/2}} - \frac{y'}{(1+y'^2)^{3/2}}\right)
-+ z''\left(\frac{y+\Lambda}{(1+y'^2)^{3/2}}\right) &=& 0
-\end{eqnarray}
-
-
-Again we specify $\Lambda=0$ and $y=y''=\sqrt{1+y'^2}=\cosh x$,
-$y'=\sinh x$ to get 
-
-\begin{eqnarray}
-\frac{\lambda y''}{(1+y'^2)^{3/2}} 
-+ z  \left(\frac{y''}{(1+y'^2)^{3/2}}\right)
-+ z' \left(\frac{-3(y+\Lambda)y'y''}{(1+y'^2)^{5/2}} - \frac{y'}{(1+y'^2)^{3/2}}\right)
-+ z''\left(\frac{y+\Lambda}{(1+y'^2)^{3/2}}\right) &=& 0
-\end{eqnarray}
-
-The inhomogeneous term is $\lambda/\cosh^2x$.
-
-\begin{equation}
-z'' - 4z'\tanh x -z = \lambda\operatorname{sech}^2 x
-\end{equation}
+but on reflection this is not correct.  It is not cleaar to me what
+exactly is being minimized in this case.
