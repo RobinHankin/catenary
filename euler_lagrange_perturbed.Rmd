@@ -197,7 +197,7 @@ optimize(final_deflection, interval = c(0.1,0.15))
 
 Now 
 
-\begin{equation}
+\begin{equation}\label{FandG}
 F = \sqrt{1+y'^2}(y + \Lambda)\qquad G =  \sqrt{1+y'^2}(\phi + \lambda)
 \end{equation}
 
@@ -459,66 +459,99 @@ points(x, cosh(x) + dy*0.1,col='red',type='l')
 Imagine you are in a spaceship that is rotating in order to simulate
 Earth's gravitational field.  You hold a chain in both hands and it
 forms a slightly perturbed catenary; in fact it minimizes $F+\epsilon
-G$ where
+G$ where $\phi=y^2$ in the notation of Equation \ref{FandG}.
 
-\begin{equation}
-F = \sqrt{1+y'^2}(y+\Lambda),\qquad
-G = \sqrt{1+y'^2}(y^2+\lambda)
-\end{equation}
 
-Then
+```{r catenary_space_definer}
+catenary_space <- function(t, state, parameters) {
+    with(as.list(c(state, parameters)), {
+        dZ <- Zdash
 
-\begin{eqnarray}
-\el{F} 
-&=& \frac{d}{dx}\left(\frac{y'(y+\Lambda)}{\sqrt{1+y'^2}}\right) - \sqrt{1+y'^2}\nonumber\\
-&=& \frac{(y+\Lambda)y''}{(1+y'^2)^{3/2}} + \frac{y'^2}{\sqrt{1+y'^2}} - \sqrt{1+y'^2}\nonumber\\
-&=& \frac{(y+\Lambda)y''}{(1+y'^2)^{3/2}} -\frac{1}{\sqrt{1+y'^2}}\\
-\end{eqnarray}
+        x <- t
+        y <- cosh(x)
+        
+        phi <- y^2
+        phi_y  <- 2*y
+        phi_x <- 0
+        
 
-and 
+        dZdash <- 4*Zdash*tanh(x) - Z -(phi + lambda + phi_x*sinh(x)*cosh(x) - phi_y*cosh(x)) # equation 24
 
-\begin{eqnarray}
-\el{G} 
-&=& \frac{d}{dx}\left(\frac{y'(y^2+\lambda)}{\sqrt{1+y'^2}}\right)  - 2y\sqrt{1+y'^2}\nonumber\\
-&=& \frac{(y^2+\lambda)y''}{(1+y'^2)^{3/2}} + \frac{2yy'^2}{\sqrt{1+y'^2}}- 2y\sqrt{1+y'^2}\nonumber\\
-&=& \frac{(y^2+\lambda)y''}{(1+y'^2)^{3/2}} - \frac{2y}{\sqrt{1+y'^2}}\nonumber\\
-\end{eqnarray}
+        dextra_length <- Zdash * tanh(x)
+        dextra_length2 <- -Z/cosh(x)^2
+        list(c(dZ, dZdash, dextra_length, dextra_length2))
+    })
+}
+```
 
-giving:
 
-\begin{eqnarray}
-\el{G} + \left(z\di{}{y} + z'\di{}{y'} + z''\di{}{y''}\right)\left(\el{F}\right) &=& 0\nonumber\\
-\frac{(y^2+\lambda)y''}{(1+y'^2)^{3/2}} - \frac{2y}{\sqrt{1+y'^2}}
-+ \left(z\di{}{y} + z'\di{}{y'} +
-z''\di{}{y''}\right)\left(\frac{(y^2+\Lambda)y''}{(1+y'^2)^{3/2}} -
-\frac{1}{\sqrt{1+y'^2}}\right) &=& 0\nonumber\\
-\frac{(y^2+\lambda)y''}{(1+y'^2)^{3/2}} - \frac{2y}{\sqrt{1+y'^2}}
-+ z  \left(\frac{2yy''}{(1+y'^2)^{3/2}} \right)\nonumber\\
-+ z' \left(\frac{-3(y^2+\Lambda)y'y''}{(1+y'^2)^{5/2}} - \frac{y'}{(1+y'^2)^{3/2}}\right)
-+ z''\frac{y^2+\Lambda}{(1+y'^2)^{3/2}} &=& 0
-\end{eqnarray}
+```{r solvespace, cache=TRUE}
 
-again, we set $\Lambda=0$ and with boundary conditions we get
-$y'=y''=\sqrt{1+y'^2}=\cosh x$, $y'=\sinh x$:
+parameters <- c(lambda = 0)
+state      <- c(Z = 0, Zdash = 0, extra_length = 0, extra_length2 = 0)  # initial conditions
+times      <- seq(-2, 2, by = 0.1)
 
-\begin{eqnarray}
-\frac{(y^2+\lambda)y''}{(1+y'^2)^{3/2}} - \frac{2y}{\sqrt{1+y'^2}}
-+ z  \left(\frac{2yy''}{(1+y'^2)^{3/2}} \right)\nonumber\\
-+ z' \left(\frac{-3(y^2+\Lambda)y'y''}{(1+y'^2)^{5/2}} - \frac{y'}{(1+y'^2)^{3/2}}\right)
-+ z''\frac{y^2+\Lambda}{(1+y'^2)^{3/2}} &=& 0\nonumber\\
-\frac{(y^2+\lambda)y''}{(1+y'^2)^{3/2}} - \frac{2y}{\sqrt{1+y'^2}}
-+ z  \left(\frac{2yy''}{(1+y'^2)^{3/2}} \right)\nonumber\\
-+ z' \left(\frac{-3y^2y'y''}{(1+y'^2)^{5/2}} - \frac{y'}{(1+y'^2)^{3/2}}\right)
-+ z''\frac{y^2}{(1+y'^2)^{3/2}} &=& 0\nonumber\\
-\frac{\cosh^3 x + \lambda\cosh x}{\cosh^3 x} - \frac{2\cosh x}{\cosh x}
-+ z  \left(\frac{2\cosh^2 x}{\cosh^3 x}\right)\nonumber\\
-+ z' \left(\frac{-3\cosh^3 x\sinh x}{\cosh^5 x}-\frac{\sinh x}{\cosh^3 x}\right)
-+ z''\left(\frac{\cosh^2x}{\cosh^3 x}\right) &=& 0\nonumber\\
-  \frac{\lambda}{\cosh^2 x} - 1
-+ \frac{2z}{\cosh x}
-+ z'\left(\frac{-3\sinh x}{\cosh^2 x}-\frac{\sinh x}{\cosh^3 x}\right)
-+ \frac{z''}{\cosh x} &=& 0\\
-z'' - \tanh x(3 + \operatorname{sech} x)z'  +2z &=& 1-\lambda\operatorname{sech} x
-\nonumber
-\end{eqnarray}
+out <- ode(y = state, times = times, func = catenary, parms = parameters)
+```
 
+```{r showspaceODE}
+head(out)
+tail(out)
+x <- out[,1]
+y <- out[,2]
+plot(x,y,type='l')
+grid()
+```
+
+```{r definespacebadness}
+badness <- function(unknown, give=FALSE){
+    lambda        <- unknown[1]
+    Zdash_initial <- unknown[2]
+    times <- seq(from = -2, to = 2, by = 1)
+    parameters <- c(lambda = lambda)
+    state <-  # initial conditions
+        c(Z = 0, Zdash = Zdash_initial, extra_length=0, extra_length2=0) 
+    out <- ode(y = state, times = times, func = catenary_space, parms = parameters)
+    ## NB: above, catenary_space() not catenary()!
+    final_disp <- out[5,2]
+    extra_length <- out[5,4]
+    badness <- final_disp^2 + extra_length^2
+    badness <- abs(final_disp) + abs(extra_length)
+    if(give){
+        return(out)
+    } else {
+        return(badness)
+    } 
+}
+```
+
+
+
+```{r optimspace, cache=TRUE}
+(jj <- optim(c(0,0.1), badness, hessian=TRUE))
+eigen(jj$hessian)
+```
+
+
+
+
+```{r, solveoptimspace, cache=TRUE}
+parameters <- c(lambda = jj$par[1])
+initial_gradient <- jj$par[2]
+state      <- c(Z = 0, Zdash = initial_gradient, extra_length = 0, extra_length2 = 0)  # initial conditions
+times      <- seq(-2, 2, by = 0.1)
+
+out <- ode(y = state, times = times, func = catenary_space, parms = parameters)
+    ## NB: above, catenary_space() not catenary()!
+```
+
+
+```{r, showoptimspace, cache=FALSE}
+head(out)
+tail(out)
+x <- out[,1]
+y0 <- out[,2]
+plot(x, y0)
+plot(x,cosh(x), type='l')
+points(x,cosh(x) - y0/4, type="l", col="red")
+```
