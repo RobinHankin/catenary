@@ -295,6 +295,29 @@ z'' = 4z'\tanh x -z  -(\phi + \lambda + \phi_x\sinh x\cosh x - \phi_y\cosh x)\la
 
 Above we understand that $\phi=\phi(x,y)=\phi(x,\cosh x)$.
 
+### The homogeneous equation.
+
+I am not sure that this makes sense, but we can consider  the
+homogeneous term, viz
+
+\begin{equation}
+z'' = 4z'\tanh x -z  \label{homogenous}
+\end{equation}
+
+This has solution
+
+\begin{equation}
+z(x) = \cosh^2x\left(
+  \alpha P_2^\sqrt{3}(\tanh x)
+  \alpha Q_2^\sqrt{3}(\tanh x)
+  \right)
+\end{equation}
+  
+where $P$ and $Q$ are associated Legendre functions of the first and
+second kind respectively.  But imposing boundary conditions
+$z(-1)=z(1)=0$ results in just the trivial solution.
+
+
 ## Numerical work for the catenary
 
 
@@ -555,3 +578,65 @@ plot(x, y0)
 plot(x,cosh(x), type='l')
 points(x,cosh(x) - y0/4, type="l", col="red")
 ```
+
+
+### Now a suspention bridge.
+
+We have a suspension bridge of unit weight per unit length supporting
+a road of weight $\epsilon$ per unit length.
+
+\begin{equation}
+F=\sqrt{1+y'^2}(y+\Lambda),\qquad G = 1 + \lambda\sqrt{1+y'^2}
+\end{equation}
+
+
+\begin{eqnarray}
+\el{F} &=& \frac{d}{dx}\left[\frac{(y+\Lambda)y'}{\sqrt{1+y'^2}}\right] - \sqrt{1+y'^2}\nonumber\\
+       &=& \frac{y''(y+\Lambda)}{(1+y'^2)^{3/2}} + \frac{y'^2}{\sqrt{1+y'^2}} - \sqrt{1+y'^2}\nonumber\\
+       &=& \frac{y''(y+\Lambda)}{(1+y'^2)^{3/2}} - \frac{1}{\sqrt{1+y'^2}}
+\end{eqnarray}
+
+and because $\di{G}{y'}=\lambda y'/\sqrt{1+y'^2}$ we have
+
+\begin{eqnarray}
+\el{G} &=& \frac{d}{dx}\di{G}{y'}\nonumber\\
+       &=& \frac{d}{dx}\left[\frac{\lambda y'}{\sqrt{1+y'^2}}\right]\nonumber\\
+       &=& \frac{\lambda y''}{(1+y'^2)^{3/2}}\label{elG2}\\
+\end{eqnarray}
+
+
+
+
+So 
+
+\begin{eqnarray}
+\el{G} + \left(z\di{}{y} + z'\di{}{y'} + z''\di{}{y''}\right)
+\left(\el{F}\right) &=& 0\end{eqnarray}
+
+The first term is just $\frac{\lambda y''}{(1+y'^2)^{3/2}}$ (from
+equation \ref{elG2}) and the second is from equation
+\ref{zyzdddyzdddydd}:
+
+\begin{eqnarray}
+\frac{\lambda y''}{(1+y'^2)^{3/2}} 
++ z  \left(\frac{y''}{(1+y'^2)^{3/2}}\right)
++ z' \left(\frac{-3(y+\Lambda)y'y''}{(1+y'^2)^{5/2}} - \frac{y'}{(1+y'^2)^{3/2}}\right)
++ z''\left(\frac{y+\Lambda}{(1+y'^2)^{3/2}}\right) &=& 0
+\end{eqnarray}
+
+
+Again we specify $\Lambda=0$ and $y=y''=\sqrt{1+y'^2}=\cosh x$,
+$y'=\sinh x$ to get 
+
+\begin{eqnarray}
+\frac{\lambda y''}{(1+y'^2)^{3/2}} 
++ z  \left(\frac{y''}{(1+y'^2)^{3/2}}\right)
++ z' \left(\frac{-3(y+\Lambda)y'y''}{(1+y'^2)^{5/2}} - \frac{y'}{(1+y'^2)^{3/2}}\right)
++ z''\left(\frac{y+\Lambda}{(1+y'^2)^{3/2}}\right) &=& 0
+\end{eqnarray}
+
+The inhomogeneous term is $\lambda/\cosh^2x$.
+
+\begin{equation}
+z'' - 4z'\tanh x -z = \lambda\operatorname{sech}^2 x
+\end{equation}
