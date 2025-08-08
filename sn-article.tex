@@ -1,0 +1,144 @@
+%%\documentclass[referee,sn-basic]{sn-jnl}% referee option is meant for double line spacing
+%%\documentclass[lineno,pdflatex,sn-basic]{sn-jnl}% Basic Springer Nature Reference Style/Chemistry Reference Style
+
+\documentclass[pdflatex,sn-mathphys-num]{sn-jnl}% Math and Physical Sciences Numbered Reference Style
+
+\usepackage{graphicx}%
+\usepackage{multirow}%
+\usepackage{amsmath,amssymb,amsfonts}%
+\usepackage{amsthm}%
+\usepackage{mathrsfs}%
+\usepackage[title]{appendix}%
+\usepackage{xcolor}%
+\usepackage{textcomp}%
+\usepackage{manyfoot}%
+\usepackage{booktabs}%
+\usepackage{algorithm}%
+\usepackage{algorithmicx}%
+\usepackage{algpseudocode}%
+\usepackage{listings}%
+
+
+\theoremstyle{thmstyleone}%
+\newtheorem{theorem}{Theorem}%  meant for continuous numbers
+%%\newtheorem{theorem}{Theorem}[section]% meant for sectionwise numbers
+%% optional argument [theorem] produces theorem numbering sequence instead of independent numbers for Proposition
+\newtheorem{proposition}[theorem]{Proposition}% 
+%\newtheorem{proposition}{Proposition}% to get separate numbers for theorem and proposition etc.
+
+\theoremstyle{thmstyletwo}%
+\newtheorem{example}{Example}%
+\newtheorem{remark}{Remark}%
+
+\theoremstyle{thmstylethree}%
+\newtheorem{definition}{Definition}%
+
+\raggedbottom
+%%\unnumbered% uncomment this for unnumbered level heads
+
+\begin{document}
+\newcommand{\di}[2]{\frac{\partial{#1}}{\partial{#2}}}
+\newcommand{\el}[1]{\frac{d}{dx}\di{#1}{y'} - \di{#1}{y}}
+\title[Article Title]{Article Title}
+
+%%=============================================================%%
+%% GivenName	-> \fnm{Joergen W.}
+%% Particle	-> \spfx{van der} -> surname prefix
+%% FamilyName	-> \sur{Ploeg}
+%% Suffix	-> \sfx{IV}
+%% \author*[1,2]{\fnm{Joergen W.} \spfx{van der} \sur{Ploeg} 
+%%  \sfx{IV}}\email{iauthor@gmail.com}
+%%=============================================================%%
+
+\author{\fnm{Robin} \sur{Hankin}}\email{hankin.robin@gmail.com}
+
+\affil{\orgdiv{Computer and Mathematical Sciences}, \orgname{University of Stirling}, \city{Stirling}, \postcode{FK9 4LA}, \country{Scotland}}
+
+
+
+
+\abstract{ This short document presents a method for dealing with
+  slight perturbations to functionals.  We apply the Euler-Lagrange
+  equations to a slightly perturbed functional and retain only terms to first order.
+
+  Three applications from different areas of mathematical physics are
+  presented.
+
+  }
+
+\keywords{keyword1, Keyword2, Keyword3, Keyword4}
+
+%%\pacs[JEL Classification]{D8, H51}
+
+%%\pacs[MSC Classification]{35A01, 65L10, 65L12, 65L20, 65L70}
+
+\maketitle
+
+\section{Introduction}\label{sec1}
+
+
+The Euler-Lagrange equations were developed by Leonhard Euler and
+Joseph-Louis Lagrange in the 1750s.  Following \citep{jeffreys1972},
+suppose we have an integral of the form
+
+\begin{equation}
+F[y] = \int_{x_1}^{x_2} F(x,y(x),y'(x))\,dx
+\end{equation}
+
+\noindent where $F$ is a given functional and $y$ a function of $x$,
+to be determined.  We wish to minimize, over a space of suitably
+well-behaved functions
+$y\colon\left[x_1,x_2\right]\longrightarrow\mathbb{R}$, the value of
+$F[y]$.  Now suppose we have identified such a $y$ that locally
+minimizes $F[y]$, and we now consider a perturbed functional
+$\mathcal{F}=F+\epsilon G$.  We take $\epsilon$ to be sufficiently
+small for us to neglect second and higher powers.  Can we similarly
+perturb $y$ (to $y+\epsilon z$, say), so as to minimize $F+\epsilon
+G$?
+
+Under these circumstances, the perturbation term $z=z(x)$ is
+interesting in its own right, and the fact the perturbation is linear
+leads to new insight.
+
+Formally, we suppose:
+
+\begin{eqnarray}
+  \frac{d}{dx}\di{F}{y'}-\di{F}{y} &=& 0\nonumber\\
+  \frac{d}{dx}\di{(F+\epsilon G)}{Y'}-\di{(F+\epsilon G)}{Y} &=& 0
+\end{eqnarray}
+
+where $Y=Y(x) = y(x) + \epsilon z(x)$. Recalling that $F=F[x,y,y']$ we
+have, working to first order:
+
+\begin{eqnarray}
+  {} &{}&
+  \frac{d}{dx}\di{(F+\epsilon G)}{Y'}-\di{(F+\epsilon G)}{Y}\nonumber\\
+  &=&  \left(\frac{d}{dx}\di{F}{Y'}-\di{F}{Y}\right) + \epsilon\left(\frac{d}{dx}\di{G}{Y'}-\di{G}{Y}\right)\nonumber\\
+  &=&  \frac{d}{dx}\left[\di{F(x,y,y')}{Y'}\right] - \di{F(x,y,y')}{Y}
+  + \epsilon\left(\frac{d}{dx}\di{G(x,y,y')}{Y'}-\di{G(x,y,y')}{Y}\right)\nonumber\\
+  &=&  \frac{d}{dx}\left[\di{F(x,Y-\epsilon z,Y'-\epsilon z')}{Y'}\right] -\di{F(x,Y-\epsilon z,Y'-\epsilon z')}{Y}\nonumber\\
+  &{}&\qquad  + \epsilon\left(\frac{d}{dx}\di{G(x,Y-\epsilon z,Y'-\epsilon z')}{Y'}-\di{G(x,Y-\epsilon z,Y'-\epsilon z')}{Y}\right)\nonumber\\
+  &=&  \frac{d}{dx}\left[\di{F(x,Y-\epsilon z,Y'-\epsilon z')}{Y'}\right]-\di{F(x,Y-\epsilon z,Y'-\epsilon z')}{Y}
+  + \epsilon\left(\el{G}\right)\nonumber\\
+  &=&  \frac{d}{dx}\di{}{Y'}\left[F -\epsilon z\di{F}{Y} - \epsilon z'\di{F}{Y'}\right]
+  - \di{}{Y}\left[F -\epsilon z\di{F}{Y} - \epsilon z'\di{F}{Y'}\right]
+  + \epsilon\left(\el{G}\right)\nonumber\\
+  &=&  \frac{d}{dx}\di{}{Y'}\left[-\epsilon z\di{F}{Y} - \epsilon z'\di{F}{Y'}\right]
+  - \di{}{Y}\left[-\epsilon z\di{F}{Y} - \epsilon z'\di{F}{Y'}\right]
+  + \epsilon\left(\el{G}\right)\nonumber\\
+\end{eqnarray}
+
+We deduce that
+\begin{eqnarray}
+\frac{d}{dx}\di{}{Y'}\left[z\di{F}{Y} + z'\di{F}{Y'}\right]
+  - \di{}{Y}\left[z\di{F}{Y} + z'\di{F}{Y'}\right] +  \el{G} &=&0\nonumber\\
+
+\end{eqnarray}
+
+
+
+\bibliography{sn-bibliography}% common bib file
+%% if required, the content of .bbl file can be included here once bbl is generated
+%%\input sn-article.bbl
+
+\end{document}
