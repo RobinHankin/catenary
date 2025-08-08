@@ -38,6 +38,8 @@
 
 \begin{document}
 \newcommand{\di}[2]{\frac{\partial{#1}}{\partial{#2}}}
+\newcommand{\dii}[3]{\frac{\partial^2{#1}}{\partial{#2}\partial{#3}}}
+\newcommand{\diii}[4]{\frac{\partial^3{#1}}{\partial{#2}\partial{#3}\partial{#4}}}
 \newcommand{\el}[1]{\frac{d}{dx}\di{#1}{y'} - \di{#1}{y}}
 \title[Article Title]{Article Title}
 
@@ -132,9 +134,28 @@ We deduce that
 \begin{eqnarray}
 \frac{d}{dx}\di{}{Y'}\left[z\di{F}{Y} + z'\di{F}{Y'}\right]
   - \di{}{Y}\left[z\di{F}{Y} + z'\di{F}{Y'}\right] +  \el{G} &=&0\nonumber\\
-
 \end{eqnarray}
 
+Observing that $z$ commutes past $\partial/\partial Y$ and
+$\partial/\partial Y'$, and identifying $\frac{d}{dt}$ with
+$\di{}{x}+ Y'\di{}{Y} + Y''\di{}{Y'}$, we obtain
+
+\begin{eqnarray}
+  \left(\di{}{x}+ Y'\di{}{Y} + Y''\di{}{Y'}\right)
+  \di{}{Y'}\left[z\di{F}{Y} + z'\di{F}{Y'}\right]
+  - \di{}{Y}\left[z\di{F}{Y} + z'\di{F}{Y'}\right] +  \el{G} &=&0\nonumber\\
+  \left(\di{}{x}+ Y'\di{}{Y} + Y''\di{}{Y'}\right)
+  \left[z\dii{F}{Y}{Y'} + z'\dii{F}{Y'}{Y'}\right]
+  - \di{}{Y}\left[z\di{F}{Y} + z'\di{F}{Y'}\right] +  \el{G} &=&0
+\end{eqnarray}
+
+Collecting terms:
+
+\begin{eqnarray}
+  &z& \left(\diii{F}{x}{Y }{Y'} + Y'\diii{F}{Y}{Y }{Y'} + Y''\diii{F}{Y }{Y'}{Y'} - \dii{F}{Y}{Y }\right)\nonumber\\
+ +&z&'\left(\diii{F}{x}{Y'}{Y'} + Y'\diii{F}{Y}{Y'}{Y'} + Y''\diii{F}{Y'}{Y'}{Y'} - \dii{F}{Y}{Y'}\right)\nonumber\\
+  +&{}&  \el{G} = 0
+\end{eqnarray}
 
 
 \bibliography{sn-bibliography}% common bib file
