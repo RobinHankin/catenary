@@ -156,6 +156,177 @@ Collecting terms:
 (above we cancel the $z'F_{yy'}$ term). This is a second order ODE in
 $z$, which gives the first-order perturbation $z$ so that $y$
 maximizes $F$ and $y+\epsilon z$ maximizes $F+\epsilon G$.
+Alternatively, we may factorize the expression, giving
+
+\begin{equation}
+\left(\el{G}\right) + \left(z\di{}{y} + z'\di{}{y'} + z''\di{}{y''}\right)
+\left(\el{F}\right)=0
+\end{equation}
+
+\section{Examples}
+
+\subsection{Refractive index stuff}
+
+The full Euler-Lagrange equations for geometrical optics would be with
+functional $F=(1+\phi)\sqrt{1+y'^2}$ where $\phi=\phi(x,y)$ is a
+refractive index term.
+
+\begin{eqnarray}
+  \frac{d}{dx}\di{F}{y'}-\di{F}{y} &=& 0\\
+  \frac{d}{dx}\frac{\phi y'}{\sqrt{1+y'^2}} &=& \phi_y\sqrt{1+y'^2}\\
+  \frac{\phi_x y'}{\sqrt{1+y'^2}}+\frac{\phi y''}{(1+y'^2)^{3/2}} &=& \phi_y\sqrt{1+y'^2}
+  \end{eqnarray}
+
+Simplifying,
+
+\begin{equation}
+  y'' = (1+y'^2)(\psi_y(1+y'^2) - \psi_xy')
+\end{equation}
+
+where $\psi=\log\phi$.  Even in the simplest nontrivial case of
+constant $\psi_x$ and $\psi_y$, this equation has no simple (and
+certainly no intuitively insightful) solution.  We now move to the
+linearised case considered above.
+
+Here $F=\sqrt{1+y'^2}$ and $G=\phi(x,y)\sqrt{1+y'^2}$.  First the homogeneous part:
+
+\begin{equation}
+  \frac{z''}{(1+y'^2)^{3/2}} -\frac{3y'y''}{(1+y'^2)^{3/2}} +
+  \frac{\phi_xy'}{\sqrt{1+y'^2}} + \frac{\phi_yy'^2}{\sqrt{1+y'^2}} + \frac{y''}{(1+y'^2)^{3/2}}-\phi_y\sqrt{1+y'^2}
+\end{equation}
+
+
+We recall that the unperturbed case $y''=0$ in the unperturbed case,
+and writing $y'=s$ to emphasise that it is a constant we get
+
+\begin{equation}
+  \frac{z''}{(1+s^2)^{3/2}} +
+  \frac{\phi_xs}{\sqrt{1+s^2}} + \frac{\phi_ys^2}{\sqrt{1+s^2}} -\phi_y\sqrt{1+s^2}
+\end{equation}
+
+\begin{equation}
+  z'' = (1+s^2)(\phi_y-\phi_xs)
+\end{equation}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{euler_lagrange_perturbed_files/figure-latex/plotdelta-1.pdf}
+\caption{Light rays following geometrical optics}\label{plotdelta}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{euler_lagrange_perturbed_files/figure-latex/plotdeltacloseup-1.pdf}
+\caption{Light rays following geometrical optics}\label{plotdeltacloseup}
+\end{figure}
+
+
+\subsection{Catenary}
+
+\begin{equation}\label{FandG}
+F = \sqrt{1+y'^2}(y + \Lambda)\qquad G =  \sqrt{1+y'^2}(\phi + \lambda)
+\end{equation}
+
+where $\phi=\phi(x,y)$ is a small perturbation.  Here 
+
+\begin{eqnarray}
+&{}& z''F_{y'y'}\nonumber\\
+&+& z'(F_{xy'y'} + y'F_{yy'y'} + y''F_{y'y'y'})\nonumber\\
+&+& z (F_{xyy'} + y'F_{yyy'} + y''F_{yy'}-F_{yy})\nonumber\\
+&+& (G_{xy'} + y'G_{yy'} + y''G_{y'y'}- G_{y})\nonumber\\
+= 0\\
+&{}&  z''\left(\frac{y+\Lambda}{(1+y'^2)^{3/2}}\right)\nonumber\\
+&+& z' \left(\frac{y'}{(1+y'^2)^{3/2}} -\frac{3(y+\Lambda)y'y''}{(1+y'^2)^{5/2}}\right)\nonumber\\
+&+& z  \left(\frac{y'y''}{(1+y'^2)^{3/2}}\right)\nonumber\\
+&+& \frac{y'\phi_x-\phi_y}{\sqrt{1+y'^2}} + \frac{(\phi+\lambda)y''}{(1+y'^2)^{3/2}}=0
+\end{eqnarray}
+
+Now we may substitute the solution giving $y=y''=\sqrt{1+y'^2}=\cosh
+x$ and $y'=\sinh x$.  After simplification:
+
+\begin{equation}\label{pertcan}
+  z'' - 4z'\tanh x - z =
+  \phi + \lambda + \phi_x\sinh x\cosh x - \phi_y\cosh x
+\end{equation}
+
+This equation is readily solved numerically\footnote{The homogeneous
+euation, viz $z'' - 4z'\tanh x - z = 0$ does have a solution in terms
+of Legendre functions}.  Solving this requires establishing three
+unknowns: two constants of integration arising from the solving of the
+second order ODE, and the value of Lagrange's undetermined multiplier
+$\lambda$.  Typically we have three three constraints: the
+perturbation at the limits is zero: $z(-1)=z(1)=0$, also the extra
+length of the string is zero.
+
+As an example we will consider a hybrid catenary and troposkein.
+Consider a rotating reference frame such as a rotating spaceship in
+free fall.  Stationary objects in this frame behave as though they are
+subject to a potential field of $m\omega\cdot\omega r_\perp^2$
+
+\begin{equation}
+  F = \sqrt{1+y'^2}(y+\Lambda)\qquad
+  G = \sqrt{1+y'^2}y^2
+\end{equation}
+
+Equation \ref{pertcan} becomes
+
+\begin{equation}
+  z'' - 4z'\tanh x - z = \cosh^2 x(1+2\lambda)
+\end{equation}
+
+Solving this we use a shooting method by which we specify that the
+start point is zero perturbation, $z(-2)=0$.  Then we want to know the
+initial slope $z'(-2)$ that ensures, simultaneously, that $z(2)=0$ and
+that there is no extra length of chain.  This comes out at
+$z'(0)\simeq 1.324$ and $\lambda = -5.524$.
+
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{euler_lagrange_perturbed_files/figure-latex/showoptimspace-1.pdf}
+\caption{Troposkein thing}\label{space}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{euler_lagrange_perturbed_files/figure-latex/showoptimspace-2.pdf}
+\caption{Troposkein thing}\label{space2}
+\end{figure}
+
+Figures~\ref{space} and~\ref{space2} show a numerical simulation.  We
+see that the catenary is distorted into a ``vee'' shape.
+
+
+\subsection{Black holes}
+
+Consider now polar coordinates $(r,\phi)$ and consider a taut string
+joining point $p_1=(r_1,\phi_1)$ to point $p_2=(r_2,\phi_2)$.  The
+string will minimize its length thus we have  functional
+
+\begin{equation}
+  F=\sqrt{r^2 + r'^2}
+\end{equation}
+
+The appropriate EL equation would be
+
+\begin{equation}
+r'' = r + 2r'/r
+\end{equation}
+
+which would have solution $r=r_0\sec(\phi-\phi_0)$.  How might this
+solution be perturbed if we perturbed the system from Newtonian to
+relativistic physics?  The first thing to change would be that the
+string minimizes its {\em proper} length:
+
+\begin{equation}
+  \int_{p_1}^{p_2}\sqrt{r^2 + \frac{r'^2}{1-2M/r}}\,d\phi
+\end{equation}
+
+
+  
+  
+
+
 
 \bibliography{sn-bibliography}% common bib file
 %% if required, the content of .bbl file can be included here once bbl is generated
