@@ -106,57 +106,55 @@ Formally, we suppose:
 
 \begin{eqnarray}
   \frac{d}{dx}\di{F}{y'}-\di{F}{y} &=& 0\nonumber\\
-  \frac{d}{dx}\di{(F+\epsilon G)}{Y'}-\di{(F+\epsilon G)}{Y} &=& 0
+  \frac{d}{dx}\di{(F+\epsilon G)}{y'}-\di{(F+\epsilon G)}{y} &=& 0
 \end{eqnarray}
 
-where $Y=Y(x) = y(x) + \epsilon z(x)$. Recalling that $F=F[x,y,y']$ we
-have, working to first order:
+We have, working to first order:
 
 \begin{eqnarray}
-  {} &{}&
-  \frac{d}{dx}\di{(F+\epsilon G)}{Y'}-\di{(F+\epsilon G)}{Y}\nonumber\\
-  &=&  \left(\frac{d}{dx}\di{F}{Y'}-\di{F}{Y}\right) + \epsilon\left(\frac{d}{dx}\di{G}{Y'}-\di{G}{Y}\right)\nonumber\\
-  &=&  \frac{d}{dx}\left[\di{F(x,y,y')}{Y'}\right] - \di{F(x,y,y')}{Y}
-  + \epsilon\left(\frac{d}{dx}\di{G(x,y,y')}{Y'}-\di{G(x,y,y')}{Y}\right)\nonumber\\
-  &=&  \frac{d}{dx}\left[\di{F(x,Y-\epsilon z,Y'-\epsilon z')}{Y'}\right] -\di{F(x,Y-\epsilon z,Y'-\epsilon z')}{Y}\nonumber\\
-  &{}&\qquad  + \epsilon\left(\frac{d}{dx}\di{G(x,Y-\epsilon z,Y'-\epsilon z')}{Y'}-\di{G(x,Y-\epsilon z,Y'-\epsilon z')}{Y}\right)\nonumber\\
-  &=&  \frac{d}{dx}\left[\di{F(x,Y-\epsilon z,Y'-\epsilon z')}{Y'}\right]-\di{F(x,Y-\epsilon z,Y'-\epsilon z')}{Y}
-  + \epsilon\left(\el{G}\right)\nonumber\\
-  &=&  \frac{d}{dx}\di{}{Y'}\left[F -\epsilon z\di{F}{Y} - \epsilon z'\di{F}{Y'}\right]
-  - \di{}{Y}\left[F -\epsilon z\di{F}{Y} - \epsilon z'\di{F}{Y'}\right]
-  + \epsilon\left(\el{G}\right)\nonumber\\
-  &=&  \frac{d}{dx}\di{}{Y'}\left[-\epsilon z\di{F}{Y} - \epsilon z'\di{F}{Y'}\right]
-  - \di{}{Y}\left[-\epsilon z\di{F}{Y} - \epsilon z'\di{F}{Y'}\right]
-  + \epsilon\left(\el{G}\right)\nonumber\\
+\frac{d}{dx}\left[\di{F}{y'}\right]
+&=& \di{F}{y}\nonumber\\
+\frac{d}{dx}\left[\left.\di{(F+\epsilon G)}{y'}\right|_{x,y+\epsilon z,y'+\epsilon z'}\right]
+&=& \left.\di{(F+\epsilon G)}{y}\right|_{x,y+\epsilon z,y'+\epsilon z'}\nonumber\\
+\frac{d}{dx}\left[\di{}{y'}\left(F + \epsilon z\di{F}{y} + \epsilon z'\di{F}{y'}+\epsilon G\right)\right]
+&=& \di{}{y}\left(F + \epsilon z\di{F}{y} + \epsilon z'\di{F}{y'}+\epsilon G\right)\nonumber\\
+\frac{d}{dx}\left[\di{F}{y'} + \epsilon\left(z\dii{F}{y}{y'} + z\dii{F}{y'}{y'} + \di{G}{y'}\right)\right]
+&=& \di{F}{y} + \epsilon\left(z\dii{F}{y}{y} + z'\dii{F}{y}{y'} + \di{G}{y}\right)\nonumber\\
+\frac{d}{dx}\left[z\dii{F}{y}{y'} + z'\dii{F}{y'}{y'} + \di{G}{y'}\right]
+&=& z\dii{F}{y}{y} + z'\dii{F}{y}{y'} + \di{G}{y}
 \end{eqnarray}
 
-We deduce that
-\begin{eqnarray}
-\frac{d}{dx}\di{}{Y'}\left[z\di{F}{Y} + z'\di{F}{Y'}\right]
-  - \di{}{Y}\left[z\di{F}{Y} + z'\di{F}{Y'}\right] +  \el{G} &=&0\nonumber\\
-\end{eqnarray}
+Now we identify $\frac{d}{dx}$ with $\di{}{x} + y'\di{}{y} +
+y''\di{}{y'} + z'\di{}{z} + z''\di{}{z'}$.  In the interests of
+typographical convenience we revert to inline notation, viz
+$\di{F}{y}\equiv\partial_yF\equiv F_y$.
 
-Observing that $z$ commutes past $\partial/\partial Y$ and
-$\partial/\partial Y'$, and identifying $\frac{d}{dt}$ with
-$\di{}{x}+ Y'\di{}{Y} + Y''\di{}{Y'}$, we obtain
 
 \begin{eqnarray}
-  \left(\di{}{x}+ Y'\di{}{Y} + Y''\di{}{Y'}\right)
-  \di{}{Y'}\left[z\di{F}{Y} + z'\di{F}{Y'}\right]
-  - \di{}{Y}\left[z\di{F}{Y} + z'\di{F}{Y'}\right] +  \el{G} &=&0\nonumber\\
-  \left(\di{}{x}+ Y'\di{}{Y} + Y''\di{}{Y'}\right)
-  \left[z\dii{F}{Y}{Y'} + z'\dii{F}{Y'}{Y'}\right]
-  - \di{}{Y}\left[z\di{F}{Y} + z'\di{F}{Y'}\right] +  \el{G} &=&0
+\frac{d}{dx}\left[zF_{yy'} + z'F_{y'y'} + G_{y'}\right]
+&=& zF_{yy} + z'F_{yy'} + G_{y}\nonumber\\
+\left(\partial_{x} + y'\partial_{y} + y''\partial_{y'} + z'\partial_{z} + z''\partial_{z'}\right)
+\left[zF_{yy'} + z'F_{y'y'} + G_{y'}\right]
+&=& zF_{yy} + z'F_{yy'} + G_{y}\nonumber\\
+(zF_{xyy'} + z'F_{xy'y'} + G_{xy'})
++ (zy'F_{yyy'} + z'y'F_{yy'y'} + y'G_{yy'})\nonumber\\
++ ( zy''F_{yy'y'} + z'y''F_{y'y'y'} + y''G_{y'y'})
++ (z'F_{yy'} + z''F_{y'y'})
+&=& zF_{yy} + z'F_{yy'} + G_{y}\nonumber\\
 \end{eqnarray}
 
 Collecting terms:
 
 \begin{eqnarray}
-  &z& \left(\diii{F}{x}{Y }{Y'} + Y'\diii{F}{Y}{Y }{Y'} + Y''\diii{F}{Y }{Y'}{Y'} - \dii{F}{Y}{Y }\right)\nonumber\\
- +&z&'\left(\diii{F}{x}{Y'}{Y'} + Y'\diii{F}{Y}{Y'}{Y'} + Y''\diii{F}{Y'}{Y'}{Y'} - \dii{F}{Y}{Y'}\right)\nonumber\\
-  +&{}&  \el{G} = 0
+&{}&  z''F_{y'y'}\\
+&+& z'(F_{xy'y'} + y'F_{yy'y'} + y''F_{y'y'y'})\\
+&+& z (F_{xyy'} + y'F_{yyy'} + y''F_{yy'}-F_{yy})\\
+&+& (G_{xy'} + y'G_{yy'} + y''G_{y'y'}- G_{y})\\
+= 0
 \end{eqnarray}
 
+(above we cancel the $z'F_{yy'}$ term). This is a second order ODE in
+z, which we may solve numerically.
 
 \bibliography{sn-bibliography}% common bib file
 %% if required, the content of .bbl file can be included here once bbl is generated
