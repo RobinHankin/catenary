@@ -88,15 +88,14 @@ F[y] = \int_{x_1}^{x_2} F(x,y(x),y'(x))\,dx
 \end{equation}
 
 \noindent where $F$ is a given functional and $y$ a function of $x$,
-to be determined.  We wish to minimize, over a space of suitably
-well-behaved functions
-$y\colon\left[x_1,x_2\right]\longrightarrow\mathbb{R}$, the value of
-$F[y]$.  Now suppose we have identified such a $y$ that locally
-minimizes $F[y]$, and we now consider a perturbed functional
-$\mathcal{F}=F+\epsilon G$.  We take $\epsilon$ to be sufficiently
-small for us to neglect second and higher powers.  Can we similarly
-perturb $y$ (to $y+\epsilon z$, say), so as to minimize $F+\epsilon
-G$?
+to be determined.  We wish to minimize the value of $F[y]$, over a
+space of suitably well-behaved functions
+$y\colon\left[x_1,x_2\right]\longrightarrow\mathbb{R}$.  Now suppose
+we have identified such a $y$ that locally minimizes $F[y]$, and we
+now consider a perturbed functional $\mathcal{F}=F+\epsilon G$.  We
+take $\epsilon$ to be sufficiently small for us to neglect second and
+higher powers.  Can we similarly perturb $y$ (to $y+\epsilon z$, say),
+so as to minimize $F+\epsilon G$?
 
 Under these circumstances, the perturbation term $z=z(x)$ is
 interesting in its own right, and the fact the perturbation is linear
@@ -104,16 +103,20 @@ leads to new insight.
 
 Formally, we suppose:
 
-\begin{eqnarray}
-  \frac{d}{dx}\di{F}{y'}-\di{F}{y} &=& 0\nonumber\\
-  \frac{d}{dx}\di{(F+\epsilon G)}{y'}-\di{(F+\epsilon G)}{y} &=& 0
-\end{eqnarray}
+\begin{equation}
+  \frac{d}{dx}\di{F}{y_0'}-\di{F}{y_0} = 0 
+\end{equation}
 
-We have, working to first order:
+and wish to identify a function $z(x)$ so that $y+\epsilon z(x)$ that
+satisfies
+\begin{equation}
+  \frac{d}{dx}\di{(F+\epsilon G)}{y'}-\di{(F+\epsilon G)}{y} = 0.
+\end{equation}
+%
+where $F$ and $G$ are evaluated at $y+\epsilon z$.  We have, working
+to first order:
 
 \begin{eqnarray}
-\frac{d}{dx}\left[\di{F}{y'}\right]
-&=& \di{F}{y}\nonumber\\
 \frac{d}{dx}\left[\left.\di{(F+\epsilon G)}{y'}\right|_{x,y+\epsilon z,y'+\epsilon z'}\right]
 &=& \left.\di{(F+\epsilon G)}{y}\right|_{x,y+\epsilon z,y'+\epsilon z'}\nonumber\\
 \frac{d}{dx}\left[\di{}{y'}\left(F + \epsilon z\di{F}{y} + \epsilon z'\di{F}{y'}+\epsilon G\right)\right]
@@ -123,12 +126,11 @@ We have, working to first order:
 \frac{d}{dx}\left[z\dii{F}{y}{y'} + z'\dii{F}{y'}{y'} + \di{G}{y'}\right]
 &=& z\dii{F}{y}{y} + z'\dii{F}{y}{y'} + \di{G}{y}
 \end{eqnarray}
-
-Now we identify $\frac{d}{dx}$ with $\di{}{x} + y'\di{}{y} +
+%
+We now identify $\frac{d}{dx}$ with $\di{}{x} + y'\di{}{y} +
 y''\di{}{y'} + z'\di{}{z} + z''\di{}{z'}$.  In the interests of
 typographical convenience we revert to inline notation, viz
 $\di{F}{y}\equiv\partial_yF\equiv F_y$.
-
 
 \begin{eqnarray}
 \frac{d}{dx}\left[zF_{yy'} + z'F_{y'y'} + G_{y'}\right]
@@ -152,47 +154,54 @@ Collecting terms:
 &+& (G_{xy'} + y'G_{yy'} + y''G_{y'y'}- G_{y})\\
 = 0
 \end{eqnarray}
-
+%
 (above we cancel the $z'F_{yy'}$ term). This is a second order ODE in
-$z$, which gives the first-order perturbation $z$ so that $y$
-maximizes $F$ and $y+\epsilon z$ maximizes $F+\epsilon G$.
-Alternatively, we may factorize the expression, giving
+$z$, which gives the first-order perturbation $z$ so that $y+\epsilon
+z$ maximizes $F+\epsilon G$.  Alternatively, we may factorize the
+expression, giving
 
-\begin{equation}
+\begin{equation}\label{factorized_eqn}
 \left(\el{G}\right) + \left(z\di{}{y} + z'\di{}{y'} + z''\di{}{y''}\right)
 \left(\el{F}\right)=0
 \end{equation}
 
+This equation is now applied to three simple classical problems in
+which a functional is given a small perturbation of some sort.  The
+examples are drawn from optics, statics, and the general theory of
+relativity.
+
 \section{Examples}
 
-\subsection{Refractive index stuff}
+\subsection{Geometrical optics in a medium of slightly varying refractive index}
 
-The full Euler-Lagrange equations for geometrical optics would be with
-functional $F=(1+\phi)\sqrt{1+y'^2}$ where $\phi=\phi(x,y)$ is a
-refractive index term.
+We consider two-dimensional ray paths in a medium of refractive index
+$1+\phi(x,y)$.  The paths are given by solving the Euler-Lagrange
+equations with functional $F=(1+\phi)\sqrt{1+y'^2}$:
 
 \begin{eqnarray}
-  \frac{d}{dx}\di{F}{y'}-\di{F}{y} &=& 0\\
-  \frac{d}{dx}\frac{\phi y'}{\sqrt{1+y'^2}} &=& \phi_y\sqrt{1+y'^2}\\
-  \frac{\phi_x y'}{\sqrt{1+y'^2}}+\frac{\phi y''}{(1+y'^2)^{3/2}} &=& \phi_y\sqrt{1+y'^2}
+  \frac{d}{dx}\di{F}{y'}-\di{F}{y} &=& 0\nonumber\\
+  \frac{\phi_x y'}{\sqrt{1+y'^2}}+\frac{\phi y''}{(1+y'^2)^{3/2}} -
+  \phi_y\sqrt{1+y'^2} &=& 0
   \end{eqnarray}
 
 Simplifying,
 
-\begin{equation}
+\begin{eqnarray}
   y'' = (1+y'^2)(\psi_y(1+y'^2) - \psi_xy')
-\end{equation}
-
+\end{eqnarray}
+%
 where $\psi=\log\phi$.  Even in the simplest nontrivial case of
 constant $\psi_x$ and $\psi_y$, this equation has no simple (and
-certainly no intuitively insightful) solution.  We now move to the
-linearised case considered above.
-
-Here $F=\sqrt{1+y'^2}$ and $G=\phi(x,y)\sqrt{1+y'^2}$.  First the homogeneous part:
+certainly no intuitively insightful) analytic solution.  We now move
+to the linearised case, in which $F=\sqrt{1+y'^2}$ and
+$G=\phi(x,y)\sqrt{1+y'^2}$.  First the homogeneous part:
 
 \begin{equation}
-  \frac{z''}{(1+y'^2)^{3/2}} -\frac{3y'y''}{(1+y'^2)^{3/2}} +
-  \frac{\phi_xy'}{\sqrt{1+y'^2}} + \frac{\phi_yy'^2}{\sqrt{1+y'^2}} + \frac{y''}{(1+y'^2)^{3/2}}-\phi_y\sqrt{1+y'^2}
+    \frac{z''}{(1+y'^2)^{3/2}}
+  - \frac{3y'y''}{(1+y'^2)^{3/2}}
+  + \frac{\phi_xy'}{\sqrt{1+y'^2}}
+  + \frac{\phi_yy'^2}{\sqrt{1+y'^2}}
+  + \frac{y''}{(1+y'^2)^{3/2}}-\phi_y\sqrt{1+y'^2}
 \end{equation}
 
 
@@ -322,9 +331,75 @@ string minimizes its {\em proper} length:
   \int_{p_1}^{p_2}\sqrt{r^2 + \frac{r'^2}{1-2M/r}}\,d\phi
 \end{equation}
 
+To fix ideas we consider the Earth's orbit around the sun, taking it
+to be a nominal circle of radius $r_0=1.5\times 10^{11}\,\mathrm{m}$,
+and use this as the unit of length.  If we take the Schwarzschild
+radius $M$ of the Sun to be $3\times 10^3\,\mathrm{m}$, we find that
+$M\simeq 2\times 10^{-8}$, and the linear approximation is reasonable;
+to first order we have
 
+\begin{equation}
+\sqrt{r^2 + \frac{r'^2}{1-2M/r}}=\sqrt{r+r'^2} + M\frac{r'^2}{r\sqrt{r^2 + r'^2}}
+\end{equation}
   
-  
+so $F=\sqrt{r^2+r'^2}$ and $G=M\frac{r'^2}{r\sqrt{r^2+r'^2}}$.  Then
+
+\begin{eqnarray}
+\frac{d}{dx}\left(\di{F}{r'}\right) -\di{F}{r} &=& 
+\frac{r^2r''- 2rr'^2 -r^3}{(r^2 +r'^2)^{3/2}}.
+\end{eqnarray}
+
+This gives $r'' = r + 2r'^2/r$ in the unperturbed case, recovering the
+familiar Euclidean straight-line solution from Newtonian physics:
+$r=r_0\sec(\theta-\theta_0)$.  The left hand side of
+equation~\ref{factorized_eqn} is then
+
+\begin{eqnarray}
+&{}& \left(z\di{}{r} + z'\di{}{r'} + z''\di{}{r''}\right)
+\left(\frac{d}{dx}\di{F}{r'}
+-\di{F}{r}\right)\nonumber\\
+&=&  \left(z\di{}{r} + z'\di{}{r'} + z''\di{}{r''}\right)
+\left(\frac{r^2r''- 2rr'^2 -r^3}{(r^2 +r'^2)^{3/2}}\right)\nonumber\\
+&=& 
+ z  \left(\frac{(r^2 - 2r'^2)(rr''-r'^2)}{(r^2 + r'^2)^{5/2}}\right)\nonumber\\
+ &{}& + z' \left(\frac{rr'(r^2 - 2r'^2 + 3rr'')}{(r^2 + r'^2)^{5/2}}\right)
+      + z''\left(\frac{r^2    (r^2+r'^2)       }{(r^2 + r'^2)^{5/2}}\right)
+\end{eqnarray}
+
+And now the non-homogeneous term:
+
+\begin{eqnarray}
+\frac{d}{dx}\left(\di{G}{r'}\right) -\di{G}{r} &=& 
+\frac{d}{dx}\left(\frac{\partial}{\partial r'}\left(\frac{r'^2}{r\sqrt{r^2+r'^2}}\right)\right)
+- \frac{\partial}{\partial
+  r}\left(\frac{r'^2}{r\sqrt{r^2+r'^2}}\right)\nonumber\\
+&=& \frac{(2r^2-r'^2)(rr''-r'^2)}{(r^2+r'^2)^{5/2}}
+\end{eqnarray}
+
+Combining and simplifying we have
+
+\begin{eqnarray}
+ &{}&z  \left((r^2 - 2r'^2)(rr''-r'^2)\right)\nonumber\\
++&{}&z'  \left(rr'(r^2 - 2r'^2 + 3rr'')\right)\nonumber\\
++&{}&z''  \left(r^2    (r^2+r'^2)       \right)\\
+&{}&\qquad =\qquad -(2r^2-r'^2)(rr''-r'^2)
+\end{eqnarray}
+
+Now we are free to substitute.  We have $r=r_0\sec(\theta-\theta_0)$
+but are given $r_0=1$ and will take $\theta_0=0$ for simplicity.  Thus
+$r'= r_0\sec\theta\tan\theta$ and $r''=\sec\theta +
+\sec\theta\tan^2\theta$.  Substituting and simplifying gives:
+
+\begin{equation}\label{string_ODE}
+z'' - 4z'\tan \theta + z(1-2\tan^2\theta) = \tan^2\theta - 2
+\end{equation}
+
+
+This does not appear to possess a simple analytical solution but
+numerical methods may be used.  We have two degrees of freedom that
+correspond to the specified radius at $p_1$ and $p_2$.  Taking
+$p_1=(1,-\pi/4)$, $p_2=(1,\pi/4)$
+
 
 
 
