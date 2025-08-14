@@ -180,21 +180,34 @@ equations with functional $F=(1+\phi)\sqrt{1+y'^2}$:
 
 \begin{eqnarray}
   \frac{d}{dx}\di{F}{y'}-\di{F}{y} &=& 0\nonumber\\
-  \frac{\phi_x y'}{\sqrt{1+y'^2}}+\frac{\phi y''}{(1+y'^2)^{3/2}} -
+  \frac{(\phi_x+y'\phi_y)y'}{\sqrt{1+y'^2}}+\frac{(1+\phi)y''}{(1+y'^2)^{3/2}} -
   \phi_y\sqrt{1+y'^2} &=& 0
   \end{eqnarray}
 
 Simplifying,
 
 \begin{eqnarray}
-  y'' = (1+y'^2)(\psi_y(1+y'^2) - \psi_xy')
+ (1+\phi) y'' = (1+y'^2)(\phi_y - y'\phi_x)
 \end{eqnarray}
 %
-where $\psi=\log\phi$.  Even in the simplest nontrivial case of
-constant $\psi_x$ and $\psi_y$, this equation has no simple (and
-certainly no intuitively insightful) analytic solution.  We now move
-to the linearised case, in which $F=\sqrt{1+y'^2}$ and
-$G=\phi(x,y)\sqrt{1+y'^2}$.  First the homogeneous part:
+Except for trivial cases such as $\phi_y=y'\phi_x$, this equation has
+no simple (and certainly no intuitively insightful) analytic solution.
+We now move to the linearised case, in which $F=\sqrt{1+y'^2}$ and
+$G=\phi(x,y)\sqrt{1+y'^2}$.  Then
+
+\begin{eqnarray}
+  \el{F} &=& \frac{y''}{(1+y'^2)^{3/2}}\nonumber\\
+  \el{G} &=& \frac{y''\phi}{(1+y'^2)^{3/2}} + \frac{y'\phi_x - \phi_y}{\sqrt{1+y'^2}}
+\end{eqnarray}
+
+Thus
+
+\begin{eqnarray}
+&{}& \left(z\di{}{y} + z'\di{}{y'} + z''\di{}{y''}\right)\left(\el{F}\right)\nonumber\\
+&=&  z'\frac{1}{(1+y'^2)^{3/2}} -z''\frac{3y'}{(1+y'^2)^{5/2}}
+\end{eqnarray}
+
+whence equation~\ref{factorized_eqn} becomes
 
 \begin{equation}
     \frac{z''}{(1+y'^2)^{3/2}}
@@ -204,11 +217,10 @@ $G=\phi(x,y)\sqrt{1+y'^2}$.  First the homogeneous part:
   + \frac{y''}{(1+y'^2)^{3/2}}-\phi_y\sqrt{1+y'^2}
 \end{equation}
 
+We recall that $y'' = 0$ in the unperturbed case, implying that $y'$
+is constant.  Writing $y'= s$ we obtain
 
-We recall that the unperturbed case $y''=0$ in the unperturbed case,
-and writing $y'=s$ to emphasise that it is a constant we get
-
-\begin{equation}
+\begin{equation}\nonumber
   \frac{z''}{(1+s^2)^{3/2}} +
   \frac{\phi_xs}{\sqrt{1+s^2}} + \frac{\phi_ys^2}{\sqrt{1+s^2}} -\phi_y\sqrt{1+s^2}
 \end{equation}
@@ -216,6 +228,9 @@ and writing $y'=s$ to emphasise that it is a constant we get
 \begin{equation}
   z'' = (1+s^2)(\phi_y-\phi_xs)
 \end{equation}
+
+We may use this as a model for phenomena such as atmospheric refraction.
+
 
 \begin{figure}[h]
 \centering
@@ -232,10 +247,43 @@ and writing $y'=s$ to emphasise that it is a constant we get
 
 \subsection{Catenary}
 
-\begin{equation}\label{FandG}
-F = \sqrt{1+y'^2}(y + \Lambda)\qquad G =  \sqrt{1+y'^2}(\phi + \lambda)
-\end{equation}
+First the classical analysis with functional
+$F=\sqrt{1+y'^2}(y+\Lambda)$.
 
+\begin{eqnarray}
+  \frac{d}{dx}\di{F}{y'} - \di{F}{y}
+  &=& 
+  \frac{d}{dx}\left[\frac{(y+\Lambda)y'}{\sqrt{1+y'^2}}\right] -  \frac{1}{\sqrt{1+y'^2}}\nonumber\\
+&=&   \frac{y'^2}{\sqrt{1+y'^2}} + \frac{(y+\Lambda)y''}{(1+y'^2)^{3/2}} - \sqrt{1+y'^2}\nonumber\\
+  &=&   \frac{(y+\Lambda)y''}{(1+y'^2)^{3/2}} - \frac{1}{\sqrt{1+y'^2}}
+  \label{catenary_EL_f}
+\end{eqnarray}
+
+Rearranging equation~\ref{catenary_EL_f} gives
+
+\begin{eqnarray}
+  (y+\Lambda)y'' &=& 1+y'^2\label{catenary_ODE}
+\end{eqnarray}
+
+Equation~\ref{catenary_ODE} requires three constants for solution
+(viz, two constants of integration arising from the fact that it is a
+second order ODE, and Lagrange's multiplier $\Lambda$).  In practice,
+these constants are determined by constraining three physical features
+of the chain, typically the height of the curve at two points,
+$y(x_1)$, $y(x_2)$ and the length of the chain between them,
+$\int_{x_1}^{x_2}\sqrt{1+y'^2}\,dx$.  For ease of exposition we
+require the chain to pass through $(\pm 2,\cosh 2)$ and specify an arc
+length of $e+e^{-1}$, giving $y=\cosh x$.
+
+We are now in a position to assess the perturbation from the standard
+catenary caused by small perturbations to the gravitational field
+potential.  We will consider a gravitational potential of $y +
+\epsilon\phi(x,y)$
+
+\begin{eqnarray}\label{FandG}
+F = \sqrt{1+y'^2}(y + \Lambda)\qquad G =  \sqrt{1+y'^2}(\phi + \lambda)
+\end{eqnarray}
+%
 where $\phi=\phi(x,y)$ is a small perturbation.  Here 
 
 \begin{eqnarray}
@@ -245,29 +293,28 @@ where $\phi=\phi(x,y)$ is a small perturbation.  Here
 &+& (G_{xy'} + y'G_{yy'} + y''G_{y'y'}- G_{y})\nonumber\\
 = 0\\
 &{}&  z''\left(\frac{y+\Lambda}{(1+y'^2)^{3/2}}\right)\nonumber\\
-&+& z' \left(\frac{y'}{(1+y'^2)^{3/2}} -\frac{3(y+\Lambda)y'y''}{(1+y'^2)^{5/2}}\right)\nonumber\\
-&+& z  \left(\frac{y'y''}{(1+y'^2)^{3/2}}\right)\nonumber\\
+&+& z' \left(-\frac{y'}{(1+y'^2)^{3/2}} -\frac{3(y+\Lambda)y'y''}{(1+y'^2)^{5/2}}\right)\nonumber\\
+&+& z  \left(\frac{y''}{(1+y'^2)^{3/2}}\right)\nonumber\\
 &+& \frac{y'\phi_x-\phi_y}{\sqrt{1+y'^2}} + \frac{(\phi+\lambda)y''}{(1+y'^2)^{3/2}}=0
 \end{eqnarray}
-
-Now we may substitute the solution giving $y=y''=\sqrt{1+y'^2}=\cosh
-x$ and $y'=\sinh x$.  After simplification:
+%
+Now we may use the unperturbed solution of $y=\cosh x$, giving
+$y=y''=\sqrt{1+y'^2}=\cosh x$ and $y'=\sinh x$.  After simplification:
 
 \begin{equation}\label{pertcan}
   z'' - 4z'\tanh x - z =
   \phi + \lambda + \phi_x\sinh x\cosh x - \phi_y\cosh x
 \end{equation}
+%
+Equation~\ref{pertcan} is readily solved numerically.  Three unknowns
+are required: two constants of integration, as \ref{pertcan} is a
+second order ODE; and the value of Lagrange's undetermined multiplier
+$\lambda$.  In this case we have three three constraints corresponding
+to the perturbation at the supports being zero, $z(\pm 2)=0$; and in
+addition we know that the perturbed solution has the same arc length
+as the unperturbed solution, for the chain is inextensible.
 
-This equation is readily solved numerically\footnote{The homogeneous
-euation, viz $z'' - 4z'\tanh x - z = 0$ does have a solution in terms
-of Legendre functions}.  Solving this requires establishing three
-unknowns: two constants of integration arising from the solving of the
-second order ODE, and the value of Lagrange's undetermined multiplier
-$\lambda$.  Typically we have three three constraints: the
-perturbation at the limits is zero: $z(-1)=z(1)=0$, also the extra
-length of the string is zero.
-
-As an example we will consider a hybrid catenary and troposkein.
+As an example we will consider a catenary that and troposkein.
 Consider a rotating reference frame such as a rotating spaceship in
 free fall.  Stationary objects in this frame behave as though they are
 subject to a potential field of $m\omega\cdot\omega r_\perp^2$
@@ -283,11 +330,15 @@ Equation \ref{pertcan} becomes
   z'' - 4z'\tanh x - z = \cosh^2 x(1+2\lambda)
 \end{equation}
 
-Solving this we use a shooting method by which we specify that the
-start point is zero perturbation, $z(-2)=0$.  Then we want to know the
-initial slope $z'(-2)$ that ensures, simultaneously, that $z(2)=0$ and
-that there is no extra length of chain.  This comes out at
-$z'(0)\simeq 1.324$ and $\lambda = -5.524$.
+This equation is analytically intractable so we use numerical methods.
+Here I find solutions for a standard $y=\cosh x$ catenary suspended at
+endpoints $(\pm 2, \cosh 2)$.  To find meaningful solutions to this
+equation, we specify that start point has zero perturbation,
+$z(-2)=0$.  We then find values of $\lambda$ and initial slope
+$(z'(-2)$ that jointly ensure $z(2)=0$ and that the chain has the same
+length as the unperturbed solution.  It is straightforward to use
+numerical techiques and we identify that $z'(0)\simeq 1.324$ and
+$\lambda = -5.524$ satisfy the constraints.
 
 
 \begin{figure}[h]
@@ -308,19 +359,61 @@ see that the catenary is distorted into a ``vee'' shape.
 
 \subsection{Black holes}
 
-Consider now polar coordinates $(r,\phi)$ and consider a taut string
-joining point $p_1=(r_1,\phi_1)$ to point $p_2=(r_2,\phi_2)$.  The
-string will minimize its length thus we have  functional
+In the theory of general relativity~\cite{misner}, the field equations
+for a stationary, spherically symmetric point mass are solved by the
+Schwarzschild metric that gives the squared interval $ds^2$ in terms
+of spherical coordinates $(r,\theta,\phi)$:
+
+\begin{eqnarray}\label{schwarzschild}
+  ds^2=
+  -dt^2(1-2M/r) + \frac{dr^2}{1-2M/r} + r^2d\theta^2 + r^2\sin\theta d\phi^2
+  \end{eqnarray}
+
+In equation~\ref{schwarzschild}, $M$ is the mass of the black hole
+(using geometrized units so the mass has the dimensions of length).
+Black holes are known to exhibit counterintuitive behaviour near the
+event horizon~\cite{scientificamerican123} and one consequence of the
+curvature of spacetime in the vicinity is that light inextensible
+string under tension can adopt curved
+configurations~\cite{hankin2022}.  Such taut inextensible strings
+minimize their proper length, given by equation~\ref{proper}.
+
+\begin{equation}\ref{proper}
+  \int_{p_1}^{p_2}\sqrt{r^2 + \frac{r'^2}{1-2M/r}}\,d\phi
+\end{equation}
+
+To find the configuration $r=r(\phi)$ of a taut string we minimize
+functional $F=\sqrt{r^2 + \frac{r'^2}{1-2M/r}}$.  The Euler-Lagrange
+equations yield
+
+\begin{equation}\label{eulerstring}
+  r''(\phi) = (r-2M) + \frac{2r-3M)r'^2}{r(r-2M)}
+\end{equation}
+
+
+Below, following Einstein~\cite{einstein_mercury},
+equation~\ref{schwarzschild} as a slight perturbation of classical
+Newtonian physics.  First, we observe that in the limit
+$M\longrightarrow 0$ we recover $r'' = r + 2r'/r$, having solution
+$r=r_0\sec(\phi-\phi_0)$, a familiar straight line but expressed in
+polar coordinates.
+
+in which we can use polar coordinates $(r,\phi)$
+and consider a taut string joining point $p_1=(r_1,\phi_1)$ to point
+$p_2=(r_2,\phi_2)$.  The string will minimize its length thus we have
+functional
 
 \begin{equation}
   F=\sqrt{r^2 + r'^2}
 \end{equation}
 
+How might this solution be perturbed if we consider it to be a small
+perturbation of from Newtonian to relativistic physics?  The first
+thing to change would be that the string minimizes its {\em proper}
+length:
+
 The appropriate EL equation would be
 
-\begin{equation}
-r'' = r + 2r'/r
-\end{equation}
 
 which would have solution $r=r_0\sec(\phi-\phi_0)$.  How might this
 solution be perturbed if we perturbed the system from Newtonian to
