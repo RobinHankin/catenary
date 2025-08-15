@@ -638,10 +638,10 @@ to first order,
 &=& \left(r^2 + r'^2 + 2M\frac{r'^2}{r}\right)^{\frac{1}{2}}\nonumber\\
 &=& \sqrt{r^2+r'^2}\left(1 + 2M\frac{r'^2}{r(r^2+r'^2)}\right)^{\frac{1}{2}}\nonumber\\
 &=& \sqrt{r^2+r'^2}\left(1 + M\frac{r'^2}{r(r^2+r'^2)}\right)\nonumber\\
-&=& \sqrt{r^2+r'^2} +  M\frac{r'^2}{r\sqrt{r^2+r'^2}}
+&=& \sqrt{r^2+r'^2} + 2M\frac{r'^2}{2r\sqrt{r^2+r'^2}}
 \end{eqnarray}
 
-so $G=M\frac{r'^2}{r\sqrt{r^2+r'^2}}$.
+so $G=M\frac{r'^2}{2r\sqrt{r^2+r'^2}}$.
 First deal with the homogeneous term:
 
 \begin{eqnarray}
@@ -687,16 +687,16 @@ And now the non-homogeneous term:
 
 \begin{eqnarray}
 \frac{d}{dx}\left(\di{G}{r'}\right) -\di{G}{r} &=& 
-\frac{d}{dx}\left(\frac{\partial}{\partial r'}\left(\frac{r'^2}{r\sqrt{r^2+r'^2}}\right)\right)
+\frac{d}{dx}\left(\frac{\partial}{\partial r'}\left(\frac{r'^2}{2r\sqrt{r^2+r'^2}}\right)\right)
 - \frac{\partial}{\partial
-  r}\left(\frac{r'^2}{r\sqrt{r^2+r'^2}}\right)\nonumber\\
+  r}\left(\frac{r'^2}{2r\sqrt{r^2+r'^2}}\right)\nonumber\\
 &=&
-\frac{d}{dx}\left(\frac{2r^2r' + r'^3}{r(r^2+r'^2)^{3/2}}\right)
-+ \frac{r'^2(2r^2 + r'^2)}{r^2(r^2+r'^2)^{3/2}}\nonumber\\
+\frac{d}{dx}\left(\frac{2r^2r' + r'^3}{2r(r^2+r'^2)^{3/2}}\right)
++ \frac{r'^2(2r^2 + r'^2)}{2r^2(r^2+r'^2)^{3/2}}\nonumber\\
 &=&
-\frac{-4r^4 -2r^2r'^4-r'^6+2r^5r''-r^3r'^2r''}{r^2(r^2+r'^2)^{5/2}}
-+ \frac{r'^2(2r^2 + r'^2)}{r^2(r^2+r'^2)^{3/2}}\nonumber\\
-&=& \underbrace{\frac{(2r^2-r'^2)(rr''-r'^2)}{(r^2+r'^2)^{5/2}}}_{\mbox{check}}
+\frac{-4r^4 -2r^2r'^4-r'^6+2r^5r''-r^3r'^2r''}{2r^2(r^2+r'^2)^{5/2}}
++ \frac{r'^2(2r^2 + r'^2)}{2r^2(r^2+r'^2)^{3/2}}\nonumber\\
+&=& \underbrace{\frac{(2r^2-r'^2)(rr''-r'^2)}{2(r^2+r'^2)^{5/2}}}_{\mbox{check}}
 \end{eqnarray}
 
 Combining we have
@@ -707,13 +707,13 @@ Combining we have
 +z' \left(-rr'(r^2 - 2r'^2 + 3rr'')\right)
 +z''\left(r^2    (r^2+r'^2)       \right)
 }{(r^2 + r'^2)^{5/2}}
-&=& -\frac{(2r^2-r'^2)(rr''-r'^2)}{(r^2+r'^2)^{5/2}}
+&=& -\frac{(2r^2-r'^2)(rr''-r'^2)}{2(r^2+r'^2)^{5/2}}
 \nonumber\\
  z  \left((r^2 - 2r'^2)(rr''-r'^2)\right)
 +z' \left(-rr'(r^2 - 2r'^2 + 3rr'')\right)
 +z''\left(r^2    (r^2+r'^2)       \right)
 &=&
--(2r^2-r'^2)(rr''-r'^2)
+-(2r^2-r'^2)(rr''-r'^2)/2\nonumber\\
 \end{eqnarray}
 
 
@@ -727,10 +727,10 @@ r_0\sec\theta\tan\theta$ and $r''=\sec\theta +
 z\underbrace{\sec^6\theta(1-2\tan^2\theta)}_{\mbox{check}}
 -4z'\sec^6\theta\tan \theta
 +z''\sec^6\theta  &=&
-\sec^6\theta(\tan^2\theta -2)
+\sec^6\theta(\frac{1}{2}\tan^2\theta -1)
 \nonumber\\
-z(1-2\tan^2\theta) - 4z'\tan \theta + z'' &=& \tan^2\theta -2\nonumber\\
-z'' - 4z'\tan \theta + z(1-2\tan^2\theta) &=& \tan^2\theta - 2
+z(1-2\tan^2\theta) - 4z'\tan \theta + z'' &=& {\scriptstyle\frac{1}{2}}\tan^2\theta -1\nonumber\\
+z'' - 4z'\tan \theta + z(1-2\tan^2\theta) &=& {\scriptstyle\frac{1}{2}}\tan^2\theta - 1
 \\
 \end{eqnarray}
 
@@ -743,7 +743,7 @@ blackhole <- function(t, state, parameters) {
 
         x <- t
         
-        dZdash <- 4*Zdash*tan(x) - Z*(1-2*tan(x)^2) + (tan(x)^2-2)
+        dZdash <- 4*Zdash*tan(x) - Z*(1-2*tan(x)^2) + (tan(x)^2/2 - 1)
 
         list(c(dZ, dZdash))
     })
@@ -786,7 +786,7 @@ plot(try,bad)
 
 optimize(blackbadness, interval=c(-1,10))
 
-blackbadness(6.088)
+blackbadness(3.044)
 ```
 
 ```{r showblack}
@@ -805,7 +805,7 @@ r <- 1/cos(theta)
 plot(NA, xlim=c(-1,1), ylim=c(-0.1,1.1), asp=1, axes=FALSE, xlab="",ylab="")
 points(r*sin(theta), r*cos(theta), type="l")
 parameters <- c(lambda = 0)
-state      <- c(Z = 0, Zdash = 6.088)  # initial conditions
+state      <- c(Z = 0, Zdash = 3.044)  # initial conditions
 times      <- theta
 out <- ode(y = state, times = times, func = blackhole, parms = parameters)
 dr <- out[,2]
@@ -825,7 +825,7 @@ rotmat <- matrix(c(cos(rot), sin(rot), -sin(rot), cos(rot)), 2, 2)
 XY <- r*cbind(sin(theta), cos(theta)) %*% rotmat
 points(XY,type="l")
 parameters <- c(lambda = 0)
-state      <- c(Z = 0, Zdash = 6.088)  # initial conditions
+state      <- c(Z = 0, Zdash = 3.044)  # initial conditions
 times      <- theta
 out <- ode(y = state, times = times, func = blackhole, parms = parameters)
 dr <- out[,2]

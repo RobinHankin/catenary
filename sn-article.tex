@@ -399,24 +399,23 @@ $M\longrightarrow 0$ we recover $F=\sqrt{r^2+r'^2}$, whence $r'' = r +
 straight line but expressed in polar coordinates.
 
 \begin{equation}
-\sqrt{r^2 + \frac{r'^2}{1-2M/r}}=\sqrt{r+r'^2} + M\frac{r'^2}{r\sqrt{r^2 + r'^2}}
+\sqrt{r^2 + \frac{r'^2}{1-2M/r}}=\sqrt{r+r'^2} + 2M\frac{r'^2}{2r\sqrt{r^2 + r'^2}}
 \end{equation}
   
-so $F=\sqrt{r^2+r'^2}$ and $G=\frac{r'^2}{r\sqrt{r^2+r'^2}}$.  Then
+so $F=\sqrt{r^2+r'^2}$ and $G=\frac{r'^2}{2r\sqrt{r^2+r'^2}}$.  Then
 
-\begin{eqnarray}
-\frac{d}{dx}\left(\di{F}{r'}\right) -\di{F}{r} &=& \frac{r^2r''- 2rr'^2 -r^3}{(r^2 +r'^2)^{3/2}}\nonumber\\
+\begin{eqnarray}\label{newtonian_string}
+\frac{d}{dx}\left(\di{F}{r'}\right) -\di{F}{r} &=& \frac{r^2r''- 2rr'^2 -r^3}{(r^2 +r'^2)^{3/2}}\\
 \frac{d}{dx}\left(\di{G}{r'}\right) -\di{G}{r} &=&
-\frac{d}{dx}\left(\frac{\partial}{\partial r'}\left(\frac{r'^2}{r\sqrt{r^2+r'^2}}\right)\right)
+\frac{d}{dx}\left(\frac{\partial}{\partial r'}\left(\frac{r'^2}{2r\sqrt{r^2+r'^2}}\right)\right)
 - \frac{\partial}{\partial
-  r}\left(\frac{r'^2}{r\sqrt{r^2+r'^2}}\right)\nonumber\\
-&=& \frac{(2r^2-r'^2)(rr''-r'^2)}{(r^2+r'^2)^{5/2}}
+  r}\left(\frac{r'^2}{r\sqrt{r^2+r'^2}}\right)\\
+&=& \frac{(2r^2-r'^2)(rr''-r'^2)}{2(r^2+r'^2)^{5/2}}
 \end{eqnarray}
 
-
-
-This gives $r'' = r + 2r'^2/r$ in the unperturbed case, recovering the
-familiar Euclidean straight-line solution from Newtonian physics:
+Equation~\ref{newtonian_string} gives $r'' = r + 2r'^2/r$ in the
+unperturbed case from which we recover the familiar Euclidean
+straight-line solution from Newtonian physics:
 $r=r_0\sec(\theta-\theta_0)$.  The left hand side of
 equation~\ref{factorized_eqn} is then
 
@@ -438,14 +437,14 @@ Equation~\ref{factorized_eqn} in full becomes
  &{}&z   \left((r^2 - 2r'^2)(rr''-r'^2)\right)\nonumber\\
 +&{}&z'  \left(-rr'(r^2 - 2r'^2 + 3rr'')\right)\nonumber\\
 +&{}&z'' \left(r^2    (r^2+r'^2)       \right)\nonumber\\
-&{}&\qquad =\qquad -(2r^2-r'^2)(rr''-r'^2)
+&{}&\qquad =\qquad -(2r^2-r'^2)(rr''-r'^2)/2
 \end{eqnarray}
 \begin{eqnarray}
   &{}&
   z   \left((r^2 - 2r'^2)(rr''-r'^2)\right)
   +z'  \left(-rr'(r^2 - 2r'^2 + 3rr'')\right)
   +z'' \left(r^2    (r^2+r'^2)       \right)\nonumber\\
- &=& -(2r^2-r'^2)(rr''-r'^2)
+ &=& -(2r^2-r'^2)(rr''-r'^2)/2
 \end{eqnarray}
 
 Now we are free to substitute.  We have $r=r_0\sec(\theta-\theta_0)$
@@ -454,7 +453,7 @@ $r'= r_0\sec\theta\tan\theta$ and $r''=\sec\theta +
 \sec\theta\tan^2\theta$.  Substituting and simplifying gives:
 
 \begin{equation}\label{string_ODE}
-z'' - 4z'\tan \theta + z(1-2\tan^2\theta) = \tan^2\theta - 2
+z'' - 4z'\tan \theta + z(1-2\tan^2\theta) = {\scriptstyle\frac{1}{2}}\tan^2\theta - 1
 \end{equation}
 
 This does not appear to possess a simple analytical solution but
@@ -464,11 +463,10 @@ correspond to the specified radius at $p_1$ and $p_2$.
 To fix ideas we consider the Earth's orbit around the sun, taking it
 to be a nominal circle of radius $r_0=1.5\times 10^{11}\,\mathrm{m}$,
 and use this as the unit of length.  If we take the Schwarzschild
-radius $M$ of the Sun to be $3\times 10^3\,\mathrm{m}$, we find that
-$M=2\times 10^{-8}$, and the linear approximation is reasonable.
+radius $2M$ of the Sun to be $3\times 10^3\,\mathrm{m}$, we find that
+$M=10^{-8}$, and the linear approximation is reasonable.
 
-  Taking
-$p_1=(1,-\pi/4)$, $p_2=(1,\pi/4)$
+Taking $p_1=(1,-\pi/4)$, $p_2=(1,\pi/4)$
 
 
 
