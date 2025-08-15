@@ -359,10 +359,10 @@ see that the catenary is distorted into a ``vee'' shape.
 
 \subsection{Black holes}
 
-In the theory of general relativity~\cite{misner}, the field equations
-for a stationary, spherically symmetric point mass are solved by the
-Schwarzschild metric that gives the squared interval $ds^2$ in terms
-of spherical coordinates $(r,\theta,\phi)$:
+In the theory of general relativity~\cite{misner1973}, the field
+equations for a stationary, spherically symmetric point mass are
+solved by the Schwarzschild metric that gives the squared interval
+$ds^2$ in terms of spherical coordinates $(r,\theta,\phi)$:
 
 \begin{eqnarray}\label{schwarzschild}
   ds^2=
@@ -372,13 +372,13 @@ of spherical coordinates $(r,\theta,\phi)$:
 In equation~\ref{schwarzschild}, $M$ is the mass of the black hole
 (using geometrized units so the mass has the dimensions of length).
 Black holes are known to exhibit counterintuitive behaviour near the
-event horizon~\cite{scientificamerican123} and one consequence of the
+event horizon~\cite{allen1990} and one consequence of the
 curvature of spacetime in the vicinity is that light inextensible
 string under tension can adopt curved
-configurations~\cite{hankin2022}.  Such taut inextensible strings
+configurations~\cite{hankin2021}.  Such taut inextensible strings
 minimize their proper length, given by equation~\ref{proper}.
 
-\begin{equation}\ref{proper}
+\begin{equation}\label{proper}
   \int_{p_1}^{p_2}\sqrt{r^2 + \frac{r'^2}{1-2M/r}}\,d\phi
 \end{equation}
 
@@ -387,60 +387,33 @@ functional $F=\sqrt{r^2 + \frac{r'^2}{1-2M/r}}$.  The Euler-Lagrange
 equations yield
 
 \begin{equation}\label{eulerstring}
-  r''(\phi) = (r-2M) + \frac{2r-3M)r'^2}{r(r-2M)}
+  r''(\phi) = (r-2M) + \frac{(2r-3M)r'^2}{r(r-2M)}
 \end{equation}
 
 
-Below, following Einstein~\cite{einstein_mercury},
+Following Einstein~\cite{einstein1915}, we consider
 equation~\ref{schwarzschild} as a slight perturbation of classical
 Newtonian physics.  First, we observe that in the limit
-$M\longrightarrow 0$ we recover $r'' = r + 2r'/r$, having solution
-$r=r_0\sec(\phi-\phi_0)$, a familiar straight line but expressed in
-polar coordinates.
-
-in which we can use polar coordinates $(r,\phi)$
-and consider a taut string joining point $p_1=(r_1,\phi_1)$ to point
-$p_2=(r_2,\phi_2)$.  The string will minimize its length thus we have
-functional
-
-\begin{equation}
-  F=\sqrt{r^2 + r'^2}
-\end{equation}
-
-How might this solution be perturbed if we consider it to be a small
-perturbation of from Newtonian to relativistic physics?  The first
-thing to change would be that the string minimizes its {\em proper}
-length:
-
-The appropriate EL equation would be
-
-
-which would have solution $r=r_0\sec(\phi-\phi_0)$.  How might this
-solution be perturbed if we perturbed the system from Newtonian to
-relativistic physics?  The first thing to change would be that the
-string minimizes its {\em proper} length:
-
-\begin{equation}
-  \int_{p_1}^{p_2}\sqrt{r^2 + \frac{r'^2}{1-2M/r}}\,d\phi
-\end{equation}
-
-To fix ideas we consider the Earth's orbit around the sun, taking it
-to be a nominal circle of radius $r_0=1.5\times 10^{11}\,\mathrm{m}$,
-and use this as the unit of length.  If we take the Schwarzschild
-radius $M$ of the Sun to be $3\times 10^3\,\mathrm{m}$, we find that
-$M\simeq 2\times 10^{-8}$, and the linear approximation is reasonable;
-to first order we have
+$M\longrightarrow 0$ we recover $F=\sqrt{r^2+r'^2}$, whence $r'' = r +
+2r'/r$.  This has solution $r=r_0\sec(\phi-\phi_0)$, a familiar
+straight line but expressed in polar coordinates.
 
 \begin{equation}
 \sqrt{r^2 + \frac{r'^2}{1-2M/r}}=\sqrt{r+r'^2} + M\frac{r'^2}{r\sqrt{r^2 + r'^2}}
 \end{equation}
   
-so $F=\sqrt{r^2+r'^2}$ and $G=M\frac{r'^2}{r\sqrt{r^2+r'^2}}$.  Then
+so $F=\sqrt{r^2+r'^2}$ and $G=\frac{r'^2}{r\sqrt{r^2+r'^2}}$.  Then
 
 \begin{eqnarray}
-\frac{d}{dx}\left(\di{F}{r'}\right) -\di{F}{r} &=& 
-\frac{r^2r''- 2rr'^2 -r^3}{(r^2 +r'^2)^{3/2}}.
+\frac{d}{dx}\left(\di{F}{r'}\right) -\di{F}{r} &=& \frac{r^2r''- 2rr'^2 -r^3}{(r^2 +r'^2)^{3/2}}\nonumber\\
+\frac{d}{dx}\left(\di{G}{r'}\right) -\di{G}{r} &=&
+\frac{d}{dx}\left(\frac{\partial}{\partial r'}\left(\frac{r'^2}{r\sqrt{r^2+r'^2}}\right)\right)
+- \frac{\partial}{\partial
+  r}\left(\frac{r'^2}{r\sqrt{r^2+r'^2}}\right)\nonumber\\
+&=& \frac{(2r^2-r'^2)(rr''-r'^2)}{(r^2+r'^2)^{5/2}}
 \end{eqnarray}
+
+
 
 This gives $r'' = r + 2r'^2/r$ in the unperturbed case, recovering the
 familiar Euclidean straight-line solution from Newtonian physics:
@@ -459,23 +432,20 @@ equation~\ref{factorized_eqn} is then
       + z''\left(\frac{r^2    (r^2+r'^2)       }{(r^2 + r'^2)^{5/2}}\right)
 \end{eqnarray}
 
-And now the non-homogeneous term:
+Equation~\ref{factorized_eqn} in full becomes
 
 \begin{eqnarray}
-\frac{d}{dx}\left(\di{G}{r'}\right) -\di{G}{r} &=& 
-\frac{d}{dx}\left(\frac{\partial}{\partial r'}\left(\frac{r'^2}{r\sqrt{r^2+r'^2}}\right)\right)
-- \frac{\partial}{\partial
-  r}\left(\frac{r'^2}{r\sqrt{r^2+r'^2}}\right)\nonumber\\
-&=& \frac{(2r^2-r'^2)(rr''-r'^2)}{(r^2+r'^2)^{5/2}}
-\end{eqnarray}
-
-Combining and simplifying we have
-
-\begin{eqnarray}
- &{}&z  \left((r^2 - 2r'^2)(rr''-r'^2)\right)\nonumber\\
-+&{}&z'  \left(rr'(r^2 - 2r'^2 + 3rr'')\right)\nonumber\\
-+&{}&z''  \left(r^2    (r^2+r'^2)       \right)\\
+ &{}&z   \left((r^2 - 2r'^2)(rr''-r'^2)\right)\nonumber\\
++&{}&z'  \left(-rr'(r^2 - 2r'^2 + 3rr'')\right)\nonumber\\
++&{}&z'' \left(r^2    (r^2+r'^2)       \right)\nonumber\\
 &{}&\qquad =\qquad -(2r^2-r'^2)(rr''-r'^2)
+\end{eqnarray}
+\begin{eqnarray}
+  &{}&
+  z   \left((r^2 - 2r'^2)(rr''-r'^2)\right)
+  +z'  \left(-rr'(r^2 - 2r'^2 + 3rr'')\right)
+  +z'' \left(r^2    (r^2+r'^2)       \right)\nonumber\\
+ &=& -(2r^2-r'^2)(rr''-r'^2)
 \end{eqnarray}
 
 Now we are free to substitute.  We have $r=r_0\sec(\theta-\theta_0)$
@@ -487,12 +457,18 @@ $r'= r_0\sec\theta\tan\theta$ and $r''=\sec\theta +
 z'' - 4z'\tan \theta + z(1-2\tan^2\theta) = \tan^2\theta - 2
 \end{equation}
 
-
 This does not appear to possess a simple analytical solution but
 numerical methods may be used.  We have two degrees of freedom that
-correspond to the specified radius at $p_1$ and $p_2$.  Taking
-$p_1=(1,-\pi/4)$, $p_2=(1,\pi/4)$
+correspond to the specified radius at $p_1$ and $p_2$.
 
+To fix ideas we consider the Earth's orbit around the sun, taking it
+to be a nominal circle of radius $r_0=1.5\times 10^{11}\,\mathrm{m}$,
+and use this as the unit of length.  If we take the Schwarzschild
+radius $M$ of the Sun to be $3\times 10^3\,\mathrm{m}$, we find that
+$M=2\times 10^{-8}$, and the linear approximation is reasonable.
+
+  Taking
+$p_1=(1,-\pi/4)$, $p_2=(1,\pi/4)$
 
 
 
