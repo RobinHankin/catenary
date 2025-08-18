@@ -791,11 +791,13 @@ blackbadness(3.044)
 
 ```{r showblack}
 parameters <- c(lambda = 0)
-state      <- c(Z = 0, Zdash = 6.088)  # initial conditions
-times      <- seq(-pi/4, pi/4, len=35)
+state      <- c(Z = 0, Zdash = 3.044)  # initial conditions
+times      <- seq(-pi/4, pi/4, len=85)
 out <- ode(y = state, times = times, func = blackhole, parms = parameters)
-plot(out[,1],out[,2])
-grid()
+plot(out[,1], out[,2], type="l", axes=FALSE, xlab=expression(phi), ylab="perturbation")
+axis(1, at=c(-pi,0,pi)/4 , labels=c(expression(-pi/4),expression(0),expression(pi/4)))
+axis(2)
+out[40:45,]
 ```
 
 
