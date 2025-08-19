@@ -517,8 +517,8 @@ catenary_space <- function(t, state, parameters) {
         x <- t
         y <- cosh(x)
         
-        phi <- y^2
-        phi_y  <- 2*y
+        phi <- y^2/2
+        phi_y  <- y
         phi_x <- 0
         
 
@@ -598,9 +598,9 @@ head(out)
 tail(out)
 x <- out[,1]
 y0 <- out[,2]
-plot(x, y0)
-plot(x,cosh(x), asp=1, type='l')
-points(x,cosh(x) - y0/4, type="l", col="red")
+plot(x, y0, type='b')
+plot(x, cosh(x), asp=1, type='l')
+points(x, cosh(x) - y0/4, type="l", col="red")
 ```
 
 

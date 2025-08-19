@@ -326,32 +326,36 @@ $\boldsymbol{\omega}\times\left(\boldsymbol{\omega}\times\boldsymbol{r}\right)$
 per unit mass; if we take $\boldsymbol{\omega}=\omega\boldsymbol{e}_x$
 the body force is $-\omega^2y\boldsymbol{e}_y$ and this is equivalent
 to a potential energy of $-\omega^2y^2/2$ per unit mass.  We now
-switch to coordinates $y^\star = y-y_0$ in which the potential energy
-is $(y^\star+y_0)^2/2$, corresponding to an off-axis troposkein.  The
-potential field would be $y_0y^\star + (y^\star)^2/2$, up to a
-constant.  Dropping the star for convenience and rescaling gives us
+switch to coordinates $y^*$ with $y = Y_0 + y_0y^*$, corresponding to
+an off-axis troposkein.  We find that the potential energy is
+proportional to $y^* +
+\frac{y_0}{Y_0}\left(y^*\right)^2/2$.  If
+$Y_0$ and $y_0$ are such that $y_0\ll Y_0$ and $y^*={\mathcal O}(1)$,
+the chain is a slightly perturbed catenary.  Dropping the star for
+convenience and rescaling gives us
 
 \begin{equation}
   F = \sqrt{1+y'^2}(y+\Lambda)\qquad
-  G = \sqrt{1+y'^2}y^2
+  G = \sqrt{1+y'^2}(y^2/2 + \lambda)
 \end{equation}
 
-Equation \ref{pertcan} becomes
+Equation \ref{pertcan}, with $\phi=y^2/2$, becomes
 
 \begin{equation}
-  z'' - 4z'\tanh x - z = \cosh^2 x(1+2\lambda)
+  z'' - 4z'\tanh x - z = y^2/2 + \lambda -y\cosh x.
 \end{equation}
-
+%
 This equation is analytically intractable so we use numerical methods.
-Here I find solutions for a standard $y=\cosh x$ catenary suspended at
-endpoints $(\pm 2, \cosh 2)$.  To find meaningful solutions to this
-equation, we specify that start point has zero perturbation,
-$z(-2)=0$.  We then find values of $\lambda$ and initial slope
-$(z'(-2)$ that jointly ensure $z(2)=0$ and that the chain has the same
-length as the unperturbed solution.  It is straightforward to use
-numerical techiques and we identify that $z'(0)\simeq 1.324$ and
-$\lambda = -5.524$ satisfy the constraints.
-
+Here I consider a standard $y=\cosh x$ catenary fixed at endpoints
+$(\pm 2, \cosh 2)$.  To find meaningful solutions to this equation,
+the left endpoint is constrained to zero perturbation, $z(-2)=0$.
+Next, we find values of $\lambda$ and initial slope $(z'(-2)$ that
+jointly ensure $z(2)=0$ and that the chain has the same length as the
+unperturbed solution.  Straightforward numerical optimization
+techiques show that $z'(0)\simeq 0.662$ and $\lambda = -2.762$ satisfy
+the constraints.  Figures~\ref{space} and~\ref{space2} show a
+numerical simulation.  We see that the catenary is distorted into a
+``vee'' shape.
 
 \begin{figure}[h]
 \centering
@@ -364,10 +368,6 @@ $\lambda = -5.524$ satisfy the constraints.
 \includegraphics[width=0.9\textwidth]{euler_lagrange_perturbed_files/figure-latex/showoptimspace-2.pdf}
 \caption{Troposkein thing}\label{space2}
 \end{figure}
-
-Figures~\ref{space} and~\ref{space2} show a numerical simulation.  We
-see that the catenary is distorted into a ``vee'' shape.
-
 
 \subsection{Black holes}
 
@@ -494,7 +494,7 @@ $2M\cdot 0.7886$, or about $\qty{2.4}{\km}$.  Further, we may exploit
 the linearity of equation~\ref{factorized_eqn}.  If we replace the Sun
 with the earth (of Schwarzschild radius $\qty{8.87}{\mm}$) in the
 physical setup, then the perturbation is again $2M\cdot 0.7886$, or
-about $\qty{7}{\mm}$.
+about $\qty{7}{\mm}$; a result difficult to obtain any other way.
 
 \bibliography{sn-bibliography}% common bib file
 %% if required, the content of .bbl file can be included here once bbl is generated
