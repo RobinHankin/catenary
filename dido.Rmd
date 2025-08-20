@@ -15,6 +15,9 @@ knitr::opts_chunk$set(echo = TRUE)
 \newcommand{\sx}{\sinh{\left(\frac{x-x_0}{a}\right)}}
 \newcommand{\tx}{\tanh{\left(\frac{x-x_0}{a}\right)}}
 \newcommand{\sech}{\operatorname{sech}}
+\newcommand{\el}[1]{\frac{d}{dx}\di{#1}{y'} - \di{#1}{y}}
+
+
 
 
 We wish to minimize the functional $F[y] = \lambda y+\sqrt{1+y'^2}$.
@@ -156,3 +159,103 @@ Squaring and summing:
 \begin{equation}
 (x-a)^2 + (y-b)^2 = \lambda^2
 \end{equation}
+
+
+
+# Perturbation analysis
+
+
+
+We will make land with a large $y$ coordinate worth slightly more.  We
+will maximize $\int (y+\epsilon y^2)\,dx$, subject to the length
+constraint.  Using standard perturbation techniques we have
+
+\begin{equation}
+F= y + \Lambda\sqrt{1+y'^2}\qquad G=y^2 + \lambda\sqrt{1+y'^2}
+\end{equation}
+
+We can show that $\Lambda=1$ [it is the radius of the circle and we
+will look only at unit radius circles from now on] so we will ignore it.
+
+\begin{equation}\label{factorized_eqn}
+\left(z\di{}{y} + z'\di{}{y'} + z''\di{}{y''}\right)
+\left(\el{F}\right) + \left(\el{G}\right) = 0
+\end{equation}
+
+We have 
+
+\begin{eqnarray}
+  \el{F} &=& \frac{d}{dt}\left[\frac{y'}{\sqrt{1+y'^2}}\right]-1  = \frac{y''}{(1+y'^2)^{3/2}}-1\\
+  \el{G} &=& \frac{\lambda y''}{(1+y'^2)^{3/2}} -2y
+\end{eqnarray}
+
+So equation \ref{factorized_eqn} gives us
+
+\begin{eqnarray}
+   z' \di{}{y' }\left[\frac{y''}{(1+y'^2)^{3/2}}-1\right]
+ + z''\di{}{y''}\left[\frac{y''}{(1+y'^2)^{3/2}}-1\right] 
+ +    \frac{\lambda y''}{(1+y'^2)^{3/2}} - 2y &=& 0\nonumber\\
+-3z' \left[\frac{y'y''}{(1+y'^2)^{5/2}}\right]
++ z''\left[\frac{1}{(1+y'^2)^{3/2}}\right]
++    \frac{\lambda y''}{(1+y'^2)^{3/2}} - 2y &=& 0\\
+\end{eqnarray}
+
+
+Simplifying
+
+\begin{equation}
+z'' - 3z'\frac{y'y''}{1+y'^2} + \lambda y'' - 2y(1+y'^2)^{3/2}=0
+\end{equation}
+
+Now a standard circle, $x^2+y^2=1$, is problematic because the
+gradient is infinite at the boundaries $x=\pm 1$.  We will take a
+unit-radius circle with center $(0,-\sqrt{2}/2)$, giving $x^2 +
+(y+\sqrt{2}/2)^2=1$, or $y=\sqrt{1-x^2}-\sqrt{2}/2$.  We find that
+$y'=\frac{-x}{\sqrt{1-x^2}}$ and $1+y'^2=\frac{1}{1-x^2}$.  Also $y'' =
+\frac{-1}{(1-x^2)^{3/2}}$.
+
+\begin{eqnarray}
+   z'' 
+-3z'\frac{\frac{x}{\sqrt{1-x^2}}\cdot\frac{1}{(1-x^2)^{3/2}}}{\frac{1}{1-x^2}}
++ \frac{\lambda\frac{-1}{(1-x^2)^{3/2}}}{(1-x^2)^{-3/2}}
+- \frac{2}{1-x^2}-\frac{\sqrt{2}}{(1-x^2)^{3/2}}
+&=& 0
+\end{eqnarray}
+
+Restating:
+
+\begin{equation}
+z'' -3z'\frac{x}{1-x^2} = \lambda +  \frac{2}{1-x^2} + \frac{\sqrt{2}}{(1-x^2)^{3/2}}
+\end{equation}
+
+
+Writing $z_\lambda(x)$ for a solution of this equation, we want to
+ensure that the total string length is preserved.  To wit:
+
+\begin{eqnarray}
+\int_{-\frac{\sqrt{2}}{2}}^{\frac{\sqrt{2}}{2}}
+\sqrt{1+\left({1+(y' + \epsilon z')^2}\right)}\,dx
+&=&
+\int_{-\frac{\sqrt{2}}{2}}^{\frac{\sqrt{2}}{2}}
+\sqrt{1+\left({1+y'^2}\right)}\,dx
+\end{eqnarray}
+
+
+Differentiating (with respect to $\epsilon$):
+
+
+\begin{eqnarray}
+\di{}{\epsilon}\int_{-\frac{\sqrt{2}}{2}}^{\frac{\sqrt{2}}{2}}
+\left.\sqrt{1+\left({1+(y' + \epsilon z')^2}\right)}\,dx\right|_{\epsilon=0}
+&=&
+\int_{-\frac{\sqrt{2}}{2}}^{\frac{\sqrt{2}}{2}}
+\di{}{\epsilon}
+\left. \sqrt{1 + (y' + \epsilon z')^2}\right|_{\epsilon=0}\,dx\nonumber\\
+&=&
+\int_{-\frac{\sqrt{2}}{2}}^{\frac{\sqrt{2}}{2}}
+\frac{y'z\,dx}{\sqrt{1+y'^2}}\nonumber\\
+&=&
+\int_{-\frac{\sqrt{2}}{2}}^{\frac{\sqrt{2}}{2}}
+-x\,z(x)\,dx\nonumber\\
+&=& 0
+\end{eqnarray}
