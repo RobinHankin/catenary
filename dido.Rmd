@@ -54,39 +54,105 @@ y' = \sqrt{\frac{1}{(C+\lambda y)^2}-1}
 \end{equation}
 
 \begin{equation}
-x + K =  \frac{(C+\lambda y)^2-1}{\lambda(C+\lambda y)\sqrt{\frac{1}{(C+\lambda y)^2}-1}}
+x - K =  \frac{(C+\lambda y)^2-1}{\lambda(C+\lambda y)\sqrt{\frac{1}{(C+\lambda y)^2}-1}}
+\end{equation}
+
+[the reason  for the negative sign for $K$ will become apparent]
+
+\begin{equation}
+\sqrt{1-(C+\lambda y)^2} = \lambda(x-K)
 \end{equation}
 
 \begin{equation}
-\sqrt{1-(C+\lambda y)^2} = \lambda(x+K)
+(C+\lambda y)^2+ \lambda^2(x-K)^2 =1
 \end{equation}
+
+\begin{equation}\label{recognisably_a_circle}
+(y + C/\lambda)^2+ (x-K)^2 = 1/\lambda^2
+\end{equation}
+
+Equation \ref{recognisably_a_circle} is recognisably an arc of a
+circle with radius $r=1/\lambda$.  We will impose boundary
+conditions: $y(a)=y(b)=0$.  That is, the curve passes through points
+$(a,0)$ and $(b,0)$.  Equation \ref{recognisably_a_circle} gives
+
+\begin{eqnarray}
+C^2 + (a-K)^2/r^2 &=& 1\\
+C^2 + (b-K)^2/r^2 &=& 1
+\end{eqnarray}
+
+Subtracting gives $(a-K)^2=(b-K)^2$, or $(a-K)=\pm(b-K)$; the positive
+root gives $a=b$ so is disallowed and we are left with $K=(a+b)/2$,
+the midpoint between $a$ and $b$ [which is why the negative sign was
+chosen above].  Substituting gives $C^2=1-M^2/r^2$.
+Equation \ref{recognisably_a_circle} becomes
 
 \begin{equation}
-(C+\lambda y)^2+ \lambda^2(x+K)^2 =1
+(y \pm r\sqrt{1-M^2/r^2})^2+ (x-K)^2 = r^2
 \end{equation}
+
+The different signs give arcs that are convex up or convex down.
+Taking the negative sign for convenience, we might know that the
+maximum height of the circle is, say, $H$, and then we know that the
+arc passes through $(K,H)$ which gives us a quadratic for $r^2$.  But
+it is easier to use geometry [in particular, the intersecting chords
+theorem] to give $(a-b)^2=4H(2r-H)$, which can be used to solve for
+$r$.
+
+## Alternative approach
+
+We seek a function $z=z(t)=(x(t),y(t))$ that maximizes the enclosed
+area subject to a total arc length constraint.  The Lagrangian would
+be
+
+\begin{equation}\Lambda = \frac{1}{2}\left(x\dot{y} -\dot{x}y\right) +
+\lambda\sqrt{\dot{x}^2+\dot{y}^2}
+\end{equation}
+
+The area is given by the first term and $\lambda$ is the Lagrange
+undetermined multiplier.
+
 
 \begin{equation}
-(y + C/\lambda)^2+ (x+K)^2 = 1/\lambda^2
+\frac{d}{dt}\di{\Lambda}{z} = \di{\Lambda}{z}
 \end{equation}
 
+We have two Euler-Lagrange equations for $x$ and $y$:
 
-boundary conditions:  $y(a)=y(b)=0$:
+\begin{eqnarray}
+\frac{d}{dt}\di{\Lambda}{\dot{x}} - \di{\Lambda}{x} &=& 0\\
+\frac{d}{dt}\di{\Lambda}{\dot{y}} - \di{\Lambda}{y} &=& 0
+\end{eqnarray}
+
+
+Applying the partial differentiation operators:
+
+\begin{eqnarray}
+\frac{d}{dt}\left[\frac{-y}{2} +
+\frac{\lambda\dot{x}}{\sqrt{\dot{x}^2+\dot{y}^2}}\right]
+-\frac{\dot{y}}{2} &=& 0\\
+\frac{d}{dt}\left[\frac{+x}{2} + \frac{\lambda\dot{y}}{\sqrt{\dot{x}^2+\dot{y}^2}}\right]
++\frac{\dot{x}}{2} &=& 0
+\end{eqnarray}
+
+\begin{eqnarray}
+\frac{d}{dt}\left[\frac{\lambda\dot{x}}{\sqrt{\dot{x}^2+\dot{y}^2}}\right]
+&=& \dot{y}\\
+\frac{d}{dt}\left[\frac{\lambda\dot{y}}{\sqrt{\dot{x}^2+\dot{y}^2}}\right]
+&=& -\dot{x}
+\end{eqnarray}
+
+Integrating both sides of each equation with respect to $t$
+\begin{eqnarray}
+\frac{\lambda\dot{x}}{\sqrt{\dot{x}^2+\dot{y}^2}}
+&=& y-b\\
+\frac{\lambda\dot{y}}{\sqrt{\dot{x}^2+\dot{y}^2}}
+&=& a-x
+\end{eqnarray}
+
+
+Squaring and summing:
 
 \begin{equation}
-C=\pm\sqrt{1-\lambda^2(a+K)^2}=\pm\sqrt{1-\lambda^2(b+K)^2}
+(x-a)^2 + (y-b)^2 = \lambda^2
 \end{equation}
-
-Solving for $K$ gives $(a+K)=\pm(b+K)$; the positive root gives $a=b$
-so is disallowed and we are left with $K=-(a+b)/2$.
-
-\begin{equation}
-\left(y\pm\frac{\sqrt{1-\lambda^2(b-a)^2/4}}{\lambda}\right)^2 + (x-(a-b)/2)^2 = \lambda^{-2}
-\end{equation}
-
-
-
-
-
-
-
-
