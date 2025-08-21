@@ -1,5 +1,5 @@
 ---
-title: "Perturbing the catenary: a first-order analysis"
+title: "Perturbing the catenary: a FLAWED first-order analysis"
 author: "Robin Hankin"
 output: pdf_document
 ---
