@@ -151,10 +151,10 @@ $\di{F}{y}\equiv\partial_yF\equiv F_y$.
 Collecting terms:
 
 \begin{eqnarray}
-&{}& z''F_{y'y'}\\
-&+& z'(F_{xy'y'} + y'F_{yy'y'} + y''F_{y'y'y'})\\
-&+& z (F_{xyy'} + y'F_{yyy'} + y''F_{yy'}-F_{yy})\\
-&+& (G_{xy'} + y'G_{yy'} + y''G_{y'y'}- G_{y})\\
+&{}& z''F_{y'y'}\nonumber\\
+&+& z'(F_{xy'y'} + y'F_{yy'y'} + y''F_{y'y'y'})\nonumber\\
+&+& z (F_{xyy'} + y'F_{yyy'} + y''F_{yy'}-F_{yy})\nonumber\\
+&+& (G_{xy'} + y'G_{yy'} + y''G_{y'y'}- G_{y})\nonumber\\
 = 0
 \end{eqnarray}
 %
@@ -165,21 +165,33 @@ expression, giving
 
 \begin{equation}\label{factorized_eqn}
 \left(\el{G}\right) + \left(z\di{}{y} + z'\di{}{y'} + z''\di{}{y''}\right)
-\left(\el{F}\right)=0
+\left(\el{F}\right)=0.
 \end{equation}
 
-This equation is now applied to three simple classical problems in
-which a functional is given a small perturbation of some sort.  The
-examples are drawn from optics, statics, and the general theory of
-relativity.
+Similar techniques show that the Beltrami identity,
+$F-y'\di{F}{y'}=C$, has a perturbed version
+
+\begin{equation}\label{beltrami}
+  \left(G-y'\di{G}{y'}\right)
+  =
+    z \left[y'\frac{\partial^2F}{\partial y\partial y'} + \di{F}{y'}\right]
+  + z'\left[y'\frac{\partial^2F}{\partial y'\partial y'}\right] + C.
+  \end{equation}
+  
+
+Equation~\ref{factorized_eqn} is now applied to three simple classical
+problems in which a functional is given a small perturbation of some
+sort.  The examples are drawn from optics, statics, and the general
+theory of relativity.
 
 \section{Examples}
 
 \subsection{Geometrical optics in a medium of slightly varying refractive index}
 
 We consider two-dimensional ray paths in a medium of refractive index
-$1+\phi(x,y)$.  The paths are given by solving the Euler-Lagrange
-equations with functional $F=(1+\phi)\sqrt{1+y'^2}$:
+$1+\phi(x,y)$.  First, we solvethe Euler-Lagrange equations exactly.
+The paths are given by solving the Euler-Lagrange equations with
+functional $F=(1+\phi)\sqrt{1+y'^2}$:
 
 \begin{eqnarray}
   \frac{d}{dx}\di{F}{y'}-\di{F}{y} &=& 0\nonumber\\
@@ -190,7 +202,7 @@ equations with functional $F=(1+\phi)\sqrt{1+y'^2}$:
 Simplifying,
 
 \begin{eqnarray}
- (1+\phi) y'' = (1+y'^2)(\phi_y - y'\phi_x)
+ (1+\phi) y'' = (1+y'^2)(\phi_y - y'\phi_x).
 \end{eqnarray}
 %
 Except for trivial cases such as $\phi_y=y'\phi_x$, this equation has
@@ -228,30 +240,42 @@ is constant.  Writing $y'= s$ we obtain
   \frac{\phi_xs}{\sqrt{1+s^2}} + \frac{\phi_ys^2}{\sqrt{1+s^2}} -\phi_y\sqrt{1+s^2}
 \end{equation}
 
-\begin{equation}
+\begin{equation}\label{zdashdashmirage}
   z'' = (1+s^2)(\phi_y-\phi_xs)
 \end{equation}
 
-We may use this as a model for phenomena such as atmospheric refraction.
+We may use this as a model for atmospheric refraction, in which the
+refractive index of air varies by less than one part in $2\times
+10^{-5}$.  A straightforward application of Snell's law for
+$\left|y'\right|\ll 1$ gives $y''=\phi_y$, which is generally used in
+the study of atmospheric mirages; equation~\ref{zdashdashmirage} is a
+slight generalization.  We may infer from
+equation~\ref{zdashdashmirage} that the rays (and ray slopes,
+interesting in the context of atmospheric mirages) deviate from
+unperturbed straight-line rays {\em linearly} with excess refractive
+index.
 
 
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.9\textwidth]{euler_lagrange_perturbed_files/figure-latex/plotdelta-1.pdf}
-\caption{Light rays following geometrical optics}\label{plotdelta}
-\end{figure}
-
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.9\textwidth]{euler_lagrange_perturbed_files/figure-latex/plotdeltacloseup-1.pdf}
-\caption{Light rays following geometrical optics}\label{plotdeltacloseup}
-\end{figure}
+%\begin{figure}[h]
+%\centering
+%\includegraphics[width=0.9\textwidth]{euler_lagrange_perturbed_files/figure-latex/plotdelta-1.pdf}
+%\caption{Light rays following geometrical optics}\label{plotdelta}
+%\end{figure}
+%
+%\begin{figure}[h]
+%\centering
+%\includegraphics[width=0.9\textwidth]{euler_lagrange_perturbed_files/figure-latex/plotdeltacloseup-1.pdf}
+%\caption{Light rays following geometrical optics}\label{plotdeltacloseup}
+%\end{figure}
 
 
 \subsection{Catenary}
 
-First the classical analysis with functional
-$F=\sqrt{1+y'^2}(y+\Lambda)$.
+A flexible uniform chain supported at two points in a uniform
+graviational field takes the form of a catenary, a hyperbolic cosine.
+This may be established by classical analysis with functional
+$F=\sqrt{1+y'^2}(y+\Lambda)$ where $\Lambda$ is a Lagrange
+multiplier that controls the length of the chain.
 
 \begin{eqnarray}
   \frac{d}{dx}\di{F}{y'} - \di{F}{y}
@@ -270,18 +294,18 @@ Rearranging equation~\ref{catenary_EL_f} gives
 
 Equation~\ref{catenary_ODE} requires three constants for solution
 (viz, two constants of integration arising from the fact that it is a
-second order ODE, and Lagrange's multiplier $\Lambda$).  In practice,
-these constants are determined by constraining three physical features
-of the chain, typically the height of the curve at two points,
-$y(x_1)$, $y(x_2)$ and the length of the chain between them,
-$\int_{x_1}^{x_2}\sqrt{1+y'^2}\,dx$.  For ease of exposition we
+second order ODE, and the Lagrange multiplier $\Lambda$).  In
+practice, these constants are determined by constraining three
+physical features of the chain, typically the height of the curve at
+two points, $y(x_1)$, $y(x_2)$ and the length of the chain between
+them, $\int_{x_1}^{x_2}\sqrt{1+y'^2}\,dx$.  For ease of exposition we
 require the chain to pass through $(\pm 2,\cosh 2)$ and specify an arc
-length of $e+e^{-1}$, giving $y=\cosh x$.
+length of $e+e^{-1}$, giving $\Lambda=0$ whence $y=\cosh x$.
 
 We are now in a position to assess the perturbation from the standard
 catenary caused by small perturbations to the gravitational field
 potential.  We will consider a gravitational potential of $y +
-\epsilon\phi(x,y)$
+\epsilon\phi(x,y)$, giving functionals
 
 \begin{eqnarray}\label{FandG}
 F = \sqrt{1+y'^2}(y + \Lambda)\qquad G =  \sqrt{1+y'^2}(\phi + \lambda)
@@ -353,20 +377,20 @@ Next, we find values of $\lambda$ and initial slope $(z'(-2)$ that
 jointly ensure $z(2)=0$ and that the chain has the same length as the
 unperturbed solution.  Straightforward numerical optimization
 techiques show that $z'(0)\simeq 0.662$ and $\lambda = -2.762$ satisfy
-the constraints.  Figures~\ref{space} and~\ref{space2} show a
+the constraints.  Figures~\ref{trop} and~\ref{trop_perturb} show a
 numerical simulation.  We see that the catenary is distorted into a
 ``vee'' shape.
 
 \begin{figure}[h]
 \centering
 \includegraphics[width=0.9\textwidth]{euler_lagrange_perturbed_files/figure-latex/showoptimspace-1.pdf}
-\caption{Troposkein thing}\label{space}
+\caption{Troposkein thing}\label{trop}
 \end{figure}
 
 \begin{figure}[h]
 \centering
 \includegraphics[width=0.9\textwidth]{euler_lagrange_perturbed_files/figure-latex/showoptimspace-2.pdf}
-\caption{Troposkein thing}\label{space2}
+\caption{Troposkein thing}\label{trop_perturb}
 \end{figure}
 
 \subsection{Black holes}
@@ -483,9 +507,9 @@ approximation is reasonable.
 \begin{figure}[h]
 \centering
 \includegraphics[width=0.9\textwidth]{euler_lagrange_perturbed_files/figure-latex/showblack-1.pdf}
-\caption{Light rays following geometrical optics}\label{showblack}
+\caption{Dido problem}\label{showblack}
 \end{figure}
-
+ 
 
 Taking $p_1=(1,-\pi/4)$, $p_2=(1,\pi/4)$ then figure~\ref{showblack}
 shows the deviation from the classical Newtonian solution due to
