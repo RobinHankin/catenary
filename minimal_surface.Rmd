@@ -1,0 +1,67 @@
+---
+title: "Generalizing Dido to a surface: obtaining a sphere"
+author: "Robin Hankin"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Minimal surfaces: spheres and soap films
+
+\newcommand{\di}[2]{\frac{\partial{#1}}{\partial{#2}}}
+\newcommand{\cx}{\cosh{\left(\frac{x-x_0}{a}\right)}}
+\newcommand{\sx}{\sinh{\left(\frac{x-x_0}{a}\right)}}
+\newcommand{\tx}{\tanh{\left(\frac{x-x_0}{a}\right)}}
+\newcommand{\sech}{\operatorname{sech}}
+\newcommand{\el}[1]{\frac{d}{dx}\di{#1}{y'} - \di{#1}{y}}
+
+We have a function $z=z(x,y)$ and wish to minimize the surface area,
+subject to a volume constraint.  We wish to minimize the functional
+$F[z] = \lambda z+\sqrt{1 + z_x^2 + z_y^2}$.  The generalized
+Euler-Lagrange equation would be
+
+\begin{equation}
+\di{F}{z}-\sum\frac{d}{dx}\left(\di{F}{z_j}\right)=0
+\end{equation}
+
+\begin{eqnarray}
+  \frac{d}{dx}\left(\di{F}{z_x}\right)
++ \frac{d}{dx}\left(\di{F}{z_x}\right)
+&=& \di{F}{z}\nonumber\\
+  \frac{d}{dx}\left(\frac{z_x}{\sqrt{1 + z_x^2 + z_y^2}}\right)
++ \frac{d}{dy}\left(\frac{z_y}{\sqrt{1 + z_x^2 + z_y^2}}\right)
+&=& \lambda\nonumber\\
+  \frac{z_{xx}(1+z_y^2)}{(1+z_x^2+z_y^2)^{3/2}} 
+- \frac{z_xz_{xy} z_y}{(1+z_x^2+z_y^2)^{3/2}}
++ \frac{z_{yy}(1+z_x^2)}{(1+z_x^2+z_y^2)^{3/2}} 
+- \frac{z_yz_{yx} z_x}{(1+z_x^2+z_y^2)^{3/2}}
+&=& \lambda\nonumber\\
+\frac{
+  z_{xx}(1+z_y^2)
++ z_{yy}(1+z_x^2)
+- 2z_xz_yz_{xy}
+}{
+ (1+z_x^2+z_y^2)^{3/2}
+}
+= \lambda\label{sphere}
+\end{eqnarray}
+
+
+It seems to be very difficult to solve equation \ref{sphere} for any
+non-trivial cases but we can see that if $z(x,y)$ has constant
+derivative then the numerator is zero.  If we try, post-hoc,
+$z(x,y)=\sqrt{1-x^2-y^2}$ [i.e., part of a sphere], then we find
+
+\begin{eqnarray}
+z_x    &=&  \frac{x}{\sqrt{1-x^2-y^2}}\nonumber\\
+z_y    &=&  \frac{y}{\sqrt{1-x^2-y^2}}\nonumber\\
+z_{xx} &=& -\frac{1-y^2}{(1-x^2-y^2)^{3/2}}\nonumber\\
+z_{yy} &=& -\frac{1-x^2}{(1-x^2-y^2)^{3/2}}\nonumber\\
+z_{xy} &=& \frac{xy}{(1-x^2-y^2)^{3/2}}
+\end{eqnarray}
+
+The numerator comes out at $\frac{2}{(1-x^-y^2)^{3/2}}$ and the
+denominator comes out at $\frac{1}{(1-x^-y^2)^{3/2}}$, which is
+consistent (with $\lambda=2$)
