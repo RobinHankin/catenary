@@ -19,25 +19,28 @@ knitr::opts_chunk$set(echo = TRUE)
 
 We have a function $z=z(x,y)$ and wish to minimize the surface area,
 subject to a volume constraint.  We wish to minimize the functional
-$F[z] = \lambda z+\sqrt{1 + z_x^2 + z_y^2}$.  The generalized
+$F[z] = \Lambda z+\sqrt{1 + z_x^2 + z_y^2}$.  The generalized
 Euler-Lagrange equation would be
 
-\begin{equation}
-\di{F}{z}-\sum\frac{d}{dx}\left(\di{F}{z_j}\right)=0
+\begin{equation}\label{gen_EL}
+\di{F}{z}-\sum\frac{d}{dx_j}\left(\di{F}{z_j}\right)=0
 \end{equation}
+
+(where the dependent variables of $z$ [that is, $(r,\theta)$] are
+denoted $x_1,x_2$).  Then
 
 \begin{eqnarray}
   \frac{d}{dx}\left(\di{F}{z_x}\right)
-+ \frac{d}{dx}\left(\di{F}{z_x}\right)
++ \frac{d}{dy}\left(\di{F}{z_y}\right)
 &=& \di{F}{z}\nonumber\\
   \frac{d}{dx}\left(\frac{z_x}{\sqrt{1 + z_x^2 + z_y^2}}\right)
 + \frac{d}{dy}\left(\frac{z_y}{\sqrt{1 + z_x^2 + z_y^2}}\right)
-&=& \lambda\nonumber\\
+&=& \Lambda\nonumber\\
   \frac{z_{xx}(1+z_y^2)}{(1+z_x^2+z_y^2)^{3/2}} 
 - \frac{z_xz_{xy} z_y}{(1+z_x^2+z_y^2)^{3/2}}
 + \frac{z_{yy}(1+z_x^2)}{(1+z_x^2+z_y^2)^{3/2}} 
 - \frac{z_yz_{yx} z_x}{(1+z_x^2+z_y^2)^{3/2}}
-&=& \lambda\nonumber\\
+&=& \Lambda\nonumber\\
 \frac{
   z_{xx}(1+z_y^2)
 + z_{yy}(1+z_x^2)
@@ -45,7 +48,7 @@ Euler-Lagrange equation would be
 }{
  (1+z_x^2+z_y^2)^{3/2}
 }
-= \lambda\label{sphere}
+= \Lambda\label{sphere}
 \end{eqnarray}
 
 
@@ -64,4 +67,167 @@ z_{xy} &=& \frac{xy}{(1-x^2-y^2)^{3/2}}
 
 The numerator comes out at $\frac{2}{(1-x^-y^2)^{3/2}}$ and the
 denominator comes out at $\frac{1}{(1-x^-y^2)^{3/2}}$, which is
-consistent (with $\lambda=2$)
+consistent (with $\Lambda=2$)
+
+
+# sphere but in polar coordinates
+
+We consider $z=z(r,\theta)$.  The volume and surface elements are
+
+\begin{equation}
+dV=rdr\,d\theta\qquad
+dS=dr\,d\theta\cdot r\sqrt{1+z_r^2+(z_\theta/r)^2}
+\end{equation}
+
+respectively.  Our functional is then
+
+\begin{equation}
+F[z] = rz +  \Lambda r\sqrt{1+z_r^2+(z_\theta/r)^2}
+\end{equation}
+
+The generalized Euler-Lagrange equation (equation \ref{gen_EL}) would
+be
+
+\begin{eqnarray}
+\di{F}{z}-\sum\frac{d}{dx_j}\left(\di{F}{z_j}\right) &=& 0\\
+  \frac{d}{dr}\left(\di{F}{r}\right)
++ \frac{d}{d\theta}\left(\di{F}{\theta}\right) 
+&=& r\\
+  \frac{d}{dr}\left(r + \Lambda\frac{1+z_r^2}{\sqrt{1+z_r^2 + (z_\theta/r)^2}}\right)
++ \frac{d}{d\theta}\left(\Lambda\frac{z_\theta}{r\sqrt{1+z_r^2+(z_\theta/r)^2}}\right) 
+&=& r
+\end{eqnarray}
+
+At this point it becomes a bit of a nightmare but the first term is, I
+think,
+
+
+\begin{equation}
+1 + 
+\frac{2\Lambda z_rz_{rr}}{\sqrt{1+z_r^2+(z_\theta/r)^2}}
+-
+\frac{
+   \Lambda(1+z_r^2)(-z_\theta^2+rz_\theta z_{r\theta}+r^3z_rz_{rr})
+}{
+   r^3\left(1+(z_\theta/r)^2 + z_r^2\right)^{3/2}
+   }
+\end{equation}
+
+and I gave up at this point. It might be easier to assume a circularly
+symmetric solution, that is $(r,\theta)=z(r)$ and deal with that.
+This will be an ODE, not a PDE as above.  Then the surface area
+element will be $2\pi r\sqrt{1+z'^2}$ and the volume element will be
+$2\pi rz$.  The functional will be, cancelling $2\pi$:
+
+\begin{equation}
+F[z] = rz + \Lambda r\sqrt{1+z'^2} 
+\end{equation}
+
+\begin{eqnarray}
+\frac{d}{dr}\di{F}{z'} &=& \di{F}{z}\nonumber\\
+\frac{d}{dr}\frac{\Lambda rz'}{\sqrt{1+z'^2}} &=& r\nonumber\\
+\frac{\Lambda rz''}{(1+z'^2)^{3/2}} &=& r\nonumber\\
+\Lambda z'' &=& (1+z'^2)^{3/2}
+\end{eqnarray}
+
+This looks hopeless but writing $u=z'$ we have
+
+\begin{eqnarray}
+\Lambda\frac{du}{dr} &=& (1+u^2)^{3/2}\nonumber\\
+\int dr &=& \Lambda\int\frac{du}{(1+u^2)^{3/2}}\nonumber\\
+C + r &=& \frac{\Lambda u}{\sqrt{1+u^2}}\nonumber\\
+u &=& \frac{C + r/\Lambda}{\sqrt{1-(C+r/\Lambda)^2}}
+\end{eqnarray}
+
+Integrate:
+
+\begin{eqnarray}
+\frac{dz}{dr} &=& \frac{C+r/\Lambda}{\sqrt{1-(C+r/\Lambda)^2}}\nonumber\\
+\int dz &=& \int\frac{C + r/\Lambda}{\sqrt{1-(C+r/\Lambda)^2}}dr\nonumber\\
+z+K &=& \pm\Lambda\sqrt{1-(C+r/\Lambda)^2}\nonumber\\
+(z+z_0)^2 + (r+r_0)^2 &=& \Lambda^{2}
+\end{eqnarray}
+
+# Perturbation analysis
+
+
+\begin{equation}\label{defin}
+F=rz + \Lambda r\sqrt{1+z'^2} \qquad G = rz^2 + \lambda\sqrt{1+z'^2}
+\end{equation}
+
+
+I THINK THIS IS WRONG I NEED TO CHECK THAT THE LAGRANGE UNDETERMINED
+	MULTIPLIER IS BEING USED CORRECTLY HERE.  
+	
+just to keep terminology consistent we will use
+
+$$
+r\longrightarrow x\qquad
+z\longrightarrow y\quad
+$$
+
+
+\begin{equation}\label{definnew}
+F= xy + \Lambda x\sqrt{1+y'^2} \qquad G = xy^2 + \lambda\sqrt{1+y'^2}
+\end{equation}
+
+
+\begin{equation}\label{factorized_eqn}
+\left(\el{G}\right) + \left(z\di{}{y} + z'\di{}{y'} + z''\di{}{y''}\right)
+\left(\el{F}\right)=0.
+\end{equation}
+
+We have
+
+
+
+
+\begin{eqnarray}
+&{}&\frac{d}{dx}\left(\di{F}{y'}\right) - \di{F}{x} \\
+&=& \frac{d}{dx}\left(\frac{\Lambda xy'}{\sqrt{1+y'^2}}\right) - x\\
+&=& \Lambda\left(\frac{y'}{\sqrt{1+y'^2}} + \frac{xy''}{(1+y'^2)^{3/2}}\right)-x\\
+&=& vF
+\end{eqnarray}
+
+and so
+
+\begin{eqnarray}
+&{}& \left(z\di{}{y} + z'\di{}{y'} + z''\di{}{y''}\right)vF\\
+&=&
+\Lambda\left[
++ z'\left(\frac{1}{(1+y'^2)^{3/2}} -\frac{3xy'}{(1+y'^2)^{5/2}}\right)
++ z''\left(\frac{x}{(1+y'^2)^{3/2}}\right)\right]
+\end{eqnarray}
+
+and
+
+\begin{eqnarray}
+&{}&\frac{d}{dx}\left( \di{G}{y'} \right) - \di{G}{x} \\
+&=& \frac{d}{dx}\left( \frac{\lambda xy'}{\sqrt{1+y'^2}} \right) - 2xy\\
+&=& \lambda\left(\frac{y'}{\sqrt{1+y'^2}} + \frac{x}{(1+y'^2)^{3/2}}\right)-2xy
+\end{eqnarray}
+
+
+For the purposes of perturbation analysis we will take the center to
+be $(0,-\sqrt{2}/2)$ with radius $r_0=1$, so $\Lambda=1$.
+We have
+
+\begin{eqnarray}
+\lambda\left(\frac{y'}{\sqrt{1+y'^2}} + \frac{x}{(1+y'^2)^{3/2}}\right)-2xy
++ z'\left(\frac{1}{(1+y'^2)^{3/2}} -\frac{3xy'}{(1+y'^2)^{5/2}}\right)
++ z''\left(\frac{x}{(1+y'^2)^{3/2}}\right)
+=0
+\end{eqnarray}
+
+(above we substitute $\Lambda=1$) Now we know that
+$x^2+(y+\sqrt{2}/2)^2=1$, so $y=\sqrt{1-x^2}-\frac{\sqrt{2}}{2}$, $y'=
+\frac{-x}{\sqrt{1-x^2}}$ and $1+y'^2=\frac{1}{1-x^2}$, which makes
+things a lot easier:
+
+\begin{eqnarray}
+\lambda\left(\frac{\frac{-x}{\sqrt{1-x^2}}}{\frac{1}{1-x^2}} + \frac{x}{\left(\frac{1}{1-x^2}\right)^{3/2}}\right)-2x\left(\sqrt{1-x^2}-\frac{\sqrt{2}}{2}\right)
++ z'\left(\frac{1}{\left(\frac{1}{1-x^2}\right)^{3/2}} -\frac{3x\frac{-x}{\sqrt{1-x^2}}}{\left(\frac{1}{1-x^2}\right)^{5/2}}\right)
++ z''\left(\frac{x}{\left(\frac{1}{1-x^2}\right)^{3/2}}\right)
+=0
+\end{eqnarray}
+
