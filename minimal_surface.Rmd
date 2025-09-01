@@ -179,20 +179,18 @@ F= xy + \Lambda x\sqrt{1+y'^2} \qquad G = xy^2 + \lambda\sqrt{1+y'^2}
 
 We have
 
-
-
-
 \begin{eqnarray}
 &{}&\frac{d}{dx}\left(\di{F}{y'}\right) - \di{F}{x} \\
 &=& \frac{d}{dx}\left(\frac{\Lambda xy'}{\sqrt{1+y'^2}}\right) - x\\
-&=& \Lambda\left(\frac{y'}{\sqrt{1+y'^2}} + \frac{xy''}{(1+y'^2)^{3/2}}\right)-x\\
-&=& vF
+&=& \Lambda\left(\frac{y'}{\sqrt{1+y'^2}} + \frac{xy''}{(1+y'^2)^{3/2}}\right)-x
 \end{eqnarray}
 
 and so
 
 \begin{eqnarray}
-&{}& \left(z\di{}{y} + z'\di{}{y'} + z''\di{}{y''}\right)vF\\
+&{}& \left(z\di{}{y} + z'\di{}{y'} + z''\di{}{y''}\right)
+\left(\el{F}\right)
+\\
 &=&
 \Lambda\left[
 + z'\left(\frac{1}{(1+y'^2)^{3/2}} -\frac{3xy'}{(1+y'^2)^{5/2}}\right)
@@ -202,9 +200,9 @@ and so
 and
 
 \begin{eqnarray}
-&{}&\frac{d}{dx}\left( \di{G}{y'} \right) - \di{G}{x} \\
-&=& \frac{d}{dx}\left( \frac{\lambda xy'}{\sqrt{1+y'^2}} \right) - 2xy\\
-&=& \lambda\left(\frac{y'}{\sqrt{1+y'^2}} + \frac{x}{(1+y'^2)^{3/2}}\right)-2xy
+&{}&\frac{d}{dx}\left( \di{G}{y'} \right) - \di{G}{x}\nonumber\\
+&=& \frac{d}{dx}\left( \frac{\lambda xy'}{\sqrt{1+y'^2}} \right) - 2xy\nonumber\\
+&=& \lambda\left(\frac{y'}{\sqrt{1+y'^2}} + \frac{xy''}{(1+y'^2)^{3/2}}\right)-2xy
 \end{eqnarray}
 
 
@@ -213,7 +211,7 @@ be $(0,-\sqrt{2}/2)$ with radius $r_0=1$, so $\Lambda=1$.
 We have
 
 \begin{eqnarray}
-\lambda\left(\frac{y'}{\sqrt{1+y'^2}} + \frac{x}{(1+y'^2)^{3/2}}\right)-2xy
+\lambda\left(\frac{y'}{\sqrt{1+y'^2}} + \frac{xy''}{(1+y'^2)^{3/2}}\right)-2xy
 + z'\left(\frac{1}{(1+y'^2)^{3/2}} -\frac{3xy'}{(1+y'^2)^{5/2}}\right)
 + z''\left(\frac{x}{(1+y'^2)^{3/2}}\right)
 =0
@@ -221,13 +219,34 @@ We have
 
 (above we substitute $\Lambda=1$) Now we know that
 $x^2+(y+\sqrt{2}/2)^2=1$, so $y=\sqrt{1-x^2}-\frac{\sqrt{2}}{2}$, $y'=
-\frac{-x}{\sqrt{1-x^2}}$ and $1+y'^2=\frac{1}{1-x^2}$, which makes
-things a lot easier:
+\frac{-x}{\sqrt{1-x^2}}$ and $1+y'^2=\frac{1}{1-x^2}$; also $y''=
+\frac{-1}{(1-x^2)^{3/2}}$.  This makes things a lot easier:
 
 \begin{eqnarray}
-\lambda\left(\frac{\frac{-x}{\sqrt{1-x^2}}}{\frac{1}{1-x^2}} + \frac{x}{\left(\frac{1}{1-x^2}\right)^{3/2}}\right)-2x\left(\sqrt{1-x^2}-\frac{\sqrt{2}}{2}\right)
+\lambda\left(\frac{\frac{-x}{\sqrt{1-x^2}}}{\frac{1}{1-x^2}} + \frac{x\cdot\frac{-1}{1-x^2}}{\left(\frac{1}{1-x^2}\right)^{\scriptstyle 3/2}}\right)
+-2x\left(\sqrt{1-x^2}-\frac{\sqrt{2}}{2}\right)
 + z'\left(\frac{1}{\left(\frac{1}{1-x^2}\right)^{3/2}} -\frac{3x\frac{-x}{\sqrt{1-x^2}}}{\left(\frac{1}{1-x^2}\right)^{5/2}}\right)
 + z''\left(\frac{x}{\left(\frac{1}{1-x^2}\right)^{3/2}}\right)
-=0
+&=& 0\nonumber\\
+\lambda\left( -x\sqrt{1-x^2} -x\sqrt{1-x^2}\right)
+-2x\left(\sqrt{1-x^2}-\frac{\sqrt{2}}{2}\right)
++ z'\left( (1-x^2)^{3/2} +3 x^2(1-x^2)^2\right)
++ z''\left(x(1-x^2)^{3/2}\right)
+&=& 0\nonumber\\
+\lambda\left( -2x\sqrt{1-x^2}\right)
+-2x\left(\sqrt{1-x^2}-\frac{\sqrt{2}}{2}\right)
++ z'\left( (1-x^2)^{3/2} +3 x^2(1-x^2)^2\right)
++ z''\left(x(1-x^2)^{3/2}\right)
+&=& 0\nonumber\\
+-2x\sqrt{1-x^2}(\lambda + 2x) + x\sqrt{2}
++ z'\left( (1-x^2)^{3/2} +3 x^2(1-x^2)^2\right)
++ z''\left(x(1-x^2)^{3/2}\right)
+&=& 0\nonumber\\
+2x\sqrt{1-x^2}(\lambda - 2x) + x\sqrt{2}
++ z'\left( (1-x^2)^{3/2} +3 x^2(1-x^2)^2\right)
++ z''\left(x(1-x^2)^{3/2}\right)
+&=& 0\nonumber\\
 \end{eqnarray}
+
+Mathematica can't give an analytical solution.
 
