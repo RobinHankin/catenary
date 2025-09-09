@@ -201,8 +201,8 @@ functional $F=(1+\phi)\sqrt{1+y'^2}$:
   \frac{d}{dx}\di{F}{y'}-\di{F}{y} &=& 0\nonumber\\
   \frac{(\phi_x+y'\phi_y)y'}{\sqrt{1+y'^2}}+\frac{(1+\phi)y''}{(1+y'^2)^{3/2}} -
   \phi_y\sqrt{1+y'^2} &=& 0
-  \end{eqnarray}
-
+\end{eqnarray}
+%
 Simplifying,
 
 \begin{eqnarray}
@@ -243,15 +243,14 @@ whence equation~\ref{factorized_eqn} becomes
 We recall that $y'' = 0$ in the unperturbed case, implying that $y'$
 is constant.  Writing $y'= s$ we obtain
 
-\begin{equation}\nonumber
+\begin{equation}
   \frac{z''}{(1+s^2)^{3/2}} +
-  \frac{\phi_xs}{\sqrt{1+s^2}} + \frac{\phi_ys^2}{\sqrt{1+s^2}} -\phi_y\sqrt{1+s^2}
+  \frac{\phi_xs}{\sqrt{1+s^2}} + \frac{\phi_ys^2}{\sqrt{1+s^2}} -\phi_y\sqrt{1+s^2}\nonumber
 \end{equation}
-
-\begin{equation}\label{zdashdashmirage}
-  z'' = (1+s^2)(\phi_y-\phi_xs)
+\begin{equation}
+  z'' = (1+s^2)(\phi_y-\phi_xs).\label{zdashdashmirage}
 \end{equation}
-
+%
 We may use this as a model for refraction of light rays in a medium in
 which the refractive index typically differs from unity only slightly;
 examples might include atmospheric mirages~\cite{trankle1999}, and the
@@ -291,13 +290,13 @@ multiplier that controls the length of the chain.
   &=&   \frac{(y+\Lambda)y''}{(1+y'^2)^{3/2}} - \frac{1}{\sqrt{1+y'^2}}
   \label{catenary_EL_f}
 \end{eqnarray}
-
+%
 Rearranging equation~\ref{catenary_EL_f} gives
-
+%
 \begin{eqnarray}
   (y+\Lambda)y'' &=& 1+y'^2\label{catenary_ODE}
 \end{eqnarray}
-
+%
 Equation~\ref{catenary_ODE} requires three constants for solution
 (viz, two constants of integration arising from the fact that it is a
 second order ODE, and the Lagrange multiplier $\Lambda$).  In
@@ -328,7 +327,7 @@ where $\phi=\phi(x,y)$ is a small perturbation.  Here
 &{}&  z''\left(\frac{y+\Lambda}{(1+y'^2)^{3/2}}\right)\nonumber\\
 &+& z' \left(-\frac{y'}{(1+y'^2)^{3/2}} -\frac{3(y+\Lambda)y'y''}{(1+y'^2)^{5/2}}\right)\nonumber\\
 &+& z  \left(\frac{y''}{(1+y'^2)^{3/2}}\right)\nonumber\\
-&+& \frac{y'\phi_x-\phi_y}{\sqrt{1+y'^2}} + \frac{(\phi+\lambda)y''}{(1+y'^2)^{3/2}}=0
+&+& \frac{y'\phi_x-\phi_y}{\sqrt{1+y'^2}} + \frac{(\phi+\lambda)y''}{(1+y'^2)^{3/2}} = 0.
 \end{eqnarray}
 %
 Now we may use the unperturbed solution of $y=\cosh x$, giving
@@ -336,7 +335,7 @@ $y=y''=\sqrt{1+y'^2}=\cosh x$ and $y'=\sinh x$.  After simplification:
 
 \begin{equation}\label{pertcan}
   z'' - 4z'\tanh x - z =
-  \phi + \lambda + \phi_x\sinh x\cosh x - \phi_y\cosh x
+  \phi + \lambda + \phi_x\sinh x\cosh x - \phi_y\cosh x.
 \end{equation}
 %
 Equation~\ref{pertcan} is readily solved numerically.  Three unknowns
@@ -358,10 +357,9 @@ the body force is $-\omega^2y\boldsymbol{e}_y$ and this is equivalent
 to a potential energy of $-\omega^2y^2/2$ per unit mass.  We now
 switch to coordinates $y^*$ with $y = Y_0 + y_0y^*$, corresponding to
 an off-axis troposkein.  We find that the potential energy is
-proportional to $y^* +
-\frac{y_0}{Y_0}\left(y^*\right)^2/2$.  If
-$Y_0$ and $y_0$ are such that $y_0\ll Y_0$ and $y^*={\mathcal O}(1)$,
-the chain is a slightly perturbed catenary.  Dropping the star for
+proportional to $y^*+\frac{y_0}{Y_0}\left(y^*\right)^2/2$.  If $Y_0$
+and $y_0$ are such that $y_0\ll Y_0$ and $y^*={\mathcal O}(1)$, the
+chain is a slightly perturbed catenary.  Dropping the star for
 convenience and rescaling gives us
 
 \begin{equation}
