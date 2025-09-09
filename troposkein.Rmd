@@ -1,0 +1,89 @@
+---
+title: "Numerical solution of a troposkein"
+author: "Robin Hankin"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## The troposkein
+
+\newcommand{\di}[2]{\frac{\partial{#1}}{\partial{#2}}}
+\newcommand{\cx}{\cosh{\left(\frac{x-x_0}{a}\right)}}
+\newcommand{\sx}{\sinh{\left(\frac{x-x_0}{a}\right)}}
+\newcommand{\tx}{\tanh{\left(\frac{x-x_0}{a}\right)}}
+\newcommand{\sech}{\operatorname{sech}}
+
+We start with functional $F = \sqrt{1+y'^2}(y^2+\lambda)$ and
+Euler-Lagrange equation
+
+\begin{equation}
+\frac{d}{dx}\di{F}{y'} -\di{F}{y}=0
+\end{equation}
+
+Giving
+
+\begin{equation}
+y''(y^2 + \lambda) = 2y(1+y'^2)
+\end{equation}
+
+# Numerical  work
+
+
+```{r odesolver}
+library("deSolve") 
+Lorenz <- function(t, state, parameters) {
+    with(as.list(c(state, parameters)), {
+        dZ <- Zdash
+
+        dZdash <- 2*Z*(1 + Zdash^2)/(Z^2 + lambda)
+        d_length <- sqrt(1 + Zdash^2)
+        list(c(dZ, dZdash, d_length))
+
+    })
+}
+
+parameters <- c(lambda = -6.1)
+state      <- c(Z = 0, Zdash = 1, length = 0)  # initial conditions
+times      <- seq(-2, 2, by = 0.05)
+
+out <- ode(y = state, times = times, func = Lorenz, parms = parameters)
+```
+
+```{r showode}
+head(out)
+tail(out)
+x <- out[, 1]
+y <- out[, 2]
+plot(x, y, type = 'l', asp=1)
+grid()
+```
+
+```{r optimizebad}
+final_height <- function(lambda){
+
+    parameters <- c(lambda = lambda)
+    state      <- c(Z = 0, Zdash = 1, length = 0)  # initial conditions
+    times      <- seq(-2, 2, by = 1)
+    
+    out <- ode(y = state, times = times, func = Lorenz, parms = parameters)
+    out[5,2]
+}
+
+
+(jj <- uniroot(final_height,c(-4,-10)))
+```
+
+
+```{r}
+    parameters <- c(lambda = jj$root)
+    state      <- c(Z = 0, Zdash = 1, length = 0)  # initial conditions
+    times      <- seq(-2, 2, by = 0.01)
+    
+    out <- ode(y = state, times = times, func = Lorenz, parms = parameters)
+    plot(out[,1],out[,2],type= "l")
+    grid()
+    abline(h=0)
+```
