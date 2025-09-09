@@ -581,7 +581,6 @@ eigen(jj$hessian)
 
 
 
-
 ```{r, solveoptimspace, cache=TRUE}
 parameters <- c(lambda = jj$par[1])
 initial_gradient <- jj$par[2]
@@ -598,7 +597,7 @@ head(out)
 tail(out)
 x <- out[,1]
 y0 <- out[,2]
-plot(x, y0, type='b')
+plot(x, -y0, type='b')
 plot(x, cosh(x), asp=1, type='l')
 points(x, cosh(x) - y0/4, type="l", col="red")
 ```
