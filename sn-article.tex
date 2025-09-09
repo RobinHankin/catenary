@@ -44,7 +44,7 @@
 \newcommand{\dii}[3]{\frac{\partial^2{#1}}{\partial{#2}\partial{#3}}}
 \newcommand{\diii}[4]{\frac{\partial^3{#1}}{\partial{#2}\partial{#3}\partial{#4}}}
 \newcommand{\el}[1]{\frac{d}{dx}\di{#1}{y'} - \di{#1}{y}}
-\title[Article Title]{Article Title}
+\title[Linear perturbations of the Euler-Lagrange equation]{Linear perturbations of the Euler-Lagrange equation}
 
 %%=============================================================%%
 %% GivenName	-> \fnm{Joergen W.}
@@ -55,23 +55,21 @@
 %%  \sfx{IV}}\email{iauthor@gmail.com}
 %%=============================================================%%
 
-\author{\fnm{Robin} \sur{Hankin}}\email{hankin.robin@gmail.com}
+\author{\fnm{Robin K. S.} \sur{Hankin}}\email{hankin.robin@gmail.com}
 
 \affil{\orgdiv{Computer and Mathematical Sciences}, \orgname{University of Stirling}, \city{Stirling}, \postcode{FK9 4LA}, \country{Scotland}}
 
 
-
-
-\abstract{ This short document presents a method for dealing with
+\abstract{This short document presents a method for dealing with
   slight perturbations to functionals.  We apply the Euler-Lagrange
-  equations to a slightly perturbed functional and retain only terms to first order.
+  equations to a slightly perturbed functional and retain only terms
+  to first order.
 
   Three applications from different areas of mathematical physics are
-  presented.
+  presented.  }
 
-  }
-
-\keywords{keyword1, Keyword2, Keyword3, Keyword4}
+\keywords{Calculus of variations, geometrical optics, catenary,
+  inextensible string, Schwarzschild metric}
 
 %%\pacs[JEL Classification]{D8, H51}
 
@@ -79,8 +77,7 @@
 
 \maketitle
 
-\section{Introduction}\label{sec1}
-
+\section{Introduction}
 
 The Euler-Lagrange equations were developed by Leonhard Euler and
 Joseph-Louis Lagrange in the 1750s.  Following \citep{jeffreys1972},
@@ -102,18 +99,17 @@ so as to minimize $F+\epsilon G$?
 
 Under these circumstances, the perturbation term $z=z(x)$ is
 interesting in its own right, and the fact the perturbation is linear
-leads to new insight.
-
-Formally, we suppose:
+leads to new insight.  Formally, we suppose:
 
 \begin{equation}
-  \frac{d}{dx}\di{F}{y}-\di{F}{y} = 0 
+  \frac{d}{dx}\di{F}{y}-\di{F}{y} = 0,
 \end{equation}
+%
+and further suppose that we have found a function $y=y(x)$.  We now
+wish to identify a function $z=z(x)$ so that $y+\epsilon z$ satisfies
 
-and wish to identify a function $z(x)$ so that $y+\epsilon z(x)$
-satisfies
 \begin{equation}
-  \frac{d}{dx}\di{(F+\epsilon G)}{y'}-\di{(F+\epsilon G)}{y} = 0.
+  \frac{d}{dx}\di{(F+\epsilon G)}{y'}-\di{(F+\epsilon G)}{y} = 0
 \end{equation}
 %
 where $F$ and $G$ are evaluated at $y+\epsilon z$.  We have, working
@@ -127,7 +123,7 @@ to first order:
 \frac{d}{dx}\left[\di{F}{y'} + \epsilon\left(z\dii{F}{y}{y'} + z\dii{F}{y'}{y'} + \di{G}{y'}\right)\right]
 &=& \di{F}{y} + \epsilon\left(z\dii{F}{y}{y} + z'\dii{F}{y}{y'} + \di{G}{y}\right)\nonumber\\
 \frac{d}{dx}\left[z\dii{F}{y}{y'} + z'\dii{F}{y'}{y'} + \di{G}{y'}\right]
-&=& z\dii{F}{y}{y} + z'\dii{F}{y}{y'} + \di{G}{y}
+&=& z\dii{F}{y}{y} + z'\dii{F}{y}{y'} + \di{G}{y}.
 \end{eqnarray}
 %
 We now identify $\frac{d}{dx}$ with $\di{}{x} + y'\di{}{y} +
@@ -186,10 +182,18 @@ theory of relativity.
 
 \section{Examples}
 
+I now present some examples drawn from physics in which the functional
+minimized by the Euler-Lagrange equation is given a small, physically
+meaningful, perturbation.  I present three cases: ray propagation in
+geometric optics, a flexible chain in a gravitational field, and an
+idealized light inextensible string in the vicinity of a black hole.
+In each case the perturbation of the solution leads to ready insight
+into the problem considered.
+
 \subsection{Geometrical optics in a medium of slightly varying refractive index}
 
 We consider two-dimensional ray paths in a medium of refractive index
-$1+\phi(x,y)$.  First, we solvethe Euler-Lagrange equations exactly.
+$1+\phi(x,y)$.  First, we solve the Euler-Lagrange equations exactly.
 The paths are given by solving the Euler-Lagrange equations with
 functional $F=(1+\phi)\sqrt{1+y'^2}$:
 
@@ -207,9 +211,13 @@ Simplifying,
 %
 Except for trivial cases such as $\phi_y=y'\phi_x$, this equation has
 no simple (and certainly no intuitively insightful) analytic solution.
-We now move to the linearised case, in which $F=\sqrt{1+y'^2}$ and
-$G=\phi(x,y)\sqrt{1+y'^2}$.  Then
+We now move to the linearised case, in which we minimize $F+\epsilon G$ with
 
+\begin{equation}F=\sqrt{1+y'^2}\qquad
+  G=\phi(x,y)\sqrt{1+y'^2}
+\end{equation}
+
+We obtain
 \begin{eqnarray}
   \el{F} &=& \frac{y''}{(1+y'^2)^{3/2}}\nonumber\\
   \el{G} &=& \frac{y''\phi}{(1+y'^2)^{3/2}} + \frac{y'\phi_x - \phi_y}{\sqrt{1+y'^2}}
@@ -244,16 +252,14 @@ is constant.  Writing $y'= s$ we obtain
   z'' = (1+s^2)(\phi_y-\phi_xs)
 \end{equation}
 
-We may use this as a model for atmospheric refraction, in which the
-refractive index of air varies by less than one part in $2\times
-10^{-5}$.  A straightforward application of Snell's law for
-$\left|y'\right|\ll 1$ gives $y''=\phi_y$, which is generally used in
-the study of atmospheric mirages; equation~\ref{zdashdashmirage} is a
-slight generalization.  We may infer from
-equation~\ref{zdashdashmirage} that the rays (and ray slopes,
-interesting in the context of atmospheric mirages) deviate from
-unperturbed straight-line rays {\em linearly} with excess refractive
-index.
+We may use this as a model for refraction of light rays in a medium in
+which the refractive index typically differs from unity only slightly;
+examples might include atmospheric mirages~\cite{trankle1999}, and the
+refraction of radio waves in interstellar space~\cite{romani1986}.  We
+may infer directly from equation~\ref{zdashdashmirage} that the rays
+(and also ray slopes, interesting in the context of imaging) deviate
+from unperturbed straight-line rays {\em linearly} with excess
+refractive index.
 
 
 %\begin{figure}[h]
@@ -273,8 +279,8 @@ index.
 
 A flexible uniform chain supported at two points in a uniform
 graviational field takes the form of a catenary, a hyperbolic cosine.
-This may be established by classical analysis with functional
-$F=\sqrt{1+y'^2}(y+\Lambda)$ where $\Lambda$ is a Lagrange
+This may be established by applying to Euler-Lagrange equation to
+functional $F=\sqrt{1+y'^2}(y+\Lambda)$ where $\Lambda$ is a Lagrange
 multiplier that controls the length of the chain.
 
 \begin{eqnarray}
@@ -305,7 +311,7 @@ length of $e+e^{-1}$, giving $\Lambda=0$ whence $y=\cosh x$.
 We are now in a position to assess the perturbation from the standard
 catenary caused by small perturbations to the gravitational field
 potential.  We will consider a gravitational potential of $y +
-\epsilon\phi(x,y)$, giving functionals
+\phi(x,y)$, giving functionals
 
 \begin{eqnarray}\label{FandG}
 F = \sqrt{1+y'^2}(y + \Lambda)\qquad G =  \sqrt{1+y'^2}(\phi + \lambda)
@@ -336,8 +342,8 @@ $y=y''=\sqrt{1+y'^2}=\cosh x$ and $y'=\sinh x$.  After simplification:
 Equation~\ref{pertcan} is readily solved numerically.  Three unknowns
 are required: two constants of integration, as \ref{pertcan} is a
 second order ODE; and the value of Lagrange's undetermined multiplier
-$\lambda$.  In this case we have three three constraints corresponding
-to the perturbation at the supports being zero, $z(\pm 2)=0$; and in
+$\lambda$.  In this case we have three constraints corresponding to
+the perturbation at the supports being zero, $z(\pm 2)=0$; and in
 addition we know that the perturbed solution has the same arc length
 as the unperturbed solution, for the chain is inextensible.
 
@@ -372,47 +378,52 @@ Equation \ref{pertcan}, with $\phi=y^2/2$, becomes
 This equation is analytically intractable so we use numerical methods.
 Here I consider a standard $y=\cosh x$ catenary fixed at endpoints
 $(\pm 2, \cosh 2)$.  To find meaningful solutions to this equation,
-the left endpoint is constrained to zero perturbation, $z(-2)=0$.
-Next, we find values of $\lambda$ and initial slope $(z'(-2)$ that
+the left endpoint is constrained to zero perturbation: $z(-2)=0$.
+Next, we find values of $\lambda$ and initial slope $z'(-2)$ that
 jointly ensure $z(2)=0$ and that the chain has the same length as the
 unperturbed solution.  Straightforward numerical optimization
 techiques show that $z'(0)\simeq 0.662$ and $\lambda = -2.762$ satisfy
-the constraints.  Figures~\ref{trop} and~\ref{trop_perturb} show a
-numerical simulation.  We see that the catenary is distorted into a
-``vee'' shape.
+the constraints.  Figures~\ref{trop} and~\ref{trop_perturb} show
+different views of this numerical solution numerical simulation.  We
+see that the catenary is distorted into a ``vee'' shape.
 
 \begin{figure}[h]
-\centering
-\includegraphics[width=0.9\textwidth]{euler_lagrange_perturbed_files/figure-latex/showoptimspace-1.pdf}
-\caption{Troposkein thing}\label{trop}
+\centering % File showoptimsspace-2.pdf created by euler_lagrange_perturbed.Rmd
+\includegraphics[width=0.9\textwidth]{euler_lagrange_perturbed_files/figure-latex/showoptimspace-2.pdf}
+\caption{A uniform flexible chain in a uniform gravitational field
+  (black; catenary) and in a slightly perturbed gravitational field (red)}
+\label{trop_perturb}
 \end{figure}
 
 \begin{figure}[h]
-\centering
-\includegraphics[width=0.9\textwidth]{euler_lagrange_perturbed_files/figure-latex/showoptimspace-2.pdf}
-\caption{Troposkein thing}\label{trop_perturb}
+\centering % File showoptimsspace-1.pdf created by euler_lagrange_perturbed.Rmd
+\includegraphics[width=0.9\textwidth]{euler_lagrange_perturbed_files/figure-latex/showoptimspace-1.pdf}
+\caption{The perturbation: that is, the difference between the red and
+  black curves of figure~\ref{trop_perturb}}
+\label{trop}
 \end{figure}
 
 \subsection{Black holes}
 
-In the theory of general relativity~\cite{misner1973}, the field
-equations for a stationary, spherically symmetric point mass are
-solved by the Schwarzschild metric that gives the squared interval
-$ds^2$ in terms of spherical coordinates $(r,\theta,\phi)$:
+In the theory of general relativity~\cite{misner1973}, the vacuum
+field equations for a stationary point mass are solved by the
+Schwarzschild metric that gives the squared interval $ds^2$ in terms
+of spherical coordinates $(r,\theta,\phi)$:
 
 \begin{eqnarray}\label{schwarzschild}
   ds^2=
   -dt^2(1-2M/r) + \frac{dr^2}{1-2M/r} + r^2d\theta^2 + r^2\sin\theta d\phi^2
   \end{eqnarray}
 
-In equation~\ref{schwarzschild}, $M$ is the mass of the black hole
-(using geometrized units so the mass has the dimensions of length).
+In equation~\ref{schwarzschild}, $M$ is the mass of the black hole (it
+is conventional to use geometrized units so the mass has the
+dimensions of length; $2M$ is known as the Schwarzschild radius).
 Black holes are known to exhibit counterintuitive behaviour near the
-event horizon~\cite{allen1990} and one consequence of the
-curvature of spacetime in the vicinity is that light inextensible
-string under tension can adopt curved
-configurations~\cite{hankin2021}.  Such taut inextensible strings
-minimize their proper length, given by equation~\ref{proper}.
+event horizon~\cite{allen1990} and one consequence of the curvature of
+spacetime in the vicinity is that light inextensible string under
+tension can adopt curved configurations~\cite{hankin2021}.  Such taut
+inextensible strings minimize their proper length, given by
+equation~\ref{proper}.
 
 \begin{equation}\label{proper}
   \int_{p_1}^{p_2}\sqrt{r^2 + \frac{r'^2}{1-2M/r}}\,d\phi
@@ -432,7 +443,8 @@ equation~\ref{schwarzschild} as a slight perturbation of classical
 Newtonian physics.  First, we observe that in the limit
 $M\longrightarrow 0$ we recover $F=\sqrt{r^2+r'^2}$, whence $r'' = r +
 2r'^2/r$.  This has solution $r=r_0\sec(\phi-\phi_0)$, a familiar
-straight line but expressed in polar coordinates.
+straight line but expressed in polar coordinates.  To first order in
+$2M$:
 
 \begin{equation}
 \sqrt{r^2 + \frac{r'^2}{1-2M/r}}=\sqrt{r+r'^2} + 2M\frac{r'^2}{2r\sqrt{r^2 + r'^2}}
@@ -441,7 +453,7 @@ straight line but expressed in polar coordinates.
 so $F=\sqrt{r^2+r'^2}$ and $G=\frac{r'^2}{2r\sqrt{r^2+r'^2}}$.  Then
 
 \begin{eqnarray}\label{newtonian_string}
-\frac{d}{dx}\left(\di{F}{r'}\right) -\di{F}{r} &=& \frac{r^2r''- 2rr'^2 -r^3}{(r^2 +r'^2)^{3/2}}\\
+\frac{d}{dx}\left(\di{F}{r'}\right) -\di{F}{r} &=& \frac{r^2r''- 2rr'^2 -r^3}{(r^2 +r'^2)^{3/2}}\nonumber\\
 \frac{d}{dx}\left(\di{G}{r'}\right) -\di{G}{r} &=&
 \frac{d}{dx}\left(\frac{\partial}{\partial r'}\left(\frac{r'^2}{2r\sqrt{r^2+r'^2}}\right)\right)
 - \frac{\partial}{\partial
@@ -505,20 +517,34 @@ nondimensionalised value of $2M$ is $10^{-8}$, and the linear
 approximation is reasonable.
 
 \begin{figure}[h]
-\centering
+\centering ng % File showblack-1.pdf created by euler_lagrange_perturbed.Rmd
 \includegraphics[width=0.9\textwidth]{euler_lagrange_perturbed_files/figure-latex/showblack-1.pdf}
-\caption{Dido problem}\label{showblack}
+\caption{Linear perturbation from a Euclidean straight line caused by slightly curved spacetime 
+  near a central point mass}
+\label{showblack}
 \end{figure}
  
-
 Taking $p_1=(1,-\pi/4)$, $p_2=(1,\pi/4)$ then figure~\ref{showblack}
 shows the deviation from the classical Newtonian solution due to
 general relativity.  We see that the maximum deviation is about
 $2M\cdot 0.7886$, or about $\qty{2.4}{\km}$.  Further, we may exploit
 the linearity of equation~\ref{factorized_eqn}.  If we replace the Sun
-with the earth (of Schwarzschild radius $\qty{8.87}{\mm}$) in the
+with the Earth (of Schwarzschild radius $\qty{8.87}{\mm}$) in the
 physical setup, then the perturbation is again $2M\cdot 0.7886$, or
 about $\qty{7}{\mm}$; a result difficult to obtain any other way.
+
+
+\section{Conclusions}
+
+Using the Euler-Lagrange equation to minimize a slightly perturbed
+functional appears to be a useful technique that can yield novel
+insight in the context of classical variational problems.  I apply
+this perturbation method to three physical problems and find linear
+theory.  In each case, the linearised perturbation furnishes insight
+into the problems considered.  In the cases of the hanging chain and
+light inextensible string, the insights obtained by the linear
+perturbation techniques presented here appear to be difficult to
+obtain any other way.
 
 \bibliography{sn-bibliography}% common bib file
 %% if required, the content of .bbl file can be included here once bbl is generated
