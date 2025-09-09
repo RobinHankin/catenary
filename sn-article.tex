@@ -101,12 +101,13 @@ Under these circumstances, the perturbation term $z=z(x)$ is
 interesting in its own right, and the fact the perturbation is linear
 leads to new insight.  Formally, we suppose:
 
-\begin{equation}
+\begin{equation}\label{euler-lagrange}
   \frac{d}{dx}\di{F}{y}-\di{F}{y} = 0,
 \end{equation}
 %
-and further suppose that we have found a function $y=y(x)$.  We now
-wish to identify a function $z=z(x)$ so that $y+\epsilon z$ satisfies
+and further suppose that we have found a function $y=y(x)$ satisfying
+equation~\ref{euler-lagrange}.  We now wish to identify a function
+$z=z(x)$ so that $y+\epsilon z$ satisfies
 
 \begin{equation}
   \frac{d}{dx}\di{(F+\epsilon G)}{y'}-\di{(F+\epsilon G)}{y} = 0
@@ -163,18 +164,17 @@ expression, giving
 \left(\el{G}\right) + \left(z\di{}{y} + z'\di{}{y'} + z''\di{}{y''}\right)
 \left(\el{F}\right)=0.
 \end{equation}
-
+%
 Similar techniques show that the Beltrami identity,
 $F-y'\di{F}{y'}=C$, has a perturbed version
-
+%
 \begin{equation}\label{beltrami}
   \left(G-y'\di{G}{y'}\right)
   =
     z \left[y'\frac{\partial^2F}{\partial y\partial y'} + \di{F}{y'}\right]
   + z'\left[y'\frac{\partial^2F}{\partial y'\partial y'}\right] + C.
-  \end{equation}
-  
-
+\end{equation}
+%
 Equation~\ref{factorized_eqn} is now applied to three simple classical
 problems in which a functional is given a small perturbation of some
 sort.  The examples are drawn from optics, statics, and the general
@@ -278,7 +278,7 @@ refractive index.
 \subsection{Catenary}
 
 A flexible uniform chain supported at two points in a uniform
-graviational field takes the form of a catenary, a hyperbolic cosine.
+gravitational field takes the form of a catenary, a hyperbolic cosine.
 This may be established by applying to Euler-Lagrange equation to
 functional $F=\sqrt{1+y'^2}(y+\Lambda)$ where $\Lambda$ is a Lagrange
 multiplier that controls the length of the chain.
@@ -382,7 +382,7 @@ the left endpoint is constrained to zero perturbation: $z(-2)=0$.
 Next, we find values of $\lambda$ and initial slope $z'(-2)$ that
 jointly ensure $z(2)=0$ and that the chain has the same length as the
 unperturbed solution.  Straightforward numerical optimization
-techiques show that $z'(0)\simeq 0.662$ and $\lambda = -2.762$ satisfy
+techniques show that $z'(0)\simeq 0.662$ and $\lambda = -2.762$ satisfy
 the constraints.  Figures~\ref{trop} and~\ref{trop_perturb} show
 different views of this numerical solution numerical simulation.  We
 see that the catenary is distorted into a ``vee'' shape.
