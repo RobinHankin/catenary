@@ -25,11 +25,14 @@ Euler-Lagrange equation
 
 Giving
 
-\begin{equation}
+\begin{equation}\label{finalODE}
 y''(y^2 + \lambda) = 2y(1+y'^2)
 \end{equation}
 
 # Numerical  work
+
+First we set up `Lorentz()` which represents equation \ref{finalODE}
+(solved for $y''$):
 
 
 ```{r odesolver}
@@ -38,12 +41,17 @@ Lorenz <- function(t, state, parameters) {
     with(as.list(c(state, parameters)), {
         dZ <- Zdash
 
-        dZdash <- 2*Z*(1 + Zdash^2)/(Z^2 + lambda)
+        dZdash <- 2*Z*(1 + Zdash^2)/(Z^2 + lambda) # y''
         d_length <- sqrt(1 + Zdash^2)
         list(c(dZ, dZdash, d_length))
 
     })
 }
+```
+
+We now specify some parameters and solve the ODE:
+
+```{r defparam}
 
 parameters <- c(lambda = -6.1)
 state      <- c(Z = 0, Zdash = 1, length = 0)  # initial conditions
@@ -52,14 +60,35 @@ times      <- seq(-2, 2, by = 0.05)
 out <- ode(y = state, times = times, func = Lorenz, parms = parameters)
 ```
 
-```{r showode}
+We will first examine the output of `ode()`.  First look at the `head()`:
+```{r headout}
 head(out)
+```
+
+(the first column is hard-wired to be `time` but here it is
+interpreted as horizontal distance $x$).  From the first line of
+output from `head()` we see the initial slope is `1.0000`.  This is
+consistent with the second line that shows `Z = 0.04999` following
+$\delta x$ of 0.05.  Now the `tail()`:
+
+```{r tailout}
 tail(out)
+```
+
+We see that the total string length is 4.729 and the final height, at
+$x=2$, is `Z = 0.392`.  What we want is for $Z(2)=0$.  First plot it:
+
+
+```{r plotout}
 x <- out[, 1]
 y <- out[, 2]
 plot(x, y, type = 'l', asp=1)
 grid()
 ```
+
+What we will do is an easy problem first.  We will specify $Z(0)=0$
+and $Z'(0)=1$ and then try to find a value of $\lambda$ that results
+in $Z(2)=0$:
 
 ```{r optimizebad}
 final_height <- function(lambda){
@@ -76,6 +105,8 @@ final_height <- function(lambda){
 (jj <- uniroot(final_height,c(-4,-10)))
 ```
 
+We see that a value for $\lambda$ of about -5.04 gives $Z(2)$ of about
+`2.71182e-08` (zero to numerical precision).
 
 ```{r}
     parameters <- c(lambda = jj$root)
@@ -83,7 +114,85 @@ final_height <- function(lambda){
     times      <- seq(-2, 2, by = 0.01)
     
     out <- ode(y = state, times = times, func = Lorenz, parms = parameters)
-    plot(out[,1],out[,2],type= "l")
+    plot(out[,1], out[,2], type= "l")
     grid()
     abline(h=0)
 ```
+
+OK so that seems to work.  But what is the string length?
+
+```{r}
+tail(out)
+```
+
+Above we see that the string length is about 4.809.  A more
+challenging problem would be to specify $Z(0)=0$, and find values of
+$Z'(0)$ and $\lambda$ that simultaneously result in $Z(2)=0$ and a
+string length of, say, 5.
+
+```{r}
+badness <- function(vec){
+    lambda <- vec[1]
+    zdash0 <- vec[2]
+    parameters <- c(lambda = lambda)
+    state      <- c(Z = 0, Zdash = zdash0, length = 0)  # initial conditions
+    times      <- seq(-2, 2, by = 1)
+    
+    sol <- ode(y = state, times = times, func = Lorenz, parms = parameters)
+    string_length <- sol[5,4]
+    final_height <- sol[5,2]
+
+    out <- (string_length - 5)^2 + (final_height - 0)^2
+    return(out)
+}
+```
+
+OK so we seek `vec` that returns a badness value of zero.  We will use
+`optim()` and use a start value of $Z'(0)=1$ and $\lambda = -5.04$ as
+these values give a string that is close to the desired configuration.
+
+```{r findminbad}
+badness(c(-5.04,1))
+badness(c(-5.04,1.1))
+(trop <- optim(c(-5.04,1),badness))
+```
+
+We see that $\lambda = -5.516$, $Z'(0)= 1.137708$ give acceptable
+results.  Visually:
+
+```{r plotting}
+parameters <- c(lambda = trop$par[1])
+state      <- c(Z = 0, Zdash = trop$par[2], length = 0)  # initial conditions
+times      <- seq(-2, 2, by = 0.01)
+sol <- ode(y = state, times = times, func = Lorenz, parms = parameters)
+plot(sol[,1], sol[,2],type="l",lwd=3)
+abline(h=0)
+```
+
+What I want to do now is create a couple of functions that can be
+stand-ins for analytic solutions.  So in the catenary case I had
+hyperbolic cosine, but here I need to use `ode()`.
+
+
+```{r definetrop}
+trop_general <- function(x){
+    parameters <- c(lambda = trop$par[1])
+    state <- c(Z = 0, Zdash = trop$par[2], length = 0)
+    ode(y = state, times = x, func = Lorenz, parms = parameters)
+}
+
+y <- function(x){trop_general(x)[,2]}
+ydash <- function(x){trop_general(x)[,3]}
+length <- function(x){trop_general(x)[,4]}
+```
+
+Now plot
+
+```{r}
+x <- seq(from = -2, to = 2, len = 55)
+plot(x,y(x))
+plot(x,ydash(x))
+plot(x,length(x))
+```
+
+
