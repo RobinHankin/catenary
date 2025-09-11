@@ -260,8 +260,8 @@ z\left[
 \frac{2yy'(2+y'^2)}{(1+y'^2)^{3/2}} - \frac{2yy'}{\sqrt{1+y'^2}}
 \right]\nonumber\\
 &{}&\qquad\qquad+z''\left[\frac{y^2+\Lambda}{(1+y'^2)^{3/2}}\right]\nonumber\\
-&=& \frac{y''(y + \lambda)}{(1+y'^2)^{3/2}} 
-+\frac{y'^2}{\sqrt{1+y'^2}} - \sqrt{1+y'^2}\label{zzdzdd}
+&=& -\left(\frac{y''(y + \lambda)}{(1+y'^2)^{3/2}} 
++\frac{y'^2}{\sqrt{1+y'^2}} - \sqrt{1+y'^2}\label{zzdzdd}\right)
 \end{eqnarray}
 
 (the last line from equation \ref{elG}).  We can extract $y$, $y'$,
@@ -274,7 +274,7 @@ z\left[\frac{2yy''}{1+y'^2} - 2\right]
 + z'\left[\frac{-3y'y''(y^2+\Lambda)}{(1+y'^2)^2} +
 \frac{2yy'(2+y'^2)}{1+y'^2} - 2yy'\right]
 +z''\left[\frac{y^2+\Lambda}{1+y'^2}\right]
-= \frac{y''(y + \lambda)}{1+y'^2} -1
+= 1-\frac{y''(y + \lambda)}{1+y'^2}
 \end{equation}
 
 Again in this case we do not have analytical
@@ -304,7 +304,7 @@ lor2 <- function(t, state, parameters) {
         
 
 
-        t_1 <- Ydashdash*(Y + lambda)/(1+Ydash^2)-1
+        t_1 <- 1-Ydashdash*(Y + lambda)/(1+Ydash^2)
         t_z <- 2*Y*Ydashdash/(1+Ydash^2)-2
         t_zdash <- -3*Ydash*Ydashdash*(Y^2 + Lambda)/(1+Ydash^2)^2 + 2*Y*Ydash*(2+Ydash^2)/(1+Ydash^2) - 2*Y*Ydash
         t_zdashdash <- (Y^2 + Lambda)/(1+Ydash^2)
