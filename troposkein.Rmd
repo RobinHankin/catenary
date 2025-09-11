@@ -15,6 +15,7 @@ knitr::opts_chunk$set(echo = TRUE)
 \newcommand{\sx}{\sinh{\left(\frac{x-x_0}{a}\right)}}
 \newcommand{\tx}{\tanh{\left(\frac{x-x_0}{a}\right)}}
 \newcommand{\sech}{\operatorname{sech}}
+\newcommand{\el}[1]{\frac{d}{dx}\di{#1}{y'} - \di{#1}{y}}
 
 We start with functional $F = \sqrt{1+y'^2}(y^2+\lambda)$ and
 Euler-Lagrange equation
@@ -31,7 +32,7 @@ y''(y^2 + \lambda) = 2y(1+y'^2)
 
 # Numerical  work
 
-First we set up `Lorentz()` which represents equation \ref{finalODE}
+First we set up `Lorenz()` which represents equation \ref{finalODE}
 (solved for $y''$):
 
 
@@ -100,7 +101,6 @@ final_height <- function(lambda){
     out <- ode(y = state, times = times, func = Lorenz, parms = parameters)
     out[5,2]
 }
-
 
 (jj <- uniroot(final_height,c(-4,-10)))
 ```
@@ -176,14 +176,20 @@ hyperbolic cosine, but here I need to use `ode()`.
 
 ```{r definetrop}
 trop_general <- function(x){
+    x <- c(-2,x)
     parameters <- c(lambda = trop$par[1])
     state <- c(Z = 0, Zdash = trop$par[2], length = 0)
-    ode(y = state, times = x, func = Lorenz, parms = parameters)
+    out <- ode(y = state, times = x, func = Lorenz, parms = parameters)[-1,,drop=FALSE]
+    y <- out[,2]
+    ydash <- out[,3]
+    ydashdash <-  2*y*(1 + ydash^2)/(y^2 + parameters["lambda"]) # copied from Lorenz()
+    return(cbind(out,ydashdash))
 }
 
 y <- function(x){trop_general(x)[,2]}
 ydash <- function(x){trop_general(x)[,3]}
 length <- function(x){trop_general(x)[,4]}
+ydashdash <- function(x){trop_general(x)[,5]}
 ```
 
 Now plot
@@ -194,5 +200,184 @@ plot(x,y(x))
 plot(x,ydash(x))
 plot(x,length(x))
 ```
+
+
+```{r}
+trop_general(-2:2)
+trop_general(0)
+y(1.1)
+y(1.2)
+y(seq(from=1,by=0.1,len=5))
+```
+
+# Perturbation analysis.
+
+\begin{equation}
+F=\sqrt{1+y'^2}(y^2+ \Lambda)\qquad
+G=\sqrt{1+y'^2}(y  + \lambda)
+\end{equation}
+
+\begin{equation}\label{factorized_eqn}
+\left(z\di{}{y} + z'\di{}{y'} + z''\di{}{y''}\right)
+\left(\el{F}\right) + \left(\el{G}\right) = 0
+\end{equation}
+
+we have
+
+\begin{eqnarray}
+\el{F} &=& \frac{d}{dx}\left[\frac{y'(y^2+\Lambda)}{\sqrt{1 +
+y'^2}}\right]
+- 2y\sqrt{1+y'^2}\\
+&=& \frac{y''(y^2 + \lambda)}{(1+y'^2)^{3/2}} +
+\frac{2yy'^2}{\sqrt{1+y'^2}} - 2y\sqrt{1+y'^2}
+\end{eqnarray}
+
+and 
+
+\begin{eqnarray}
+\el{G} &=& \frac{d}{dx}\left[\frac{y'(y + \lambda)}{\sqrt{1 + y'^2}}\right]
+-\sqrt{1+y'^2}\nonumber\\
+&=&
+\frac{y''(y + \lambda)}{(1+y'^2)^{3/2}} +
+\frac{y'^2}{\sqrt{1+y'^2}} - \sqrt{1+y'^2}\label{elG}
+\end{eqnarray}
+
+So from equation \ref{factorized_eqn}
+
+\begin{eqnarray}
+&{}& \left(z\di{}{y} + z'\di{}{y'} + z''\di{}{y''}\right)
+\left(\el{F}\right)\nonumber\\
+&=& \left(z\di{}{y} + z'\di{}{y'} + z''\di{}{y''}\right)
+\left[\frac{y''(y^2 + \Lambda)}{(1+y'^2)^{3/2}} +
+\frac{2yy'^2}{\sqrt{1+y'^2}} - 2y\sqrt{1+y'^2}
+\right]\nonumber\\
+&=&
+z\left[
+\frac{2yy''}{(1+y'^2)^{3/2}} + \frac{2y'^2}{\sqrt{1+y'^2}}
+-2\sqrt{1+y'^2}\right]\nonumber\\
+&{}&\qquad
++ z'\left[\frac{-3y'y''(y^2+\Lambda)}{(1+y'^2)^{5/2}} +
+\frac{2yy'(2+y'^2)}{(1+y'^2)^{3/2}} - \frac{2yy'}{\sqrt{1+y'^2}}
+\right]\nonumber\\
+&{}&\qquad\qquad+z''\left[\frac{y^2+\Lambda}{(1+y'^2)^{3/2}}\right]\nonumber\\
+&=& \frac{y''(y + \lambda)}{(1+y'^2)^{3/2}} 
++\frac{y'^2}{\sqrt{1+y'^2}} - \sqrt{1+y'^2}\label{zzdzdd}
+\end{eqnarray}
+
+(the last line from equation \ref{elG}).  We can extract $y$, $y'$,
+and $y''$ from the numerics.  We can use $\Lambda = -5.516$ from the
+shooting techniques.  Multiplying equation \ref{zzdzdd} by
+$\sqrt{1+y'^2}$:
+
+\begin{equation}\label{zz2}
+z\left[\frac{2yy''}{1+y'^2} - 2\right]
++ z'\left[\frac{-3y'y''(y^2+\Lambda)}{(1+y'^2)^2} +
+\frac{2yy'(2+y'^2)}{1+y'^2} - 2yy'\right]
++z''\left[\frac{y^2+\Lambda}{1+y'^2}\right]
+= \frac{y''(y + \lambda)}{1+y'^2} -1
+\end{equation}
+
+Again in this case we do not have analytical
+expressions\footnote{Actually we do.  But they are a dog's breakfast.}
+for $y$ or $y'$ or $y''$.  Observe that $\lambda$ is not known and we
+have to use the boundary conditions.  Viz: $z(0)=z(2)=0$;
+$\int\sqrt{1+(y'+\epsilon
+z')^2}\,dx=\int\sqrt{1+y'^2}\,dx\longrightarrow
+\int\frac{y'z'\,dx}{\sqrt{1+y'^2}}=0$.  It is not entirely clear how
+to solve equation \ref{zz2} numerically.
+
+
+```{r}
+options(digits=5)
+
+lor2 <- function(t, state, parameters) {
+    with(as.list(c(state, parameters)), {
+
+        Lambda <- -5.516   # This from trop$par[1]
+
+        dY <- Ydash
+
+        dYdash <- 2*Y*(1 + Ydash^2)/(Y^2 + Lambda) # y''
+        d_length <- sqrt(1 + Ydash^2)
+
+        Ydashdash <- dYdash
+        
+
+
+        t_1 <- Ydashdash*(Y + lambda)/(1+Ydash^2)-1
+        t_z <- 2*Y*Ydashdash/(1+Ydash^2)-2
+        t_zdash <- -3*Ydash*Ydashdash*(Y^2 + Lambda)/(1+Ydash^2)^2 + 2*Y*Ydash*(2+Ydash^2)/(1+Ydash^2) - 2*Y*Ydash
+        t_zdashdash <- (Y^2 + Lambda)/(1+Ydash^2)
+        
+        dZ <-Zdash
+        dZdash <- (t_1 - Z*t_z - Zdash*t_zdash)/t_zdashdash
+        d_epsilonlength <- Ydash*Zdash/sqrt(1+Ydash^2)
+
+        list(c(dY, dYdash, d_length, dZ, dZdash, d_epsilonlength))
+
+    })
+}
+```
+
+OK so function `lor2()` implements the ODE for $z$.  We do not know
+$z'(-2)$ or the value of $\lambda$.  We can specify $z(-2)=0$ and want
+to choose values of $z'(-2)$ and $\lambda$ so that $z(2)=0$ and the
+total extra length [given by the `epsilonlength`] is zero.  Observe
+that we know $\Lambda = -5.516$ and $y'(-2) = 1.137708$ from the
+analysis of equation \ref{zzdzdd}.  As a kickoff I will choose some
+values of $\lambda$ and $z'(-2)$ just to see what happens:
+
+```{r}
+trop
+parameters <- c(lambda = -2.1)
+state      <- c(Y = 0, Ydash = trop$par[2], length = 0, Z=0, Zdash=0.1, epsilonlength=0)  # initial conditions
+times      <- seq(-2, 2, by = 0.5)
+out <- ode(y = state, times = times, func = lor2, parms = parameters)
+out
+plot(out[,1],out[,5],type='b')
+```
+
+We need something a bit more systematic.
+
+
+```{r}
+badness <- function(vec){
+    lambda <- vec[1]
+    initial_zslope <- vec[2]
+    parameters <- c(lambda = lambda)
+    state      <- c(Y = 0, Ydash = trop$par[2], length = 0, Z=0, Zdash=initial_zslope, epsilonlength=0)  # initial conditions
+    times      <- seq(-2, 2, by = 1)
+    out <- ode(y = state, times = times, func = lor2, parms = parameters)
+    final_Z <- out[5,5]
+    final_epsilonlength <- out[5,7]
+    badness <- final_Z^2 + final_epsilonlength^2
+    return(unname(badness))
+}
+```
+
+
+```{r domod, cache=TRUE}
+(modtrop <- optim(c(-2.11, 0.11),badness))
+```
+
+```{r solvezode, cache=TRUE}
+parameters <- c(lambda = modtrop$par[1])
+state      <- c(Y = 0, Ydash = trop$par[2], length = 0, Z=0, Zdash = modtrop$par[2], epsilonlength=0)  # initial conditions
+times      <- seq(-2, 2, by = 0.1)
+out <- ode(y = state, times = times, func = lor2, parms = parameters)
+head(out)
+x <- out[,1]
+y <- out[,2]
+z <- out[,5]
+```
+
+
+```{r plotzode}
+plot(x,y,type='b')
+plot(x,z,type="b")
+plot(x,y,type="l",lwd=2)
+points(x,y+z,type="l",col="red")
+```
+
 
 
