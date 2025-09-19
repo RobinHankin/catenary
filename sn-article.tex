@@ -57,7 +57,7 @@
 
 \author{\fnm{Robin K. S.} \sur{Hankin}}\email{hankin.robin@gmail.com}
 
-\affil{\orgdiv{Computer and Mathematical Sciences}, \orgname{University of Stirling}, \city{Stirling}, \postcode{FK9 4LA}, \country{Scotland}}
+\affil{\orgdiv{Computing Science and and Mathematics}, \orgname{University of Stirling}, \city{Stirling}, \postcode{FK9 4LA}, \country{Scotland}}
 
 
 \abstract{This short document presents a method for dealing with
@@ -106,8 +106,9 @@ leads to new insight.  Formally, we suppose:
 \end{equation}
 %
 and further suppose that we have found a function $y=y(x)$ satisfying
-equation~\ref{euler-lagrange}.  We now wish to identify a function
-$z=z(x)$ so that $y+\epsilon z$ satisfies
+equation~\ref{euler-lagrange}.  Given a fixed, small, $\epsilon>0$, we
+now wish to identify a function $z=z(x)$ so that $y+\epsilon z$
+satisfies
 
 \begin{equation}
   \frac{d}{dx}\di{(F+\epsilon G)}{y'}-\di{(F+\epsilon G)}{y} = 0
@@ -174,11 +175,6 @@ $F-y'\di{F}{y'}=C$, has a perturbed version
     z \left[y'\frac{\partial^2F}{\partial y\partial y'} + \di{F}{y'}\right]
   + z'\left[y'\frac{\partial^2F}{\partial y'\partial y'}\right] + C.
 \end{equation}
-%
-Equation~\ref{factorized_eqn} is now applied to three simple classical
-problems in which a functional is given a small perturbation of some
-sort.  The examples are drawn from optics, statics, and the general
-theory of relativity.
 
 \section{Examples}
 
@@ -227,26 +223,22 @@ Thus
 
 \begin{eqnarray}
 &{}& \left(z\di{}{y} + z'\di{}{y'} + z''\di{}{y''}\right)\left(\el{F}\right)\nonumber\\
-&=&  z'\frac{1}{(1+y'^2)^{3/2}} -z''\frac{3y'}{(1+y'^2)^{5/2}}
+&=&  \left(z\di{}{y} + z'\di{}{y'} + z''\di{}{y''}\right)\frac{y''}{(1+y'^2)^{3/2}}\nonumber\\
+&=&  \frac{z''}{(1+y'^2)^{3/2}} - \frac{3y'z'}{(1+y'^2)^{5/2}}
 \end{eqnarray}
 
 whence equation~\ref{factorized_eqn} becomes
 
 \begin{equation}
     \frac{z''}{(1+y'^2)^{3/2}}
-  - \frac{3y'y''}{(1+y'^2)^{3/2}}
-  + \frac{\phi_xy'}{\sqrt{1+y'^2}}
-  + \frac{\phi_yy'^2}{\sqrt{1+y'^2}}
-  + \frac{y''}{(1+y'^2)^{3/2}}-\phi_y\sqrt{1+y'^2}
+  - \frac{3y'y''z'}{(1+y'^2)^{5/2}} + 
+  \frac{y''}{(1+y'^2)^{3/2}}
+  + \frac{y'\phi_x - \phi_y}{\sqrt{1+y'^2}}=0
 \end{equation}
 
 We recall that $y'' = 0$ in the unperturbed case, implying that $y'$
 is constant.  Writing $y'= s$ we obtain
 
-\begin{equation}
-  \frac{z''}{(1+s^2)^{3/2}} +
-  \frac{\phi_xs}{\sqrt{1+s^2}} + \frac{\phi_ys^2}{\sqrt{1+s^2}} -\phi_y\sqrt{1+s^2}\nonumber
-\end{equation}
 \begin{equation}
   z'' = (1+s^2)(\phi_y-\phi_xs).\label{zdashdashmirage}
 \end{equation}
@@ -278,7 +270,7 @@ refractive index.
 
 A flexible uniform chain supported at two points in a uniform
 gravitational field takes the form of a catenary, a hyperbolic cosine.
-This may be established by applying to Euler-Lagrange equation to
+This may be established by applying the Euler-Lagrange equation to
 functional $F=\sqrt{1+y'^2}(y+\Lambda)$ where $\Lambda$ is a Lagrange
 multiplier that controls the length of the chain.
 
@@ -380,10 +372,10 @@ the left endpoint is constrained to zero perturbation: $z(-2)=0$.
 Next, we find values of $\lambda$ and initial slope $z'(-2)$ that
 jointly ensure $z(2)=0$ and that the chain has the same length as the
 unperturbed solution.  Straightforward numerical optimization
-techniques show that $z'(0)\simeq 0.662$ and $\lambda = -2.762$ satisfy
-the constraints.  Figures~\ref{trop} and~\ref{trop_perturb} show
-different views of this numerical solution numerical simulation.  We
-see that the catenary is distorted into a ``vee'' shape.
+techniques show that $z'(0)\simeq 0.662$ and $\lambda = -2.762$
+satisfy the constraints.  Figures~\ref{trop} and~\ref{trop_perturb}
+show different views of this numerical simulation.  We see that the
+catenary is distorted into a ``vee'' shape.
 
 \begin{figure}[h]
 \centering % File showoptimsspace-2.pdf created by euler_lagrange_perturbed.Rmd
@@ -480,12 +472,6 @@ equation~\ref{factorized_eqn} is then
 Equation~\ref{factorized_eqn} in full becomes
 
 \begin{eqnarray}
- &{}&z   \left((r^2 - 2r'^2)(rr''-r'^2)\right)\nonumber\\
-+&{}&z'  \left(-rr'(r^2 - 2r'^2 + 3rr'')\right)\nonumber\\
-+&{}&z'' \left(r^2    (r^2+r'^2)       \right)\nonumber\\
-&{}&\qquad =\qquad -(2r^2-r'^2)(rr''-r'^2)/2
-\end{eqnarray}
-\begin{eqnarray}
   &{}&
   z   \left((r^2 - 2r'^2)(rr''-r'^2)\right)
   +z'  \left(-rr'(r^2 - 2r'^2 + 3rr'')\right)
@@ -515,7 +501,7 @@ nondimensionalised value of $2M$ is $10^{-8}$, and the linear
 approximation is reasonable.
 
 \begin{figure}[h]
-\centering ng % File showblack-1.pdf created by euler_lagrange_perturbed.Rmd
+\centering % File showblack-1.pdf created by euler_lagrange_perturbed.Rmd
 \includegraphics[width=0.9\textwidth]{euler_lagrange_perturbed_files/figure-latex/showblack-1.pdf}
 \caption{Linear perturbation from a Euclidean straight line caused by slightly curved spacetime 
   near a central point mass}
@@ -529,8 +515,10 @@ $2M\cdot 0.7886$, or about $\qty{2.4}{\km}$.  Further, we may exploit
 the linearity of equation~\ref{factorized_eqn}.  If we replace the Sun
 with the Earth (of Schwarzschild radius $\qty{8.87}{\mm}$) in the
 physical setup, then the perturbation is again $2M\cdot 0.7886$, or
-about $\qty{7}{\mm}$; a result difficult to obtain any other way.
-
+about $\qty{7}{\mm}$.  This result appears to be difficult to obtain
+any other way: because $\qty{7}{mm}\sim\qty{5e-14}{AU}$ we would need
+to solve equation~\ref{eulerstring} to 15 decimal places, a demanding
+task.
 
 \section{Conclusions}
 
