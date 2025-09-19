@@ -98,8 +98,10 @@ higher powers.  Can we similarly perturb $y$ (to $y+\epsilon z$, say),
 so as to minimize $F+\epsilon G$?
 
 Under these circumstances, the perturbation term $z=z(x)$ is
-interesting in its own right, and the fact the perturbation is linear
-leads to new insight.  Formally, we suppose:
+interesting in its own right: any symmetries become clear, and one can
+deal with a range of (small) perturbations to a functional using a
+single coherent technique.  The fact the perturbation of $z$ is linear
+implies that the response scales proportionally.
 
 \begin{equation}\label{euler-lagrange}
   \frac{d}{dx}\di{F}{y}-\di{F}{y} = 0,
@@ -201,7 +203,7 @@ functional $F=(1+\phi)\sqrt{1+y'^2}$:
 %
 Simplifying,
 
-\begin{eqnarray}
+\begin{eqnarray}\label{full_RI}
  (1+\phi) y'' = (1+y'^2)(\phi_y - y'\phi_x).
 \end{eqnarray}
 %
@@ -243,14 +245,15 @@ is constant.  Writing $y'= s$ we obtain
   z'' = (1+s^2)(\phi_y-\phi_xs).\label{zdashdashmirage}
 \end{equation}
 %
-We may use this as a model for refraction of light rays in a medium in
-which the refractive index typically differs from unity only slightly;
-examples might include atmospheric mirages~\cite{trankle1999}, and the
-refraction of radio waves in interstellar space~\cite{romani1986}.  We
-may infer directly from equation~\ref{zdashdashmirage} that the rays
-(and also ray slopes, interesting in the context of imaging) deviate
-from unperturbed straight-line rays {\em linearly} with excess
-refractive index.
+(compare equation~\ref{full_RI}).  We may use this as a model for
+refraction of light rays in a medium in which the refractive index
+typically differs from unity only slightly; examples might include
+atmospheric mirages~\cite{trankle1999}, and the refraction of radio
+waves in interstellar space~\cite{romani1986}.  We may infer directly
+from equation~\ref{zdashdashmirage} that the rays (and also ray
+slopes, interesting in the context of imaging) deviate from
+unperturbed straight-line rays {\em linearly} with excess refractive
+index.
 
 
 %\begin{figure}[h]
@@ -395,16 +398,17 @@ catenary is distorted into a ``vee'' shape.
 
 \subsection{Black holes}
 
-In the theory of general relativity~\cite{misner1973}, the vacuum
-field equations for a stationary point mass are solved by the
-Schwarzschild metric that gives the squared interval $ds^2$ in terms
-of spherical coordinates $(r,\theta,\phi)$:
+In the theory of general relativity~\cite{misner1973}, the
+Schwarzschild metric is an exact solution to the vacuum field
+equations for a stationary point mass.  The Schwarzschild metric gives
+the squared interval $ds^2$ in terms of spherical coordinates
+$(r,\theta,\phi)$:
 
 \begin{eqnarray}\label{schwarzschild}
   ds^2=
-  -dt^2(1-2M/r) + \frac{dr^2}{1-2M/r} + r^2d\theta^2 + r^2\sin\theta d\phi^2
-  \end{eqnarray}
-
+  -dt^2(1-2M/r) + \frac{dr^2}{1-2M/r} + r^2d\theta^2 + r^2\sin\theta d\phi^2.
+\end{eqnarray}
+%
 In equation~\ref{schwarzschild}, $M$ is the mass of the black hole (it
 is conventional to use geometrized units so the mass has the
 dimensions of length; $2M$ is known as the Schwarzschild radius).
@@ -418,13 +422,18 @@ equation~\ref{proper}.
 \begin{equation}\label{proper}
   \int_{p_1}^{p_2}\sqrt{r^2 + \frac{r'^2}{1-2M/r}}\,d\phi
 \end{equation}
-
+%
 To find the configuration $r=r(\phi)$ of a taut string we minimize
-functional $F=\sqrt{r^2 + \frac{r'^2}{1-2M/r}}$.  The Euler-Lagrange
+functional $F=\sqrt{r^2 + \frac{r'^2}{1-2M/r}}$.
+
+
+
+
+The Euler-Lagrange
 equations yield
 
 \begin{equation}\label{eulerstring}
-  r''(\phi) = (r-2M) + \frac{(2r-3M)r'^2}{r(r-2M)}
+  r''(\phi) = (r-2M) + \frac{(2r-3M)r'^2}{r(r-2M)}.
 \end{equation}
 
 
