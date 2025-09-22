@@ -61,12 +61,18 @@
 
 
 \abstract{This short document presents a method for dealing with
-  slight perturbations to functionals.  We apply the Euler-Lagrange
-  equations to a slightly perturbed functional and retain only terms
-  to first order.
-
+  slight perturbations to functionals.  We take a functional $F$ for
+  which the Euler-Lagrange equations have a known solution $y=y(x)$.
+  We then perturb the functional to $F+\epsilon G$ for some some small
+  value of $\epsilon$, and retaining only terms to first order, obtain
+  expressions for $z=z(x)$ such that $y+\epsilon z$ minimizes
+  $F+\epsilon G$.  Numerical methods may be used to obtain $z$.
   Three applications from different areas of mathematical physics are
-  presented.  }
+  presented: one from optics, one from mechanics, and one from the
+  theory of general relativity.  In each case the perturbation from
+  the known system is an informative and interesting result of the
+  analysis.
+}
 
 \keywords{Calculus of variations, geometrical optics, catenary,
   inextensible string, Schwarzschild metric}
@@ -535,6 +541,13 @@ into the problems considered.  In the cases of the hanging chain and
 light inextensible string, the insights obtained by the linear
 perturbation techniques presented here appear to be difficult to
 obtain any other way.
+
+\section*{Declaration}
+
+The author did not receive support from any organization for the
+submitted work.  The author has no relevant financial or non-financial
+interests to disclose.  The author has no competing interests to
+declare that are relevant to the content of this article.
 
 \bibliography{sn-bibliography}% common bib file
 %% if required, the content of .bbl file can be included here once bbl is generated
