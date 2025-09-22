@@ -20,7 +20,7 @@
 
 
 \usepackage{siunitx}
-
+\usepackage{wasysym}
 
 \theoremstyle{thmstyleone}%
 \newtheorem{theorem}{Theorem}%  meant for continuous numbers
@@ -147,13 +147,13 @@ $\di{F}{y}\equiv\partial_yF\equiv F_y$.
 + (z'F_{yy'} + z''F_{y'y'})
 &=& zF_{yy} + z'F_{yy'} + G_{y}\nonumber\\
 \end{eqnarray}
-
+%
 Collecting terms:
 
 \begin{eqnarray}
 &{}& z''F_{y'y'}\nonumber\\
 &+& z'(F_{xy'y'} + y'F_{yy'y'} + y''F_{y'y'y'})\nonumber\\
-&+& z (F_{xyy'} + y'F_{yyy'} + y''F_{yy'}-F_{yy})\nonumber\\
+&+& z (F_{xyy'} + y'F_{yyy'} + y''F_{yy'y'}-F_{yy})\nonumber\\
 &+& (G_{xy'} + y'G_{yy'} + y''G_{y'y'}- G_{y})\nonumber\\
 = 0
 \end{eqnarray}
@@ -378,7 +378,8 @@ unperturbed solution.  Straightforward numerical optimization
 techniques show that $z'(0)\simeq 0.662$ and $\lambda = -2.762$
 satisfy the constraints.  Figures~\ref{trop} and~\ref{trop_perturb}
 show different views of this numerical simulation.  We see that the
-catenary is distorted into a ``vee'' shape.
+catenary is distorted into a ``vee'' shape; the accurate symmetry of
+figure~\ref{trop} about $x=0$ is a consistency check.
 
 \begin{figure}[h]
 \centering % File showoptimsspace-2.pdf created by euler_lagrange_perturbed.Rmd
@@ -497,10 +498,10 @@ numerical methods may be used.  We have two degrees of freedom that
 correspond to the specified radius at $p_1$ and $p_2$.
 
 To fix ideas we consider the Earth's orbit around the sun, taking it
-to be a nominal circle of radius $r_0 = \qty{1.5e11}{\m}$,
-and use this as the unit of length.  If we take the Schwarzschild
-radius of the Sun to be $\qty{3e3}{\m}$, we find that the
-nondimensionalised value of $2M$ is $10^{-8}$, and the linear
+to be a nominal circle of radius $r_0 = \qty{1.5e11}{\m}$, and use
+this as the unit of length.  If we take the Schwarzschild radius of
+the Sun to be $\qty{3e3}{\m}$, we find that the nondimensionalised
+value of $2M_\odot$ is $10^{-8}$, and the linear
 approximation is reasonable.
 
 \begin{figure}[h]
@@ -514,14 +515,14 @@ approximation is reasonable.
 Taking $p_1=(1,-\pi/4)$, $p_2=(1,\pi/4)$ then figure~\ref{showblack}
 shows the deviation from the classical Newtonian solution due to
 general relativity.  We see that the maximum deviation is about
-$2M\cdot 0.7886$, or about $\qty{2.4}{\km}$.  Further, we may exploit
-the linearity of equation~\ref{factorized_eqn}.  If we replace the Sun
-with the Earth (of Schwarzschild radius $\qty{8.87}{\mm}$) in the
-physical setup, then the perturbation is again $2M\cdot 0.7886$, or
-about $\qty{7}{\mm}$.  This result appears to be difficult to obtain
-any other way: because $\qty{7}{mm}\sim\qty{5e-14}{AU}$ we would need
-to solve equation~\ref{eulerstring} to 15 decimal places, a demanding
-task.
+$2M_\odot\cdot 0.7886$, or about $\qty{2.4}{\km}$.  Further, we may
+exploit the linearity of equation~\ref{factorized_eqn}.  If we replace
+the Sun with the Earth (of Schwarzschild radius $\qty{8.87}{\mm}$) in
+the physical setup, then the perturbation is $2M_\oplus\cdot 0.7886$,
+or about $\qty{7}{\mm}$.  This result appears to be difficult to
+obtain any other way: because $\qty{7}{mm}\sim\qty{5e-14}{AU}$ we
+would need to solve equation~\ref{eulerstring} to 15 decimal places, a
+demanding task.
 
 \section{Conclusions}
 
