@@ -400,9 +400,9 @@ catenary is distorted into a ``vee'' shape.
 
 In the theory of general relativity~\cite{misner1973}, the
 Schwarzschild metric is an exact solution to the vacuum field
-equations for a stationary point mass.  The Schwarzschild metric gives
-the squared interval $ds^2$ in terms of spherical coordinates
-$(r,\theta,\phi)$:
+equations for a stationary point mass~\cite{hartle2003}.  The
+Schwarzschild metric gives the squared interval $ds^2$ in terms of
+spherical coordinates $(r,\theta,\phi)$:
 
 \begin{eqnarray}\label{schwarzschild}
   ds^2=
@@ -425,12 +425,7 @@ equation~\ref{proper}.
 %
 To find the configuration $r=r(\phi)$ of a taut string we minimize
 functional $F=\sqrt{r^2 + \frac{r'^2}{1-2M/r}}$.
-
-
-
-
-The Euler-Lagrange
-equations yield
+Following~\cite{hankin2021}, the Euler-Lagrange equations yield
 
 \begin{equation}\label{eulerstring}
   r''(\phi) = (r-2M) + \frac{(2r-3M)r'^2}{r(r-2M)}.
@@ -451,20 +446,19 @@ $2M$:
   
 so $F=\sqrt{r^2+r'^2}$ and $G=\frac{r'^2}{2r\sqrt{r^2+r'^2}}$.  Then
 
-\begin{eqnarray}\label{newtonian_string}
-\frac{d}{dx}\left(\di{F}{r'}\right) -\di{F}{r} &=& \frac{r^2r''- 2rr'^2 -r^3}{(r^2 +r'^2)^{3/2}}\nonumber\\
-\frac{d}{dx}\left(\di{G}{r'}\right) -\di{G}{r} &=&
+\begin{eqnarray}\label{elF}
+\frac{d}{dx}\left(\di{F}{r'}\right) -\di{F}{r} &=& \frac{r^2r''- 2rr'^2 -r^3}{(r^2 +r'^2)^{3/2}}\\
+\frac{d}{dx}\left(\di{G}{r'}\right) -\di{G}{r} &=&\label{elG}
 \frac{d}{dx}\left(\frac{\partial}{\partial r'}\left(\frac{r'^2}{2r\sqrt{r^2+r'^2}}\right)\right)
 - \frac{\partial}{\partial
   r}\left(\frac{r'^2}{r\sqrt{r^2+r'^2}}\right)\nonumber\\
 &=& \frac{(2r^2-r'^2)(rr''-r'^2)}{2(r^2+r'^2)^{5/2}}
 \end{eqnarray}
 
-Equation~\ref{newtonian_string} gives $r'' = r + 2r'^2/r$ in the
-unperturbed case from which we recover the familiar Euclidean
-straight-line solution from Newtonian physics:
-$r=r_0\sec(\theta-\theta_0)$.  The left hand side of
-equation~\ref{factorized_eqn} is then
+Equation~\ref{elF} gives $r'' = r + 2r'^2/r$ in the unperturbed case
+from which we recover the familiar Euclidean straight-line solution
+from Newtonian physics: $r=r_0\sec(\theta-\theta_0)$.  The left hand
+side of equation~\ref{factorized_eqn} is then
 
 \begin{eqnarray}
 &{}& \left(z\di{}{r} + z'\di{}{r'} + z''\di{}{r''}\right)
