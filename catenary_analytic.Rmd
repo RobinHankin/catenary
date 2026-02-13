@@ -1,0 +1,227 @@
+---
+title: "Analytic calculations of the catenary"
+author: "robin hankin"
+date: "2026-02-12"
+output: bookdown::html_document2
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Introduction
+
+The equation of the catenary will be taken as:
+
+
+\begin{equation}
+(\#eq:catenary)
+y=y_0 + a\cosh\left(\frac{x-x_0}{a}\right)
+\end{equation}
+
+
+Equation \@ref(eq:catenary) shows a standard parametrization of the
+catenary.  Here I present some numerical calculations that give
+$x_0,y_0,a$ in terms of known quantities [e.g. fixed anchor points,
+tension, or arc length].
+
+
+### Some preliminaries {-}
+
+First the standard definition of the catenary in R idiom:
+
+```{r definecatenary}
+catenary <- function(x, params){
+    x0  <- params[1]
+    y0  <- params[2]
+    a   <- params[3]
+
+    return(y0 + a*cosh((x-x0)/a))
+}
+```
+
+And now some stuff for the standard catenary $y=\cosh x$:
+
+
+```{r specifystandardcatenary}
+features_standard <- list(
+    x1 = -1,
+    y1 = cosh(-1),
+    x2 = +1,
+    y2 = cosh(1),
+    g1 = -sinh(1), # gradient @ x=x1
+    g2 = +sinh(1), # gradient @ x=x2
+    L  = 2*sinh(1)
+)
+
+params_standard <- c(x0=0, y0=0, a=1)
+```
+
+```{r plotstandardcatenary}
+x <- seq(from = -1, to = 1, len = 100)
+plot(x, catenary(x, params_standard), type='b')
+```
+
+# Known parameters $x_0,y_0,a$; find tension $T$ at endpoints
+
+Assume unit weight per unit length.
+
+```{r definetension}
+tension <- function(x, params){
+    x0  <- params[1]
+    y0  <- params[2]
+    a   <- params[3]
+
+    return(a*cosh((x-x0)/a))
+}
+```
+
+```{r showtension}
+tension(-1, params_standard)
+tension(+1, params_standard)
+```
+
+# Known anchor points, known arc length, find parameters $x_0, y_0, a$
+
+Suppose we know that the catenary passes through $(x_1,y_1)$ and
+$(x_2,y_2)$, and that the arc length is $L$.  We have:
+
+\newcommand{\cat}[1]{y_0 + a\cosh\left(\frac{{#1}-x_0}{a}\right)}
+
+
+\begin{eqnarray}
+\cat{x_1} &=& y_1\\
+\cat{x_2} &=& y_2\\
+ \sinh\left(\frac{x_2-x_0}{a}\right)
+-\sinh\left(\frac{x_1-x_0}{a}\right) &=&L/a
+\end{eqnarray}
+
+The last following from
+
+
+\begin{equation}
+L
+= \int_{x=x_1}^{x_2}\sqrt{1+y'^2}dx
+= \int_{x=x_1}^{x_2}\cosh\left(\frac{x-x_0}{a}\right)dx
+= \left.a\sinh\left(\frac{x-x_0}{a}\right)\right|_{x_1}^{x_2}
+\end{equation}
+
+
+So we have three equations and three unknowns.  In the following we
+define a "badness" as the sum of the squares of the mismatches from
+these three equations, and minimize that:
+
+```{r definep1p2L}
+p1p2L <- function(known_features, startp=c(0,0,1), give=FALSE){
+
+    x1 <- known_features$x1
+    y1 <- known_features$y1
+    x2 <- known_features$x2
+    y2 <- known_features$y2
+    L  <- known_features$L   # arc length
+    
+    objective <- function(params){
+        x0 <- params[1]
+        y0 <- params[2]
+        a  <- params[3]
+        
+        f <- function(x){y0 + a*cosh((x-x0)/a)}
+        
+        L_params <- a*(  sinh((x2-x0)/a) - sinh((x1-x0)/a)  )
+        
+        bit1 <- f(x1) - y1
+        bit2 <- f(x2) - y2
+        bit3 <- L_params - L
+        
+        badness <- bit1^2 + bit2^2 + bit3^2
+        return(badness)
+    }
+    
+    jj <- optim(par=startp, fn=function(params){objective(params)})
+    if(give){return(jj)} else {return(jj$par)}
+}    
+```
+
+First a consistency check: if $x_0=0, y_0=0, a=1$ we have a standard
+catenary $y=\cosh x$ that passes through $(\pm 1,\cosh 1)$ with arc
+length $e^1-e^{-1}\simeq 2.35$.
+
+
+
+Now we will try to recover this from the known features:
+
+```{r p1p2Lrecover}
+p1p2L(features_standard, startp=c(0.1, -0.1, 1.2))
+```
+ 
+Above we see convergence.
+
+
+```{r plotderivedstandardcatenary}
+x <- seq(from = -1, to = 1, len = 100)
+plot(x, catenary(x, params=p1p2L(features_standard, startp=c(0, 0, 1))))
+```
+
+```{r nonstandardcatenary}
+myfeatures <- function(L){list(x1=-1,y1=2,x2=1,y2=0,L=L)}
+plot  (x, catenary(x, params=p1p2L(myfeatures(6), startp=c(0, 0, 1))), type='o')
+points(x, catenary(x, params=p1p2L(myfeatures(5), startp=c(0, 0, 1))), type='o')
+points(x, catenary(x, params=p1p2L(myfeatures(4), startp=c(0, 0, 1))), type='o')
+points(x, catenary(x, params=p1p2L(myfeatures(3), startp=c(0, 0, 1))), type='o')
+```
+
+
+
+# Known $(x_1,y_1)$, known $L$, known gradient at $x_1$
+
+now we have
+\begin{eqnarray}
+\cat{x_1} &=& y_1\\
+\sinh(x_1-x_0) &=& g\\
+ \sinh\left(\frac{x_2-x_0}{a}\right)
+-\sinh\left(\frac{x_1-x_0}{a}\right) &=&L/a
+\end{eqnarray}
+
+
+```{r label=p1g1L}
+p1g1L <- function(known_features, startp=c(0,0,1), give=FALSE){
+
+    x1 <- known_features$x1
+    y1 <- known_features$y1
+    x2 <- known_features$x2
+    g1 <- known_features$g1
+    L  <- known_features$L
+
+    objective <- function(params){
+        x0 <- params[1]
+        y0 <- params[2]
+        a  <- params[3]
+        
+        f <- function(x){y0 + a*cosh((x-x0)/a)}  # height
+        g <- function(x){       sinh((x-x0)/a)}  # gradient
+        
+        L_params <- a*(  sinh((x2-x0)/a) - sinh((x1-x0)/a)  )
+        
+        bit1 <- f(x1) - y1
+        bit2 <- g(x1) - g1
+        bit3 <- L_params - L
+        
+        badness <- bit1^2 + bit2^2 + bit3^2
+        return(badness)
+    }
+    
+    jj <- optim(par=startp, fn=function(params){objective(params)})
+    if(give){return(jj)} else {return(jj$par)}
+}    
+```
+
+```{r dfdf}
+myfeatures <- function(g){list(x1=-1, y1=2,  x2=1,  g1=g, L=4)}
+plot  (x, catenary(x, params=p1g1L(myfeatures(-0.0), startp=c(0, 0, 1))), type='o', ylim=c(0,5))
+points(x, catenary(x, params=p1g1L(myfeatures(-0.5), startp=c(0, 0, 1))), type='o')
+points(x, catenary(x, params=p1g1L(myfeatures(-1.0), startp=c(0, 0, 1))), type='o')
+points(x, catenary(x, params=p1g1L(myfeatures(-1.5), startp=c(0, 0, 1))), type='o')
+points(x, catenary(x, params=p1g1L(myfeatures(-2.0), startp=c(0, 0, 1))), type='o')
+```
+
+# Known $(x_1,y_1)$, known $L$, known gradient at $x_1$
