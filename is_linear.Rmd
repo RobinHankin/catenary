@@ -1,0 +1,174 @@
+---
+title: "Is a perturbed catenary linear?"
+author: "robin hankin"
+date: "2026-02-17"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r defcat}
+y <- function(x, params){
+  x0 <- params[1]
+  y0 <- params[2]
+  a  <- params[3]
+
+  return(y0 + a*cosh((x-x0)/a))
+}
+
+ydash <- function(x, params){
+  x0 <- params[1]
+  y0 <- params[2]
+  a  <- params[3]
+
+  return(sinh((x-x0)/a))
+}
+
+tension <- function(x, params){  # NB  for unit weight per unit length
+  x0 <- params[1]
+  y0 <- params[2]
+  a  <- params[3]
+
+  return(cosh((x-x0)/a))
+}
+
+arclength <- function(x, params){  # NB indefinite integral
+  x0 <- params[1]
+  y0 <- params[2]
+  a  <- params[3]
+
+  K <- pi*1e2  # constant of integration
+  return(cosh((x-x0)/a) + K)
+}
+
+```
+
+Need to find `ap <- c(x01, y01, a1, x02, y02, a2, xF, yF)`.  This is eight equations.
+
+$f_1(x)=y_0^{(1)}+a^{(1)}\cosh\left(\frac{x-x_0^{(1)}}{a^{(1)}}\right)$ and
+$f_2(x)=y_0^{(2)}+a^{(2)}\cosh\left(\frac{x-x_0^{(2)}}{a^{(2)}}\right)$.
+
+\begin{eqnarray}
+f_1(x_1) &=& y_1\qquad\mbox{string 1 goes through left anchor point}\\
+f_2(x_2) &=& y_2\qquad\mbox{string 2 goes throught right anchor point}\\
+f_1(x_F) &=& y_F\qquad\mbox{string 1 meets force point}\\
+f_2(x_F) &=& y_F\qquad\mbox{string 2 meets force point}\\
+-T_1(x_1)\sin\theta_1 + T_2(x_2)\sin\theta_2 + F_y &=& \rho_1L_1+\rho_2L_2
+\qquad\mbox{vertical forces balance}\\
+T_1(x_1)\cos\theta_1 &=& T_2(x_2)\cos\theta_2 + F_x\qquad\mbox{horizontal forces balance}\\
+\int_{x=x_1}^{x_F}\sqrt{1+(y_1)'^2}\,dx &=& L_1\qquad\mbox{string 1 of length $L_1$}\\
+\int_{x=x_F}^{x_2}\sqrt{1+(y_2)'^2}\,dx &=& L_2\qquad\mbox{string 2 of length $L_2$}
+\end{eqnarray}
+
+
+First specify the knowns:
+
+```{r}
+knowns  <-
+    list(
+        x1  =  -1,
+        y1  =  1,
+        x2  =  2,
+        y2  =  2,
+        rho1  =  1,
+        rho2  =  2,
+        L1  =  2,
+        L2  =  4,
+        Fx  =  0.1,  # x-component of force
+        Fy  =  -0.15 # y-component of force
+    )
+```
+
+
+
+```{r defbad}
+badness <- function(params1, params2, pF, knowns){
+    attach(knowns)
+
+    L1_est <- (arclength(pF[1], params1) - arclength(x1, params1)) # "est" = estimated
+    L2_est <- (arclength(x2, params2) - arclength(pF[1], params2))
+
+    mismatch1 <- y(x1, params1) - y1  # string 1 meets left anchor point
+    mismatch2 <- y(x2, params2) - y2  # string 2 meets right anchor point
+    mismatch3 <- y(pF[1], params1) - pF[2] # string 1 meets force point
+    mismatch4 <- y(pF[1], params2) - pF[2] # string 2 meets force point
+
+    LHS5 <-  (
+        -rho1 * tension(x1, params1) * sin(atan(ydash(x1, params1))) + 
+         rho2 * tension(x2, params2) * sin(atan(ydash(x2, params2)))
+    )
+    RHS5 <- rho1*L1_est + rho2*L2_est
+    mismatch5 <- LHS5 - RHS5
+
+    mismatch6 <- (
+        rho1 * tension(x1, params1) * cos(atan(ydash(x1,params1))) +
+        rho2 * tension(x2, params2) * cos(atan(ydash(x2,params2)))
+    ) - Fx
+
+    mismatch7 <- L1_est - L1
+    mismatch8 <- L2_est - L2
+
+    bad1 <- mismatch1^2
+    bad2 <- mismatch2^2
+    bad3 <- mismatch3^2
+    bad4 <- mismatch4^2
+    bad5 <- mismatch5^2
+    bad6 <- mismatch6^2
+    bad7 <- mismatch7^2
+    bad8 <- mismatch8^2
+
+    badness <- bad1 + bad2 + bad3 + bad4 + bad5 + bad6 + bad7 + bad8
+    detach(knowns)
+
+    return(badness)
+}
+```
+
+`ap <- c(x01, y01, a1, x02, y02, a2, xF, yF)`.  This is eight equations.
+
+
+```{r optdef}
+optimand <- function(ap){
+    params1 <- ap[1:3]
+    params2 <- ap[4:6]
+    pF      <- ap[7:8]
+
+    badness(params1, params2, pF, knowns)
+}
+```
+
+```{r dotheopt}
+jj <- optim(c(rep(1,6),0,0), fn=optimand, method = "BFGS", control = list(trace=100,maxit=10000))
+jj
+
+optim(jj$par, fn=optimand, method = "BFGS", control = list(trace=100,maxit=10000))
+```
+
+
+
+```{r}
+
+params1 <- jj$par[1:3]
+params2 <- jj$par[4:6]
+pF      <- jj$par[7:8]
+
+attach(knowns)
+plot(c(x1,x2),c(-1,2),type="n",asp=1)
+
+
+x <- seq(from=x1, to= pF[1], by=0.01)
+points(x, y(x,params1))
+
+x <- seq(from=pF[1], to= x2, by=0.01)
+points(x, y(x,params2))
+
+points(x1,y1,pch=16,col='red')
+points(x2,y2,pch=16,col='red')
+
+detach(knowns)
+
+```
+
