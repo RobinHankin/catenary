@@ -15,7 +15,6 @@ y <- function(x, params){
   x0 <- params[1]
   y0 <- params[2]
   a  <- params[3]
-
   return(y0 + a*cosh((x-x0)/a))
 }
 
@@ -23,27 +22,41 @@ ydash <- function(x, params){
   x0 <- params[1]
   y0 <- params[2]
   a  <- params[3]
-
   return(sinh((x-x0)/a))
 }
 
-tension <- function(x, params){  # NB  for unit weight per unit length
+tensionX <- function(x, params){  # NB  for unit weight per unit length
   x0 <- params[1]
   y0 <- params[2]
   a  <- params[3]
 
-  return(cosh((x-x0)/a))
+  return(a)
 }
 
-arclength <- function(x, params){  # NB indefinite integral
+tensionY <- function(x, params){  # NB  for unit weight per unit length
   x0 <- params[1]
   y0 <- params[2]
   a  <- params[3]
 
-  K <- pi*1e2  # constant of integration
-  return(cosh((x-x0)/a) + K)
+  return(a*sinh((x-x0)/a))
 }
 
+arclength <- function(x, params){  # NB indefinite integral, hence K
+  x0 <- params[1]
+  y0 <- params[2]
+  a  <- params[3]
+
+  K <- -pi*7e2  # constant of integration
+  return(a*sinh((x-x0)/a) + K)
+}
+
+intersection <- function(params1, params2){
+
+    f <- function(x){(y(x,params1) - y(x,params2))^2}
+    out <- optimize(f, interval= c(-100, 100))
+    return(c(out$minimum, out$objective))
+}
+    
 ```
 
 Need to find `ap <- c(x01, y01, a1, x02, y02, a2, xF, yF)`.  This is eight equations.
@@ -54,11 +67,10 @@ $f_2(x)=y_0^{(2)}+a^{(2)}\cosh\left(\frac{x-x_0^{(2)}}{a^{(2)}}\right)$.
 \begin{eqnarray}
 f_1(x_1) &=& y_1\qquad\mbox{string 1 goes through left anchor point}\\
 f_2(x_2) &=& y_2\qquad\mbox{string 2 goes throught right anchor point}\\
-f_1(x_F) &=& y_F\qquad\mbox{string 1 meets force point}\\
-f_2(x_F) &=& y_F\qquad\mbox{string 2 meets force point}\\
--T_1(x_1)\sin\theta_1 + T_2(x_2)\sin\theta_2 + F_y &=& \rho_1L_1+\rho_2L_2
-\qquad\mbox{vertical forces balance}\\
-T_1(x_1)\cos\theta_1 &=& T_2(x_2)\cos\theta_2 + F_x\qquad\mbox{horizontal forces balance}\\
+T_1(x_F)\sin\theta_1 - T_2(x_F)\sin\theta_2 + F_y &=& 0
+\qquad\mbox{vertical forces at force point balance}\\
+T_1(x_F)\cos\theta_1 - T_2(x_F)\cos\theta_2 + F_x &=& 0
+\qquad\mbox{horizontal forces at force point balance}\\
 \int_{x=x_1}^{x_F}\sqrt{1+(y_1)'^2}\,dx &=& L_1\qquad\mbox{string 1 of length $L_1$}\\
 \int_{x=x_F}^{x_2}\sqrt{1+(y_2)'^2}\,dx &=& L_2\qquad\mbox{string 2 of length $L_2$}
 \end{eqnarray}
@@ -66,48 +78,56 @@ T_1(x_1)\cos\theta_1 &=& T_2(x_2)\cos\theta_2 + F_x\qquad\mbox{horizontal forces
 
 First specify the knowns:
 
-```{r}
+```{r doknowns}
 knowns  <-
     list(
         x1  =  -1,
         y1  =  1,
         x2  =  2,
         y2  =  2,
-        rho1  =  1,
-        rho2  =  2,
+        rho1  =  5,
+        rho2  =  1,
         L1  =  2,
         L2  =  4,
-        Fx  =  0.1,  # x-component of force
-        Fy  =  -0.15 # y-component of force
+        Fx  =  0,  # x-component of force
+        Fy  =  3 # y-component of force
     )
 ```
-
-
 
 ```{r defbad}
 badness <- function(params1, params2, pF, knowns){
     attach(knowns)
 
-    L1_est <- (arclength(pF[1], params1) - arclength(x1, params1)) # "est" = estimated
-    L2_est <- (arclength(x2, params2) - arclength(pF[1], params2))
+    xF <- pF[1]
+    yF <- pF[2]
+
+    L1_est <- arclength(xF, params1) - arclength(x1, params1) # "est" = estimated
+    L2_est <- arclength(x2, params2) - arclength(xF, params2)
+
+    ## all mismatch variables are zero at a solution.
+
 
     mismatch1 <- y(x1, params1) - y1  # string 1 meets left anchor point
     mismatch2 <- y(x2, params2) - y2  # string 2 meets right anchor point
-    mismatch3 <- y(pF[1], params1) - pF[2] # string 1 meets force point
-    mismatch4 <- y(pF[1], params2) - pF[2] # string 2 meets force point
 
-    LHS5 <-  (
-        -rho1 * tension(x1, params1) * sin(atan(ydash(x1, params1))) + 
-         rho2 * tension(x2, params2) * sin(atan(ydash(x2, params2)))
-    )
-    RHS5 <- rho1*L1_est + rho2*L2_est
-    mismatch5 <- LHS5 - RHS5
+    mismatch3 <- y(xF, params1) - yF  # string 1 meets force point
+    mismatch4 <- y(xF, params2) - yF  # string 2 meets force point
 
-    mismatch6 <- (
-        rho1 * tension(x1, params1) * cos(atan(ydash(x1,params1))) +
-        rho2 * tension(x2, params2) * cos(atan(ydash(x2,params2)))
-    ) - Fx
+    mismatch5 <- # Total horizontal forces on force point (xF,yF)
+        (
+            -rho1 * tensionX(xF, params1)  # force to the left is negative
+            +rho2 * tensionX(xF, params2) 
+            +Fx # external horizontal force at force point
+        )
 
+    mismatch6 <- # Total vertical forces on force point (xF, yF)
+        (
+            -rho1 * tensionY(xF, params1) # F>0 if y' < 0
+            +rho2 * tensionY(xF, params2) # F>0 if y' > 0
+            +Fy # external vertical force at force point
+        )
+    
+    
     mismatch7 <- L1_est - L1
     mismatch8 <- L2_est - L2
 
@@ -120,14 +140,17 @@ badness <- function(params1, params2, pF, knowns){
     bad7 <- mismatch7^2
     bad8 <- mismatch8^2
 
-    badness <- bad1 + bad2 + bad3 + bad4 + bad5 + bad6 + bad7 + bad8
+
+    allbad <- c(bad1,bad2,bad3,bad4,bad5,bad6,bad7,bad8)
+#    print(c(Fx,Fy))
+#    print(allbad)
     detach(knowns)
 
-    return(badness)
+    return(sum(allbad))
 }
 ```
 
-`ap <- c(x01, y01, a1, x02, y02, a2, xF, yF)`.  This is eight equations.
+`ap <- c(x01, y01, a1, x02, y02, a2, xF, yF)`.  This is six parameters.
 
 
 ```{r optdef}
@@ -135,40 +158,50 @@ optimand <- function(ap){
     params1 <- ap[1:3]
     params2 <- ap[4:6]
     pF      <- ap[7:8]
-
     badness(params1, params2, pF, knowns)
 }
 ```
 
 ```{r dotheopt}
-jj <- optim(c(rep(1,6),0,0), fn=optimand, method = "BFGS", control = list(trace=100,maxit=10000))
+jj <- optim(c(c(0,0,1), c(1,0,1), c(0,0)), fn=optimand, method = "BFGS", control = list(trace=100,maxit=10000))
 jj
 
 optim(jj$par, fn=optimand, method = "BFGS", control = list(trace=100,maxit=10000))
 ```
 
 
-
-```{r}
+```{r doplot}
+jj$par
 
 params1 <- jj$par[1:3]
 params2 <- jj$par[4:6]
 pF      <- jj$par[7:8]
 
+
+plotter <- function(...){
 attach(knowns)
-plot(c(x1,x2),c(-1,2),type="n",asp=1)
+plot(c(x1,x2), c(-1,2),type="n",asp=1)
 
-
-x <- seq(from=x1, to= pF[1], by=0.01)
+x <- seq(from = x1, to = pF[1], len=50)
 points(x, y(x,params1))
 
-x <- seq(from=pF[1], to= x2, by=0.01)
+x <- seq(from = pF[1], to = x2, len=50)
 points(x, y(x,params2))
 
-points(x1,y1,pch=16,col='red')
-points(x2,y2,pch=16,col='red')
+points(x1, y1, pch=16, col='red')
+points(x2, y2, pch=16, col='red')
+
+points(pF[1],pF[2],pch=16,col='blue')
+
+arrows(x0=pF[1],y0=pF[2], x1=pF[1]+Fx/6, y1=pF[2]+Fy/6)
 
 detach(knowns)
+}
+
+plotter()
+pdf(file="f.pdf")
+plotter()
+dev.off()
 
 ```
 
