@@ -1,9 +1,25 @@
 \documentclass{article}
 \usepackage{tikz}
 \usetikzlibrary{arrows.meta}
+
+
+\title{Analysis of a slightly perturbed vertically hanging flexible chain}
+\author{Robin K. S. Hankin}
+
 \begin{document}
+\maketitle	
 
 
+
+We consider a unit-length hanging chain in the form of a catenary
+constrained to pass through $(0,1)$ and $(x,\cosh(x/a))$; $x$ and $a$
+to be determined.  The chain is of unit weight per unit length and is
+subject to (known) force $F$ pulling horizontally to the left;
+figure~\ref{catenary}.
+
+
+\begin{figure}
+\begin{centering}
 \begin{tikzpicture}[scale=1.3,
     force/.style = {
         -{Stealth[length=3.5mm, width=1.2mm, inset=0.8pt]}, 
@@ -20,10 +36,10 @@
 \node[below] at (0,0){$(0,1)$};
 
 \fill (2,{cosh(2)-1}) circle (1.2pt);
-\node[left] at (2,{cosh(2)-1}) {$(x,\cosh(x))$};
+\node[left] at (2,{cosh(2)-1}) {$(x,a\cosh(x/a))$};
 
 \draw[force] (0,0) -- ++(-1,0)
-    node[label] {$T_0$};
+    node[label] {$F$};
 
 \draw[force] (2,{cosh(2)-1}) -- ++(1,0)
     node[label] {$T_x$};
@@ -37,8 +53,41 @@
 \draw[thin,dashed]
   (1.24, {cosh(1.24)-1}) -- ++(0, 0.5)
     node[right] {};
-
 \end{tikzpicture}
+\caption{A (half)\label{catenary} catenary}
+\end{centering}
+\end{figure}
+
+
+\begin{eqnarray}
+  F &=& T_x\qquad\mbox{balance horizontal forces}\\
+  T_y &=& a\sinh(x/a)\qquad\mbox{vertical forces; arc length}\\
+  T_y/T_x &=& \sinh(x/a)\qquad\mbox{tension parallel to chain}
+\end{eqnarray}
+
+We see that $a=F=T_x$.  The arc length is
+$\int\sqrt{1+y'^2}\,dx=a\sinh(x/a)=1$, whence $F\sinh(x/F)=1$, or
+$x=F\mathrm{arcsinh}{\left(1/F\right)}$.
+
+This is nonlinear for small $F$:
+
+\begin{eqnarray}\frac{dx}{dF}&=&
+  \mathrm{arcsinh}{\left(1/F\right)}-\frac{1}{\sqrt{1+F^2}}\\
+  &=& \log\left(\frac{1}{F}+\sqrt{1+\frac{1}{F^2}}\right)-\frac{1}{\sqrt{1+F^2}}\\
+  &=& \log\left(\frac{1}{F}\left(1+\sqrt{1+F^2}\right)\right)-\frac{1}{\sqrt{1+F^2}}\\
+  &=& -\log F + \log\left(1+\sqrt{1+F^2}\right)-\frac{1}{\sqrt{1+F^2}}\\
+  &=& -\log F + \log 2 -1 - \frac{1}{4}F^2 + \mathcal{O}(F^4)\\
+  &\longrightarrow&\infty\qquad\mbox{as $F\longrightarrow 0^+$}
+  \end{eqnarray}
+
+The vertical displacement $y$ is given by $F\cosh(x/F)-F$ with
+$x=F\mathrm{arcsinh}(1/F)$, or
+$y=\sqrt{1+F^2}-F=1-F+\mathcal{O}(F^2)$.
+
+If we want to consider the case where $F$ is very large (resulting in
+an almost horizontal string), we obtain a horizontal displacement of
+$1-\frac{1}{6}F^{-2} + \mathcal{O}(F^{-4})$ and a vertical
+displacement of $\frac{1}{2}F^{-1} + \mathcal{O}(F^{-2})$.
 
 
 
