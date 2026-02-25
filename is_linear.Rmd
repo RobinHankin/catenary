@@ -154,7 +154,7 @@ badness <- function(params1, params2, pF, knowns){
 
 
 ```{r optdef}
-optimand <- function(ap){
+optimand <- function(ap, knowns){
     params1 <- ap[1:3]
     params2 <- ap[4:6]
     pF      <- ap[7:8]
@@ -163,10 +163,9 @@ optimand <- function(ap){
 ```
 
 ```{r dotheopt}
-jj <- optim(c(c(0,0,1), c(1,0,1), c(0,0)), fn=optimand, method = "BFGS", control = list(trace=100,maxit=10000))
+jj <- optim(c(c(0,0,1), c(1,0,1), c(0,0)), fn=optimand, knowns=knowns, method = "BFGS", control = list(trace=0, maxit=10000))
 jj
 
-optim(jj$par, fn=optimand, method = "BFGS", control = list(trace=100,maxit=10000))
 ```
 
 
@@ -203,5 +202,58 @@ pdf(file="f.pdf")
 plotter()
 dev.off()
 
+```
+
+
+
+
+## Now streamline: keep everything constant except Fx and Fy
+
+What I want to do is to show that the displacement is a linear
+function of Fx,Fy.
+
+```{r}
+p <- function(force){
+
+	knowns  <-
+		list(
+			x1  =  -1,
+			y1  =  1,
+			x2  =  2,
+			y2  =  2,
+			rho1  =  5,
+			rho2  =  1,
+			L1  =  2,
+			L2  =  4,
+			Fx  =  force[1],  # x-component of force
+			Fy  =  force[2] # y-component of force
+		)
+	
+	jj <- optim(c(c(0,0,1), c(1,0,1), c(0,0)),
+                fn=optimand, knowns=knowns,
+                method = "BFGS",
+                control = list(trace=0, maxit=10000))
+
+	return(jj$par[7:8])
+}
+
+(equilibrium <- p(c(0,0)))
+p(c(+0.1,  0.0)) - equilibrium
+p(c(-0.1,  0.0)) - equilibrium
+p(c( 0.0, +0.1)) - equilibrium
+p(c( 0.0, -0.1)) - equilibrium
+
+
+f <- function(x){(p(c(x, 0)) - equilibrium)/x}
+f(0.1)
+f(0.2)
+f(0.3)
+f(0.4)
+
+g <- function(x){(p(c(0, x)) - equilibrium)/x}
+g(0.1)
+g(0.2)
+g(0.3)
+g(0.4)
 ```
 
