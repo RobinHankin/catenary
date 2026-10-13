@@ -1,0 +1,77 @@
+\documentclass{article}
+\usepackage{amsmath} % provides many mathematical environments & tools
+
+\setlength{\parindent}{0mm}
+
+\begin{document}
+
+\title{Restatement of Gale 1976}
+\author{Robin K. S. Hankin}
+\maketitle
+
+\subsection*{Overview}
+
+This is the salient parts of Gale 1976, typeset in \LaTeX.
+
+
+\setcounter{section}{2} % Just an example to set the prefix to 2
+\begin{subequations}
+    \begin{equation}\tag{2.1a}\label{2.1a}
+      \frac{d\overline{x}}{ds} =
+       (1 + u_s -v\alpha_s)\cos\alpha
+      -(v_s     +u\alpha_s)\sin\alpha
+    \end{equation}
+
+    \begin{equation}\tag{2.1b}\label{2.1b}
+      \frac{d\overline{y}}{ds} =
+       (1 + u_s -v\alpha_s)\sin\alpha
+      +(v_s     +u\alpha_s)\cos\alpha
+    \end{equation}
+
+    \begin{equation}\tag{2.1c}\label{2.1c}
+      \frac{d\overline{z}}{dx}=w_s
+    \end{equation}
+\end{subequations}
+
+In equations \ref{2.1a}-\ref{2.1c}, subscript $s$ indicates
+differentiation WRT arc length $s$.
+
+
+
+
+We proceed as demonstrated in the lab manual; assuming that $h\ne 0$ 
+we have
+\begin{align*}
+    \frac{f(x+h)-f(x)}{h} & =  \frac{(x+h)^3-x^3}{h}   \\
+                          & =  \frac{x^3+3x^2h+3xh^2+h^3 - x^3}{h}\\
+                          & =  \frac{3x^2h+2xh^2+h^3}{h}\\
+                          & =  \frac{h(3x^2+2xh+h^2)}{h}\\
+                          & =  3x^2+2xh+h^2
+\end{align*} 
+
+\subsection*{Lab activity 2.3.4}
+Use the definition of the derivative to find $f'(x)$ when $f(x)=x^{\frac{1}{4}}$.
+
+Using the definition of the derivative, we have
+\begin{align*}
+            f'(x)           &= \lim_{h\rightarrow 0}\frac{(x+h)^{1/4}-x^{1/4}}{h}   \\
+                            &=  \lim_{h\rightarrow 0}\frac{(x+h)^{1/4}-x^{1/4}}{h}\cdot \frac{((x+h)^{1/4}+x^{1/4})((x+h)^{1/2}+x^{1/2})}{((x+h)^{1/4}+x^{1/4})((x+h)^{1/2}+x^{1/2})}\\
+                            &=  \lim_{h\rightarrow 0}\frac{(x+h)-x}{h((x+h)^{1/4}+x^{1/4})((x+h)^{1/2}+x^{1/2})}    \\  
+                            &=  \lim_{h\rightarrow 0}\frac{1}{((x+h)^{1/4}+x^{1/4})((x+h)^{1/2}+x^{1/2})}   \\
+                            &= \frac{1}{(x^{1/4}+x^{1/4})(x^{1/2}+x^{1/2})} \\
+                            &=  \frac{1}{(2x^{1/4})(2x^{1/2})}  \\
+                            &=  \frac{1}{4x^{3/4}}  \\
+                            &=  \frac{1}{4}x^{-3/4}
+\end{align*}
+Note: the key observation here is that
+\begin{align*}
+    a^4-b^4 &= (a^2-b^2)(a^2+b^2)   \\
+        &= (a-b)(a+b)(a^2+b^2), 
+\end{align*}
+with 
+\[
+    a = (x+h)^{1/4}, \qquad b = x^{1/4},
+\]
+which allowed us to rationalize the denominator.
+
+\end{document}
