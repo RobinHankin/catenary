@@ -1,5 +1,6 @@
 \documentclass{article}
-\usepackage{amsmath} % provides many mathematical environments & tools
+\usepackage{amsmath}
+\usepackage{graphicx}
 
 \setlength{\parindent}{0mm}
 
@@ -13,65 +14,229 @@
 
 This is the salient parts of Gale 1976, typeset in \LaTeX.
 
+\begin{figure}
+\centering
+\includegraphics[height=7cm]{gale_fig2.1.png}
+\caption{Gale's figure 2.1}
+\end{figure}
 
-\setcounter{section}{2} % Just an example to set the prefix to 2
-\begin{subequations}
-    \begin{equation}\tag{2.1a}\label{2.1a}
-      \frac{d\overline{x}}{ds} =
-       (1 + u_s -v\alpha_s)\cos\alpha
-      -(v_s     +u\alpha_s)\sin\alpha
-    \end{equation}
+\begin{figure}
+\centering
+\includegraphics[height=7cm]{gale_fig2.2.png}
+\caption{Gale's figure 2.2}
+\end{figure}
 
-    \begin{equation}\tag{2.1b}\label{2.1b}
-      \frac{d\overline{y}}{ds} =
-       (1 + u_s -v\alpha_s)\sin\alpha
-      +(v_s     +u\alpha_s)\cos\alpha
-    \end{equation}
+\begin{figure}
+\centering
+\includegraphics[height=7cm]{gale_fig2.3.png}
+\caption{Gale's figure 2.3}
+\end{figure}
 
-    \begin{equation}\tag{2.1c}\label{2.1c}
-      \frac{d\overline{z}}{dx}=w_s
-    \end{equation}
-\end{subequations}
+
+\begin{align}\tag{2.1a}\label{2.1a}
+  \frac{d\overline{x}}{ds} &=
+  (1 + u_s -v\alpha_s)\cos\alpha
+  -(v_s     +u\alpha_s)\sin\alpha
+  \\
+  \tag{2.1b}\label{2.1b}
+  \frac{d\overline{y}}{ds} &=
+  (1 + u_s -v\alpha_s)\sin\alpha
+  +(v_s     +u\alpha_s)\cos\alpha
+  \\
+  \tag{2.1c}\label{2.1c}
+  \frac{d\overline{z}}{dx}&=
+  w_s
+\end{align}
 
 In equations \ref{2.1a}-\ref{2.1c}, subscript $s$ indicates
 differentiation WRT arc length $s$.
 
+\newcommand{\da}[2]{\frac{d\overline{#1}}{d{#2}}}
+\newcommand{\db}[2]{\frac{d\overline{#1}}{d\overline{#2}}}
+\newcommand{\so}{\overline{S}}
+\newcommand{\eo}{\overline{\epsilon}}
+\newcommand{\embig}{\rule{1mm}{7mm}}
+\newcommand{\lag}{\mathcal{L}}
+\newcommand{\ints}{\int_{s_1}^{s_2}}
+\newcommand{\intt}{\int_{t_1}^{t_2}}
+\newcommand{\di}[2]{\frac{\partial{#1}}{\partial{#2}}}
+
+\begin{align}\tag{2.2a}\label{2.2a}
+  \da{x}{s}  &= \da{s}{s}\db{x}{s} = \da{s}{s}\cos\overline{\alpha}\cos\overline{\gamma}\\
+\tag{2.2b}\label{2.2b}
+  \da{y}{s}  &= \da{s}{s}\db{y}{s} = \da{s}{s}\sin\overline{\alpha}\\
+\tag{2.2c}\label{2.2c}
+  \da{z}{x}  &= \da{s}{s}\db{z}{s} = \da{s}{s}\cos\overline{\alpha}\sin\overline{\gamma}
+\end{align}
+
+equating 2.1 and 2.2 gives:
+
+\begin{align}
+  \da{s}{s}\cos\overline{\alpha}\cos\overline{\gamma} &=
+  (1 + u_s -v\alpha_s)\cos\alpha
+  -(v_s     +u\alpha_s)\sin\alpha\\
+\tag{2.3b}\label{2.3b}
+\da{s}{s}\sin\overline{\alpha}  &= 
+  (1 + u_s -v\alpha_s)\sin\alpha
++(v_s     +u\alpha_s)\cos\alpha\\
+\tag{2.3c}\label{2.3c}
+\da{s}{s}\cos\overline{\alpha}\sin\overline{\gamma} &=
+w_s
+\end{align}
+
+Eliminating $\overline{\alpha},\overline{\gamma}$ gives
+
+\begin{equation}\tag{2.4}\label{2.4}
+  \da{s}{s}=\sqrt{
+    w_s^2 + (1 + u_s -v\alpha_s)^2+(v_s+u\alpha_s)^2}
+\end{equation}
+
+Define the longitudinal stress by
+
+$$\overline{\epsilon}=\frac{d\overline{s}-ds}{ds}$$
+
+Thus
+
+\begin{equation}\label{2.5}\tag{2.5}
+  \overline{\epsilon} = \sqrt{w_s^2 + (1 + u_s -v\alpha_s)^2+(v_s+u\alpha_s)^2}-1
+\end{equation}
+
+(and because $\overline{\epsilon}=0$ for the inextensible case we have 
+
+$$w_s^2 + (1 + u_s -v\alpha_s)^2+(v_s+u\alpha_s)^2=1$$
+
+
+Now potential energy:
+
+\begin{equation}\label{2.6}\tag{2.6}
+  \frac{\partial V_g}{\partial s}  = \frac{\partial V_{0g}}{\partial s} +
+    \rho g(u\sin\alpha + v\cos\alpha)
+\end{equation}
+
+And kinetic energy:
+
+\begin{equation}\label{2.7}\tag{2.7}
+  \frac{\partial\mathrm{KE}}{\partial s}=\frac{\rho}{2}\left(
+  u_t^2 +  v_t^2 +  w_t^2\right)
+  \end{equation}
 
 
 
-We proceed as demonstrated in the lab manual; assuming that $h\ne 0$ 
-we have
-\begin{align*}
-    \frac{f(x+h)-f(x)}{h} & =  \frac{(x+h)^3-x^3}{h}   \\
-                          & =  \frac{x^3+3x^2h+3xh^2+h^3 - x^3}{h}\\
-                          & =  \frac{3x^2h+2xh^2+h^3}{h}\\
-                          & =  \frac{h(3x^2+2xh+h^2)}{h}\\
-                          & =  3x^2+2xh+h^2
-\end{align*} 
+\begin{align}
+  \overline{u}_t &= \tag{2.8a}\label{2.8a}
+  \left(u_t\cos\beta + v_t\sin\beta\right)\cdot
+  \left(\cos\overline{\gamma}+(1-\cos\overline{\gamma})\sin^2\overline{\alpha}\right)\nonumber\\
+  &{\qquad} +
+  \left(-u_t\sin\beta + v_t\cos\beta\right)\cdot
+  \left(1-\cos\overline{\beta}\right)\sin\overline{\alpha}\cos\overline{\alpha}\nonumber\\
+  &{\qquad} +
+  w_t\cdot\sin\overline{\gamma}\cdot\cos\overline{\alpha}\nonumber\\
+  \overline{v}_t &= \tag{2.8b}\label{2.8b}
+  \left(u_t\cos\beta + v_t\sin\beta\right)\cdot\left(1-\cos\overline{\gamma}\right)\cdot
+  \sin\overline{\alpha}\cos\overline{\alpha}\nonumber\\
+  &{\qquad} +
+  (u_t\sin\beta + v_t\cos\beta)\cdot\left(\cos\overline{\gamma} + (1-\cos\overline{\gamma})
+  \cos^2\overline{\alpha}\right) - w_t\sin\overline{\gamma}\sin\overline{\alpha}\nonumber\\
+  \overline{w}_t &= \tag{2.8c}\label{2.8c}
+  -\left(u_t\cos\beta + v_t\sin\beta\right)\cdot
+  (\sin\overline{\gamma}\cos\overline{\alpha})\nonumber\\
+  &{\qquad} +
+  (-u_t\sin\beta + v_t\cos\beta)\cdot\left(\sin\overline{\gamma}\sin\overline{\alpha}\right) +
+  w_t\cos\overline{\gamma}\nonumber
+\end{align}
 
-\subsection*{Lab activity 2.3.4}
-Use the definition of the derivative to find $f'(x)$ when $f(x)=x^{\frac{1}{4}}$.
+Increment of virtual work $\delta W_f$:
 
-Using the definition of the derivative, we have
-\begin{align*}
-            f'(x)           &= \lim_{h\rightarrow 0}\frac{(x+h)^{1/4}-x^{1/4}}{h}   \\
-                            &=  \lim_{h\rightarrow 0}\frac{(x+h)^{1/4}-x^{1/4}}{h}\cdot \frac{((x+h)^{1/4}+x^{1/4})((x+h)^{1/2}+x^{1/2})}{((x+h)^{1/4}+x^{1/4})((x+h)^{1/2}+x^{1/2})}\\
-                            &=  \lim_{h\rightarrow 0}\frac{(x+h)-x}{h((x+h)^{1/4}+x^{1/4})((x+h)^{1/2}+x^{1/2})}    \\  
-                            &=  \lim_{h\rightarrow 0}\frac{1}{((x+h)^{1/4}+x^{1/4})((x+h)^{1/2}+x^{1/2})}   \\
-                            &= \frac{1}{(x^{1/4}+x^{1/4})(x^{1/2}+x^{1/2})} \\
-                            &=  \frac{1}{(2x^{1/4})(2x^{1/2})}  \\
-                            &=  \frac{1}{4x^{3/4}}  \\
-                            &=  \frac{1}{4}x^{-3/4}
-\end{align*}
-Note: the key observation here is that
-\begin{align*}
-    a^4-b^4 &= (a^2-b^2)(a^2+b^2)   \\
-        &= (a-b)(a+b)(a^2+b^2), 
-\end{align*}
-with 
-\[
-    a = (x+h)^{1/4}, \qquad b = x^{1/4},
-\]
-which allowed us to rationalize the denominator.
+\begin{align}\tag{2.9}\label{2.9}
+  \delta W_f &= -\int_{s_1}^{s^2}
+  \left(
+  f_1\overline{u_t}\delta\overline{u} +
+  f_2\overline{v_t}\delta\overline{v} +
+  f_2\overline{w_t}\delta\overline{w}
+  \right)\,ds\\
+  &=   \int_{s_1}^{s^2}
+  \left(\tag{2.9b}\label{2.9b}
+  Q_u\delta u +Q_v\delta v+Q_w\delta w\right)\,ds
+  \end{align}
+
+
+
+Now the tension at any position is denoted $\so$.  The increment of
+work of the internal forces on the cable as it is strained between two
+states is
+
+\begin{equation}\tag{2.10}\label{2.10}
+  \delta W_s= -\int_{s_1}^{s_2}\so\delta\overline{\epsilon}\,ds
+\end{equation}
+
+where $\delta\overline{\epsilon}$ is an incremental change in the
+strain.  Using equation~\ref{2.5}
+
+
+\begin{equation}\tag{2.11}\label{2.11}
+  \delta\overline{\epsilon} =
+  \frac{
+    (1+u_s-\alpha_s v)\cdot\left(\delta u_s-\alpha_s\delta v\right)
+    + (v_s+\alpha_s u)\cdot\left(\delta v_s+\alpha_s\delta u\right)
+    + w_s\delta w_s
+  }{
+    \sqrt{w_S^2 + (1+u_s-v\alpha_s)^2 + (v_s + u\alpha_s)^2}
+  }
+\end{equation}
+
+Then substitute \ref{2.11} into \ref{2.10} [NB using \ref{2.5}]:
+
+\begin{align}
+  \delta W_s &=
+  \ints\left[\embig
+    \left\lbrace\frac{-\so\alpha_s(v_s+\alpha_s
+      u)}{\eo+1} +
+    \left[\so\frac{1+u_s-\alpha_sv}{\eo+1}\right]_s\right\rbrace\,\delta u\right.\nonumber\\
+    &{}\qquad
+    +  \left\lbrace\frac{\so\alpha_s(1+u_s-\alpha_sv)}{\eo+1}
+    + \left[\so\frac{v_s+\alpha_su}{\eo+1}\right]_s\right\rbrace\,\delta v\nonumber\\
+    &{}\qquad
+    + \left\lbrace\left[\frac{\so w_s}{\eo+1}\right]_s\right\rbrace
+    \left.\embig
+    \right]\,ds\nonumber\\
+  &{}\qquad
+  -\left[
+  \frac{\so}{\eo+1}
+  \left\lbrace\embig
+  (1+u_s-\alpha_sv)\delta u +(v_s+\alpha_su)\delta v+w_s\delta w
+  \right\rbrace
+  \right]_{s_1}^{s_2}\tag{2.12}\label{2.12}
+\end{align}
+
+or
+
+\begin{equation}\tag{2.13}\label{2.13}
+  \delta W_s=\ints
+  \left[
+    R_u\delta u+R_v\delta v + R_w\delta w\right],ds +
+  \mbox{boundary terms}
+\end{equation}
+
+
+Defining the Lagrangian
+\begin{align}\tag{2.14}\label{2.14}
+  \lag &=
+  \lag(t,s,u,v,w,u_s,v_s,w_s,u_t,v_t,w_t)=KE-V_g\nonumber\\
+  & = \ints\left[\frac{\rho}{2}\left(u_t^2+v_t^2+w_t^2\right)
+  - \frac{\partial V_{0g}}{\partial s}
+  - \rho g(u\sin\alpha+v\cos\alpha)\right]\,ds
+  \end{align}
+
+\begin{equation}\tag{2.15}\label{2.15}
+  \intt\left[\delta\lag + \delta W_f + \delta
+    W_s\right]\,dt=0
+\end{equation}
+
+
+\begin{align}
+  \intt\delta\lag\,dt=\intt\ints\left\lbrace
+  \di{\lag}{u}\delta u +   \di{\lag}{u}\delta u +   \di{\lag}{u}\delta u + 
+  \right\rbrace
+  \end{align}
 
 \end{document}
